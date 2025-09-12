@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeHer - Women Safety Awareness</title>
+  <style>
+    /* General Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Segoe UI", sans-serif; background: #fff; color: #333; line-height: 1.6; }
+
+    /* Navbar */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem;
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
+    }
+    .navbar .logo { color: rgb(14, 14, 14); font-weight: bold; font-size: 1.5rem; }
+    .nav-links { list-style: none; display: flex; gap: 1.2rem; }
+    .nav-links li a { text-decoration: none; color: rgb(4, 4, 4); font-weight: 500; }
+    .hamburger { font-size: 2rem; color: rgb(34, 33, 33); cursor: pointer; display: none; }
+
+    /* Side Panel */
+    .side-panel {
+      height: 100%; width: 0;
+      position: fixed; top: 0; right: 0;
+      background-color: #ff4e50; overflow-x: hidden;
+      transition: 0.4s; padding-top: 60px; z-index: 9999;
+    }
+    .side-panel a {
+      padding: 12px 24px; display: block;
+      font-size: 1.2rem; color: rgb(33, 32, 32); text-decoration: none;
+    }
+    .side-panel a:hover { background: rgba(255,255,255,0.2); }
+    .side-panel .closebtn {
+      position: absolute; top: 20px; right: 25px;
+      font-size: 2rem; cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh; display: flex;
+      justify-content: center; align-items: center;
+      background: linear-gradient(to bottom, #ff7eb3, #f9d423);
+      text-align: center; padding-top: 60px;
+    }
+    .hero h1 {
+      font-size: 3rem; color: white; opacity: 1;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* Articles */
+    .articles {
+      padding: 3rem 2rem; display: grid; gap: 2rem;
+    }
+    .articles article {
+      display: flex; flex-wrap: wrap;
+      gap: 1rem; align-items: center;
+      opacity: 0; transform: translateY(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .articles article.visible { opacity: 1; transform: translateY(0); }
+    .articles img {
+      max-width: 400px; border-radius: 10px; flex: 1;
+    }
+    .articles div { flex: 2; }
+
+    /* Footer */
+    footer {
+      background: #ff4e50; color: white;
+      padding: 2rem; text-align: center;
+    }
+    footer table { margin: 1rem auto; border-collapse: collapse; }
+    footer td { padding: 0.5rem 1rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .articles article { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">SafeHer</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Articles</a></li>
+      <li><a href="#">Resources</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleSidePanel()">Menu</div>
+  </nav>
+
+  <!-- Side Panel -->
+  <div id="sidePanel" class="side-panel">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
+    <a href="#">Emergency Numbers</a>
+    <a href="#">Self Defense</a>
+    <a href="#">Workshops</a>
+    <a href="#">About Us</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 class="fade-text">SafeHer: Women Safety Awareness</h1>
+  </section>
+
+  <!-- Articles Section -->
+  <section class="articles">
+    <article>
+      <img src="https://source.unsplash.com/600x400/?women,safety" alt="Awareness">
+      <div>
+        <h2>Why We Created SafeHer</h2>
+        <p>Our mission is to create a safe digital space where women can access resources,
+          awareness guides, and emergency support. Safety is not just a priority—it is a right.</p>
+      </div>
+    </article>
+
+    <article>
+      <img src="https://source.unsplash.com/600x400/?support,women" alt="Support">
+      <div>
+        <h2>Empowering Through Knowledge</h2>
+        <p>By sharing real stories, guides, and workshops, we empower women to be prepared
+          and resilient in challenging situations.</p>
+      </div>
+    </article>
+
+    <article>
+      <img src="https://source.unsplash.com/600x400/?community,women" alt="Community">
+      <div>
+        <h2>Building a Safer Community</h2>
+        <p>Together, through awareness and collective action, we can build a safer society
+          where women feel free, respected, and protected.</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <h3>Contact Us</h3>
+    <table>
+      <tr><td>Email:</td><td>support@safeher.org</td></tr>
+      <tr><td>Phone:</td><td>+91 98765 43210</td></tr>
+      <tr><td>Address:</td><td>New Delhi, India</td></tr>
+    </table>
+  </footer>
+
+  <script>
+    // Side Panel Toggle
+    function toggleSidePanel() {
+      const panel = document.getElementById("sidePanel");
+      panel.style.width = (panel.style.width === "250px") ? "0" : "250px";
+    }
+
+    // Fade effect for hero text on scroll
+    window.addEventListener("scroll", () => {
+      const heroText = document.querySelector(".hero h1");
+      const scrollPos = window.scrollY;
+      heroText.style.opacity = 1 - scrollPos / 300;
+      heroText.style.transform = `translateY(-${scrollPos / 3}px)`;
+    });
+
+    // Fade-in articles when in view
+    const articles = document.querySelectorAll(".articles article");
+    function revealOnScroll() {
+      articles.forEach(article => {
+        const rect = article.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          article.classList.add("visible");
+        }
+      });
+    }
+    window.addEventListener("scroll", revealOnScroll);
+    window.addEventListener("load", revealOnScroll);
+  </script>
+
+</body>
+</html>
