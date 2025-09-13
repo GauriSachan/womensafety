@@ -5,162 +5,126 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - SafeHer</title>
   <style>
-    /* General Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: "Segoe UI", sans-serif; background: #fff; color: #333; line-height: 1.6; }
 
     /* Navbar */
     .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       padding: 1rem 2rem;
       background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      left: 0;
-      z-index: 1000;
+      position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .navbar .logo { color: rgb(14, 14, 14); font-weight: bold; font-size: 1.7rem; }
+    .navbar .logo { font-weight: bold; font-size: 1.7rem; color: #fff; }
     .nav-links { list-style: none; display: flex; gap: 1rem; }
     .nav-links li a {
-      text-decoration: none;
-      color: white;
-      font-weight: 600;
-      padding: 8px 18px;
-      border-radius: 25px;
-      background: rgba(14,14,14,0.8);
-      transition: 0.3s ease;
+      text-decoration: none; color: #fff; font-weight: 600;
+      padding: 8px 18px; border-radius: 25px;
+      transition: 0.3s;
     }
-    .nav-links li a:hover { opacity: 0.9; transform: translateY(-2px); }
+    .nav-links li a:hover { background: rgba(255,255,255,0.2); }
 
-    .three-dots { font-size: 2rem; cursor: pointer; color: rgb(34, 33, 33); display: none; }
+    .three-dots { font-size: 2rem; cursor: pointer; color: white; display: none; }
 
     /* Side Panel */
     .side-panel {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      top: 0;
-      right: 0;
-      background-color: #ff4e50;
-      overflow-x: hidden;
-      transition: 0.4s;
-      padding-top: 60px;
-      z-index: 9999;
+      height: 100%; width: 0; position: fixed; top: 0; right: 0;
+      background-color: #ff4e50; overflow-x: hidden;
+      transition: 0.4s; padding-top: 60px; z-index: 9999;
     }
     .side-panel a {
-      padding: 12px 24px;
-      display: block;
-      font-size: 1.2rem;
-      color: #fff;
-      text-decoration: none;
+      padding: 12px 24px; display: block; font-size: 1.2rem;
+      color: #fff; text-decoration: none;
     }
     .side-panel a:hover { background: rgba(255,255,255,0.2); }
     .side-panel .closebtn { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; }
 
-    /* Hero Section */
+    /* Hero */
     .hero {
-      height: 50vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(to bottom, #ff7eb3, #f9d423);
-      text-align: center;
-      padding-top: 60px;
+      height: 50vh; display: flex; justify-content: center; align-items: center;
+      background: linear-gradient(to bottom right, #ff7eb3, #f9d423);
+      text-align: center; padding-top: 60px;
     }
     .hero h1 {
-      font-size: 3rem;
-      color: white;
+      font-size: 3rem; color: white;
       text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      animation: fadeInDown 1.2s ease;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Container */
     .container { max-width: 1000px; margin: 2rem auto; padding: 2rem; }
 
-    /* Cards Section */
+    /* Cards */
     .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem; margin-bottom: 2rem;
     }
     .card {
       background: linear-gradient(to bottom, #fff, #ffe9ef);
-      border-radius: 20px;
-      padding: 2rem;
+      border-radius: 20px; padding: 2rem;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 1s ease;
     }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
     .card h3 { color: #f05a7e; margin-bottom: 1rem; }
-    .card p { font-size: 1.1rem; color: #555; }
 
-    /* Contact Info Section */
+    /* Contact Info */
     .contact-info {
-      background: #fff2f5;
-      border-radius: 20px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      background: #fff2f5; border-radius: 20px; padding: 2rem;
+      margin-bottom: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease;
     }
-    .contact-info h3 { color: #f05a7e; margin-bottom: 1rem; }
-    .contact-info p { font-size: 1.1rem; margin-bottom: 0.5rem; }
 
     /* Contact Form */
     .contact-form {
-      background: #fff2f5;
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      background: #fff2f5; padding: 2rem; border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;
+      animation: fadeIn 1s ease;
     }
     .contact-form h2 { color: #f05a7e; margin-bottom: 1rem; }
     .contact-form input,
     .contact-form textarea {
-      width: 95%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border: 1px solid #f05a7e;
-      border-radius: 12px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
+      width: 90%; padding: 0.8rem; margin: 0.6rem 0;
+      border: 2px solid transparent; border-radius: 12px;
+      font-size: 1rem; transition: 0.3s;
     }
     .contact-form input:focus,
     .contact-form textarea:focus {
       border-color: #f05a7e;
-      box-shadow: 0 0 8px rgba(240,90,126,0.3);
+      box-shadow: 0 0 12px rgba(240,90,126,0.4);
       outline: none;
     }
     .contact-form button {
-      width: 50%;
-      padding: 0.8rem;
-      margin-top: 1rem;
-      border: none;
-      border-radius: 40px;
-      background: #f05a7e;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
+      width: 50%; padding: 0.9rem; margin-top: 1rem;
+      border: none; border-radius: 40px;
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      color: white; font-weight: bold; font-size: 1rem; cursor: pointer;
       transition: 0.3s ease;
     }
-    .contact-form button:hover { opacity: 0.9; transform: translateY(-2px); }
+    .contact-form button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 126, 179, 0.5);
+    }
+
+    #formResponse { margin-top: 1rem; font-weight: 600; color: #333; }
 
     /* Footer */
     footer {
       background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
-      color: white;
-      padding: 2rem;
-      text-align: center;
+      color: white; padding: 2rem; text-align: center;
     }
-    footer table { margin: 1rem auto; border-collapse: collapse; }
-    footer td { padding: 0.5rem 1rem; }
 
-    /* Responsive */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .three-dots { display: block; }
@@ -192,26 +156,25 @@
     <a href="contact.html">Contact</a>
   </div>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="hero">
     <h1>Contact & Learn More About SafeHer</h1>
   </section>
 
   <div class="container">
-
-    <!-- Cards Section -->
+    <!-- Cards -->
     <div class="cards">
       <div class="card">
         <h3>Our Mission</h3>
-        <p>To empower women with knowledge, awareness, and tools to stay safe in every situation. Building a society where women live confidently and fearlessly.</p>
+        <p>Empowering women with knowledge, awareness, and tools to stay safe in every situation.</p>
       </div>
       <div class="card">
-        <h3>Why We Created SafeHer</h3>
-        <p>SafeHer was born to provide accessible self-defense resources, safety guides, and emergency support for women everywhere.</p>
+        <h3>Why SafeHer?</h3>
+        <p>SafeHer provides accessible self-defense resources, safety guides, and emergency support for women everywhere.</p>
       </div>
     </div>
 
-    <!-- Contact Info Section -->
+    <!-- Contact Info -->
     <div class="contact-info">
       <h3>Contact Info</h3>
       <p><strong>Email:</strong> contact@safeher.org</p>
@@ -222,12 +185,14 @@
     <!-- Contact Form -->
     <div class="contact-form">
       <h2>Send Us a Message</h2>
-      <input type="text" placeholder="Full Name">
-      <input type="email" placeholder="Email">
-      <textarea rows="5" placeholder="Your Message"></textarea>
-      <button>Send Message</button>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <p id="formResponse"></p>
     </div>
-
   </div>
 
   <!-- Footer -->
@@ -240,12 +205,29 @@
       const panel = document.getElementById("sidePanel");
       panel.style.width = (panel.style.width === "250px") ? "0" : "250px";
     }
-  </script>
 
+    // Contact Form Submission
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message })
+        });
+
+        const data = await res.json();
+        document.getElementById("formResponse").innerText = data.message || data.error;
+        document.getElementById("contactForm").reset();
+      } catch (err) {
+        document.getElementById("formResponse").innerText = "❌ Server error. Please try again later.";
+      }
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-

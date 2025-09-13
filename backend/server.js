@@ -31,7 +31,16 @@ const UserSchema = new mongoose.Schema({
 });
 const User = mongoose.model("User", UserSchema);
 
-// ✅ Mail Transporter (SMTP with SSL)
+// ✅ Contact Message Model
+const ContactSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  message: String,
+  createdAt: { type: Date, default: Date.now }
+});
+const ContactMessage = mongoose.model("ContactMessage", ContactSchema);
+
+// ✅ Mail Transporter
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -41,6 +50,10 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS // 16-char Gmail App Password
   }
 });
+
+// ==========================
+// AUTH ROUTES (Same as before)
+// ==========================
 
 // ✅ Signup - send OTP
 app.post("/signup", async (req, res) => {
@@ -55,7 +68,6 @@ app.post("/signup", async (req, res) => {
 
     if (user) {
       if (user.verified) return res.status(400).json({ error: "User already exists" });
-      // Update unverified user
       user.name = name;
       user.password = hashedPassword;
       user.otp = otp;
@@ -65,36 +77,17 @@ app.post("/signup", async (req, res) => {
       await user.save();
     }
 
-    // Send OTP email (HTML + text for better deliverability)
-    try {
-      await transporter.sendMail({
-        from: `"SheShield Team" <${process.env.EMAIL_USER}>`,
-        to: email,
-        replyTo: process.env.EMAIL_USER,
-        subject: "SheShield: Confirm Your Email",
-        text: `Hello ${name},
-
-Thank you for registering with SheShield – your trusted platform for women's safety.
-
-Your OTP is: ${otp}
-
-This OTP will expire in 10 minutes. Please do not share it with anyone.
-
-- Team SheShield`,
-        html: `<div style="font-family:Arial,sans-serif; line-height:1.6; color:#333;">
-                 <h2>Hello ${name},</h2>
-                 <p>Thank you for registering with <strong>SheShield</strong> – your trusted platform for women's safety.</p>
-                 <p><strong>Your OTP is: ${otp}</strong></p>
-                 <p>This OTP will expire in 10 minutes. Please do not share it with anyone.</p>
-                 <br>
-                 <p>- Team SheShield</p>
-               </div>`
-      });
-      console.log("✅ OTP sent successfully to:", email);
-    } catch (mailErr) {
-      console.error("❌ Email send error:", mailErr);
-      return res.status(500).json({ error: "Failed to send OTP email" });
-    }
+    await transporter.sendMail({
+      from: `"SheShield Team" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "SheShield: Confirm Your Email",
+      text: `Hello ${name},\n\nThank you for registering with SheShield.\n\nYour OTP is: ${otp}\n\nThis OTP will expire in 10 minutes.\n\n- Team SheShield`,
+      html: `<h2>Hello ${name},</h2>
+             <p>Thank you for registering with <strong>SheShield</strong>.</p>
+             <p><strong>Your OTP is: ${otp}</strong></p>
+             <p>This OTP will expire in 10 minutes.</p>
+             <p>- Team SheShield</p>`
+    });
 
     res.json({ message: "OTP sent to email. Please verify." });
 
@@ -126,7 +119,7 @@ app.post("/verify-otp", async (req, res) => {
   }
 });
 
-// ✅ Login (only after verified)
+// ✅ Login
 app.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
@@ -145,6 +138,38 @@ app.post("/login", async (req, res) => {
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: "Login failed" });
+  }
+});
+
+// ==========================
+// CONTACT ROUTE (NEW)
+// ==========================
+app.post("/contact", async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+
+    // ✅ Save message in DB
+    const newMessage = new ContactMessage({ name, email, message });
+    await newMessage.save();
+
+    // ✅ Send email to Admin
+    await transporter.sendMail({
+      from: `"SafeHer Contact Form" <${process.env.EMAIL_USER}>`,
+      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER, // admin email from .env
+      subject: "📩 New Contact Message - SafeHer",
+      text: `New message received from ${name} (${email}):\n\n${message}`,
+      html: `<h3>New Contact Message</h3>
+             <p><strong>Name:</strong> ${name}</p>
+             <p><strong>Email:</strong> ${email}</p>
+             <p><strong>Message:</strong></p>
+             <p>${message}</p>`
+    });
+
+    res.json({ message: "Message sent successfully ✅" });
+
+  } catch (err) {
+    console.error("Contact form error:", err);
+    res.status(500).json({ error: "Failed to send message" });
   }
 });
 
