@@ -1,9 +1,24 @@
+/* Background Image with Overlay */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #fffafc;
+  background: url('backg.jpeg') no-repeat center center fixed; /* your image path */
+  background-size: cover;
   color: #222;
+  position: relative;
 }
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 250, 252, 0.85); /* light overlay for readability */
+  z-index: -1;
+}
+
 
 /* Navbar */
 .navbar {
