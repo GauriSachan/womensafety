@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - SafeHer</title>
+  <style>
+    /* General Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Segoe UI", sans-serif; background: #fff; color: #333; line-height: 1.6; }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .navbar .logo { color: rgb(14, 14, 14); font-weight: bold; font-size: 1.7rem; }
+    .nav-links { list-style: none; display: flex; gap: 1rem; }
+    .nav-links li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 25px;
+      background: rgba(14,14,14,0.8);
+      transition: 0.3s ease;
+    }
+    .nav-links li a:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .three-dots { font-size: 2rem; cursor: pointer; color: rgb(34, 33, 33); display: none; }
+
+    /* Side Panel */
+    .side-panel {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      background-color: #ff4e50;
+      overflow-x: hidden;
+      transition: 0.4s;
+      padding-top: 60px;
+      z-index: 9999;
+    }
+    .side-panel a {
+      padding: 12px 24px;
+      display: block;
+      font-size: 1.2rem;
+      color: #fff;
+      text-decoration: none;
+    }
+    .side-panel a:hover { background: rgba(255,255,255,0.2); }
+    .side-panel .closebtn { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; }
+
+    /* Hero Section */
+    .hero {
+      height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, #ff7eb3, #f9d423);
+      text-align: center;
+      padding-top: 60px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Container */
+    .container { max-width: 1000px; margin: 2rem auto; padding: 2rem; }
+
+    /* Cards Section */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: linear-gradient(to bottom, #fff, #ffe9ef);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+    .card h3 { color: #f05a7e; margin-bottom: 1rem; }
+    .card p { font-size: 1.1rem; color: #555; }
+
+    /* Contact Info Section */
+    .contact-info {
+      background: #fff2f5;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .contact-info h3 { color: #f05a7e; margin-bottom: 1rem; }
+    .contact-info p { font-size: 1.1rem; margin-bottom: 0.5rem; }
+
+    /* Contact Form */
+    .contact-form {
+      background: #fff2f5;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .contact-form h2 { color: #f05a7e; margin-bottom: 1rem; }
+    .contact-form input,
+    .contact-form textarea {
+      width: 95%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: 1px solid #f05a7e;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: #f05a7e;
+      box-shadow: 0 0 8px rgba(240,90,126,0.3);
+      outline: none;
+    }
+    .contact-form button {
+      width: 50%;
+      padding: 0.8rem;
+      margin-top: 1rem;
+      border: none;
+      border-radius: 40px;
+      background: #f05a7e;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .contact-form button:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    footer table { margin: 1rem auto; border-collapse: collapse; }
+    footer td { padding: 0.5rem 1rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .three-dots { display: block; }
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">SafeHer</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">Articles</a></li>
+      <li><a href="#">Resources</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
+  </nav>
+
+  <!-- Side Panel -->
+  <div id="sidePanel" class="side-panel">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
+    <a href="#">Emergency Numbers</a>
+    <a href="self-defense.html">Self Defense</a>
+    <a href="#">Workshops</a>
+    <a href="#">About Us</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Contact & Learn More About SafeHer</h1>
+  </section>
+
+  <div class="container">
+
+    <!-- Cards Section -->
+    <div class="cards">
+      <div class="card">
+        <h3>Our Mission</h3>
+        <p>To empower women with knowledge, awareness, and tools to stay safe in every situation. Building a society where women live confidently and fearlessly.</p>
+      </div>
+      <div class="card">
+        <h3>Why We Created SafeHer</h3>
+        <p>SafeHer was born to provide accessible self-defense resources, safety guides, and emergency support for women everywhere.</p>
+      </div>
+    </div>
+
+    <!-- Contact Info Section -->
+    <div class="contact-info">
+      <h3>Contact Info</h3>
+      <p><strong>Email:</strong> contact@safeher.org</p>
+      <p><strong>Phone:</strong> +91 98765 43210</p>
+      <p><strong>Address:</strong> 21 Freedom Street, New Delhi, India</p>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form">
+      <h2>Send Us a Message</h2>
+      <input type="text" placeholder="Full Name">
+      <input type="email" placeholder="Email">
+      <textarea rows="5" placeholder="Your Message"></textarea>
+      <button>Send Message</button>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 SafeHer. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function toggleSidePanel() {
+      const panel = document.getElementById("sidePanel");
+      panel.style.width = (panel.style.width === "250px") ? "0" : "250px";
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+
+

@@ -16,17 +16,17 @@
       background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
       position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
     }
-    .navbar .logo { color: rgb(14, 14, 14); font-weight: bold; font-size: 1.5rem; }
-    .nav-links { list-style: none; display: flex; gap: 1.2rem; }
-    .nav-links li a { text-decoration: none; color: rgb(4, 4, 4); font-weight: 500; }
+    .navbar .logo { color: #0e0e0e; font-weight: bold; font-size: 1.5rem; }
+    .nav-links { list-style: none; display: flex; gap: 1rem; }
+    .nav-links li a {
+      text-decoration: none; font-weight: bold; padding: 8px 16px;
+      border-radius: 25px; background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      color: white; transition: 0.3s ease;
+    }
+    .nav-links li a:hover { opacity: 0.9; transform: translateY(-2px); }
 
     /* 3-dot button */
-    .three-dots {
-      font-size: 2rem;
-      color: rgb(34, 33, 33);
-      cursor: pointer;
-      display: block; /* always visible */
-    }
+    .three-dots { font-size: 2rem; color: rgb(34, 33, 33); cursor: pointer; display: block; }
 
     /* Side Panel */
     .side-panel {
@@ -40,10 +40,7 @@
       font-size: 1.2rem; color: white; text-decoration: none;
     }
     .side-panel a:hover { background: rgba(255,255,255,0.2); }
-    .side-panel .closebtn {
-      position: absolute; top: 20px; right: 25px;
-      font-size: 2rem; cursor: pointer;
-    }
+    .side-panel .closebtn { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; }
 
     /* Hero Section */
     .hero {
@@ -60,17 +57,23 @@
     /* Articles */
     .articles {
       padding: 3rem 2rem; display: grid; gap: 2rem;
+      max-width: 1200px; margin: auto;
     }
     .articles article {
       display: flex; flex-wrap: wrap;
       gap: 1rem; align-items: center;
       opacity: 0; transform: translateY(50px);
       transition: opacity 0.8s ease, transform 0.8s ease;
+      background: #fff; padding: 1rem; border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .articles article:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
     }
     .articles article.visible { opacity: 1; transform: translateY(0); }
-    .articles img {
-      max-width: 400px; border-radius: 10px; flex: 1;
-    }
+    .articles img { max-width: 400px; border-radius: 10px; flex: 1; }
     .articles div { flex: 2; }
 
     /* Footer */
@@ -83,9 +86,10 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .nav-links { display: none; } /* hide links on mobile */
-      .three-dots { display: block; } /* keep dots */
+      .nav-links { display: none; }
+      .three-dots { display: block; }
       .articles article { flex-direction: column; text-align: center; }
+      .hero h1 { font-size: 2.2rem; }
     }
   </style>
 </head>
@@ -95,10 +99,10 @@
   <nav class="navbar">
     <div class="logo">SafeHer</div>
     <ul class="nav-links">
-      <li><a href="#">Home</a></li>
+      <li><a href="index.html">Home</a></li>
       <li><a href="articles.html">Articles</a></li>
       <li><a href="#">Resources</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
     <!-- 3-dot button -->
     <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
@@ -108,9 +112,10 @@
   <div id="sidePanel" class="side-panel">
     <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
     <a href="emergency.html">Emergency Numbers</a>
-    <a href="#">Self Defense</a>
+    <a href="self-defense.html">Self Defense</a>
     <a href="#">Workshops</a>
     <a href="#">About Us</a>
+    <a href="login.html">Login / Sign Up</a>
   </div>
 
   <!-- Hero Section -->
@@ -124,8 +129,7 @@
       <img src="https://source.unsplash.com/600x400/?women,safety" alt="Awareness">
       <div>
         <h2>Why We Created SafeHer</h2>
-        <p>Our mission is to create a safe digital space where women can access resources,
-          awareness guides, and emergency support. Safety is not just a priority—it is a right.</p>
+        <p>Our mission is to create a safe digital space where women can access resources, awareness guides, and emergency support. Safety is not just a priority—it is a right.</p>
       </div>
     </article>
 
@@ -133,8 +137,7 @@
       <img src="https://source.unsplash.com/600x400/?support,women" alt="Support">
       <div>
         <h2>Empowering Through Knowledge</h2>
-        <p>By sharing real stories, guides, and workshops, we empower women to be prepared
-          and resilient in challenging situations.</p>
+        <p>By sharing real stories, guides, and workshops, we empower women to be prepared and resilient in challenging situations.</p>
       </div>
     </article>
 
@@ -142,8 +145,7 @@
       <img src="https://source.unsplash.com/600x400/?community,women" alt="Community">
       <div>
         <h2>Building a Safer Community</h2>
-        <p>Together, through awareness and collective action, we can build a safer society
-          where women feel free, respected, and protected.</p>
+        <p>Together, through awareness and collective action, we can build a safer society where women feel free, respected, and protected.</p>
       </div>
     </article>
   </section>
@@ -165,6 +167,17 @@
       panel.style.width = (panel.style.width === "250px") ? "0" : "250px";
     }
 
+    // Fade-in articles when in view
+    const articles = document.querySelectorAll(".articles article");
+    function revealOnScroll() {
+      articles.forEach(article => {
+        const rect = article.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) article.classList.add("visible");
+      });
+    }
+    window.addEventListener("scroll", revealOnScroll);
+    window.addEventListener("load", revealOnScroll);
+
     // Fade effect for hero text on scroll
     window.addEventListener("scroll", () => {
       const heroText = document.querySelector(".hero h1");
@@ -172,21 +185,6 @@
       heroText.style.opacity = 1 - scrollPos / 300;
       heroText.style.transform = `translateY(-${scrollPos / 3}px)`;
     });
-
-    // Fade-in articles when in view
-    const articles = document.querySelectorAll(".articles article");
-    function revealOnScroll() {
-      articles.forEach(article => {
-        const rect = article.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) {
-          article.classList.add("visible");
-        }
-      });
-    }
-    window.addEventListener("scroll", revealOnScroll);
-    window.addEventListener("load", revealOnScroll);
   </script>
-
 </body>
 </html>
-
