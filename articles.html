@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeHer | Articles</title>
+  <link rel="stylesheet" href="articles.css">
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+    <div class="logo">SafeHer</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="#">Resources</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
+  </nav>
+  <!-- Side Panel -->
+  <div id="sidePanel" class="side-panel">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
+    <a href="#">Emergency Numbers</a>
+    <a href="#">Self Defense</a>
+    <a href="#">Workshops</a>
+    <a href="#">About Us</a>
+  </div>
+
+  <!-- ✅ Honeycomb Section -->
+  <section class="honeycomb-section">
+    <h2>Our Stories & Articles</h2>
+    <ul class="honeycomb">
+      <li class="hex">
+        <img src="images/self-defense.jpg" alt="Self Defense">
+        <div class="hex-text">Self Defense Tips</div>
+      </li>
+      <li class="hex">
+        <img src="images/cyberbullying.jpg" alt="Cyberbullying">
+        <div class="hex-text">Cyberbullying Awareness</div>
+      </li>
+      <li class="hex">
+        <img src="images/empowerment.jpg" alt="Empowerment">
+        <div class="hex-text">Women Empowerment</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ✅ Online Articles Section -->
+  <section class="articles">
+    <h2>Online Safety Resources</h2>
+    <div class="article">
+      <img src="images/social-media.jpg" alt="Online Safety">
+      <h3>Staying Safe on Social Media</h3>
+      <p>Tips and guidelines from experts on maintaining privacy and security online...</p>
+    </div>
+    <div class="article">
+      <img src="images/harassment.jpg" alt="Harassment">
+      <h3>Dealing with Online Harassment</h3>
+      <p>Understand cyberbullying, reporting mechanisms, and mental health care...</p>
+    </div>
+    <div class="article">
+      <img src="images/women.jpg" alt="Empowerment">
+      <h3>Women’s Stories of Empowerment</h3>
+      <p>Read real-life stories of women fighting back and building safer communities...</p>
+    </div>
+  </section>
+
+  <!-- ✅ YouTube Video Slideshow -->
+  <section class="video-carousel">
+    <h2>Learn with Videos</h2>
+    <div class="carousel-container">
+      <div class="carousel">
+        <div class="video-slide">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID1" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-slide">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID2" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-slide">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID3" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+      <button class="prev" onclick="moveSlide(-1)">❮</button>
+      <button class="next" onclick="moveSlide(1)">❯</button>
+    </div>
+  </section>
+
+  <!-- ✅ Cyberbullying Paragraph -->
+  <section class="cyberbullying-info">
+    <h2>Understanding Cyberbullying</h2>
+    <p>
+      Cyberbullying is one of the most pressing issues faced by women today. 
+      It includes online harassment, trolling, and the spread of harmful content 
+      that can deeply affect mental health and safety. Awareness, reporting, 
+      and learning self-defense strategies are essential to build resilience 
+      against online abuse. SafeHer is committed to providing resources, support, 
+      and a safe community for women everywhere.
+    </p>
+  </section>
+
+  <!-- ✅ Footer (centered table layout) -->
+  <footer>
+    <table align="center" cellpadding="8">
+      <tr>
+        <td><strong>Contact:</strong></td>
+        <td>support@safeher.org</td>
+      </tr>
+      <tr>
+        <td><strong>Phone:</strong></td>
+        <td>+91 98765 43210</td>
+      </tr>
+      <tr>
+        <td><strong>Address:</strong></td>
+        <td>123 Safe Street, New Delhi, India</td>
+      </tr>
+    </table>
+    <p>&copy; 2025 SafeHer. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ JS for slideshow -->
+  <script>
+    let currentSlide = 0;
+    function moveSlide(n) {
+      let slides = document.querySelectorAll(".video-slide");
+      slides[currentSlide].style.display = "none";
+      currentSlide = (currentSlide + n + slides.length) % slides.length;
+      slides[currentSlide].style.display = "block";
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      let slides = document.querySelectorAll(".video-slide");
+      slides.forEach((s, i) => s.style.display = (i === 0 ? "block" : "none"));
+    });
+  </script>
+
+</body>
+</html>
