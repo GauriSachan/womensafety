@@ -19,7 +19,14 @@
     .navbar .logo { color: rgb(14, 14, 14); font-weight: bold; font-size: 1.5rem; }
     .nav-links { list-style: none; display: flex; gap: 1.2rem; }
     .nav-links li a { text-decoration: none; color: rgb(4, 4, 4); font-weight: 500; }
-    .hamburger { font-size: 2rem; color: rgb(34, 33, 33); cursor: pointer; display: none; }
+
+    /* 3-dot button */
+    .three-dots {
+      font-size: 2rem;
+      color: rgb(34, 33, 33);
+      cursor: pointer;
+      display: block; /* always visible */
+    }
 
     /* Side Panel */
     .side-panel {
@@ -30,7 +37,7 @@
     }
     .side-panel a {
       padding: 12px 24px; display: block;
-      font-size: 1.2rem; color: rgb(33, 32, 32); text-decoration: none;
+      font-size: 1.2rem; color: white; text-decoration: none;
     }
     .side-panel a:hover { background: rgba(255,255,255,0.2); }
     .side-panel .closebtn {
@@ -76,8 +83,8 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: block; }
+      .nav-links { display: none; } /* hide links on mobile */
+      .three-dots { display: block; } /* keep dots */
       .articles article { flex-direction: column; text-align: center; }
     }
   </style>
@@ -93,7 +100,8 @@
       <li><a href="#">Resources</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
-    <div class="hamburger" onclick="toggleSidePanel()">Menu</div>
+    <!-- 3-dot button -->
+    <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
   </nav>
 
   <!-- Side Panel -->
@@ -181,3 +189,4 @@
 
 </body>
 </html>
+

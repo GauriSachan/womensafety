@@ -13,21 +13,23 @@ body {
 }
 
 /* Navbar */
-header {
-  background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
-  padding: 1rem;
-}
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
+  background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
-.logo {
+.navbar .logo {
+  color: rgb(14, 14, 14);
   font-weight: bold;
   font-size: 1.5rem;
-  color: white;
 }
 
 .nav-links {
@@ -38,15 +40,16 @@ header {
 
 .nav-links li a {
   text-decoration: none;
-  color: white;
+  color: rgb(4, 4, 4);
   font-weight: 500;
 }
 
-.hamburger {
+/* 3-dot menu button */
+.three-dots {
   font-size: 2rem;
-  color: white;
   cursor: pointer;
-  display: none;
+  color: rgb(34, 33, 33);
+  display: none; /* hidden on desktop */
 }
 
 /* Side Panel */
@@ -54,20 +57,25 @@ header {
   height: 100%;
   width: 0;
   position: fixed;
-  top: 0; right: 0;
-  background: #ff4e50;
+  top: 0;
+  right: 0;
+  background-color: #ff4e50;
   overflow-x: hidden;
   transition: 0.4s;
   padding-top: 60px;
-  z-index: 999;
+  z-index: 9999;
 }
 
 .side-panel a {
-  display: block;
   padding: 12px 24px;
+  display: block;
   font-size: 1.2rem;
-  color: white;
+  color: rgb(33, 32, 32);
   text-decoration: none;
+}
+
+.side-panel a:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .side-panel .closebtn {
@@ -75,6 +83,7 @@ header {
   top: 20px;
   right: 25px;
   font-size: 2rem;
+  cursor: pointer;
 }
 
 /* Hero Section */
@@ -85,6 +94,7 @@ header {
   align-items: center;
   background: linear-gradient(to bottom, #ff7eb3, #f9d423);
   text-align: center;
+  padding-top: 60px;
 }
 
 .hero h1 {
@@ -106,6 +116,14 @@ header {
   flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.articles article.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .articles img {
@@ -128,16 +146,24 @@ footer {
 
 footer table {
   margin: 1rem auto;
-  color: white;
   border-collapse: collapse;
 }
+
 footer td {
   padding: 0.5rem 1rem;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .nav-links { display: none; }
-  .hamburger { display: block; }
-  .articles article { flex-direction: column; text-align: center; }
+  .nav-links {
+    display: none;
+  }
+  .three-dots {
+    display: block;
+  }
+  .articles article {
+    flex-direction: column;
+    text-align: center;
+  }
 }
+
