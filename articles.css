@@ -2,7 +2,7 @@
 body {
   font-family: "Arial", sans-serif;
   margin: 0;
-  background: url("images/bg.jpg") no-repeat center center fixed;
+  background: url("backg.jpeg") no-repeat center center fixed;
   background-size: cover;
   color: #222;
 }
