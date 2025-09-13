@@ -91,6 +91,44 @@
       .articles article { flex-direction: column; text-align: center; }
       .hero h1 { font-size: 2.2rem; }
     }
+
+    /* ===================== LOGIN/SIGNUP MODAL ====================== */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+      justify-content: center; align-items: center; z-index: 2000;
+    }
+    .modal.active { display: flex; }
+
+    .modal-content {
+      background: rgba(255,255,255,0.2);
+      padding: 2rem;
+      border-radius: 20px;
+      width: 350px;
+      color: white;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      text-align: center;
+      animation: slideIn 0.5s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-content h2 { margin-bottom: 1rem; font-size: 1.8rem; }
+    .modal-content input {
+      width: 100%; padding: 10px; margin: 10px 0;
+      border-radius: 12px; border: none;
+      outline: none;
+    }
+    .modal-content button {
+      width: 100%; padding: 10px; border: none; border-radius: 12px;
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      color: white; font-weight: bold; cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .modal-content button:hover { transform: scale(1.05); }
+    .switch { margin-top: 1rem; cursor: pointer; font-size: 0.9rem; color: #f9d423; }
   </style>
 </head>
 <body>
@@ -115,7 +153,7 @@
     <a href="self-defense.html">Self Defense</a>
     <a href="#">Workshops</a>
     <a href="#">About Us</a>
-    <a href="login.html">Login / Sign Up</a>
+    <a href="javascript:void(0)" onclick="openModal('login')">Login / Sign Up</a>
   </div>
 
   <!-- Hero Section -->
@@ -160,6 +198,20 @@
     </table>
   </footer>
 
+  <!-- ================= LOGIN/SIGNUP MODAL ================= -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" style="float:right;cursor:pointer;font-size:1.5rem;">&times;</span>
+      <h2 id="modalTitle">Login</h2>
+      <form id="authForm">
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <div class="switch" id="toggleAuth">Don’t have an account? Sign up</div>
+    </div>
+  </div>
+
   <script>
     // Side Panel Toggle
     function toggleSidePanel() {
@@ -167,7 +219,7 @@
       panel.style.width = (panel.style.width === "250px") ? "0" : "250px";
     }
 
-    // Fade-in articles when in view
+    // Fade-in articles
     const articles = document.querySelectorAll(".articles article");
     function revealOnScroll() {
       articles.forEach(article => {
@@ -178,13 +230,57 @@
     window.addEventListener("scroll", revealOnScroll);
     window.addEventListener("load", revealOnScroll);
 
-    // Fade effect for hero text on scroll
+    // Hero fade effect
     window.addEventListener("scroll", () => {
       const heroText = document.querySelector(".hero h1");
       const scrollPos = window.scrollY;
       heroText.style.opacity = 1 - scrollPos / 300;
       heroText.style.transform = `translateY(-${scrollPos / 3}px)`;
     });
+
+    // ================= LOGIN/SIGNUP MODAL SCRIPT =================
+    const modal = document.getElementById("authModal");
+    const closeModal = document.getElementById("closeModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const toggleAuth = document.getElementById("toggleAuth");
+    const authForm = document.getElementById("authForm");
+
+    function openModal(type) {
+      modal.classList.add("active");
+      if (type === "login") {
+        modalTitle.textContent = "Login";
+        toggleAuth.textContent = "Don’t have an account? Sign up";
+        authForm.innerHTML = `
+          <input type="email" placeholder="Email" required>
+          <input type="password" placeholder="Password" required>
+          <button type="submit">Login</button>
+        `;
+      }
+    }
+
+    toggleAuth.onclick = () => {
+      if (modalTitle.textContent === "Login") {
+        modalTitle.textContent = "Sign Up";
+        toggleAuth.textContent = "Already have an account? Login";
+        authForm.innerHTML = `
+          <input type="text" placeholder="Name" required>
+          <input type="email" placeholder="Email" required>
+          <input type="password" placeholder="Password" required>
+          <button type="submit">Sign Up</button>
+        `;
+      } else {
+        modalTitle.textContent = "Login";
+        toggleAuth.textContent = "Don’t have an account? Sign up";
+        authForm.innerHTML = `
+          <input type="email" placeholder="Email" required>
+          <input type="password" placeholder="Password" required>
+          <button type="submit">Login</button>
+        `;
+      }
+    };
+
+    closeModal.onclick = () => modal.classList.remove("active");
+    window.onclick = (e) => { if (e.target == modal) modal.classList.remove("active"); };
   </script>
 </body>
 </html>

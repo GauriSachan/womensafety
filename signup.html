@@ -1,78 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up - SafeHer</title>
+  <title>WomenSafetyApp - Signup</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(to bottom, #ff7eb3, #f9d423);
-      color: #333;
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 500px;
-      margin: 3rem auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      font-family: Arial, sans-serif;
       text-align: center;
-    }
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-      color: #ff4e50;
-    }
-    p {
-      margin-bottom: 1.5rem;
-      color: #666;
+      margin-top: 50px;
     }
     input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
+      margin: 5px;
+      padding: 8px;
+    }
+    form {
+      display: inline-block;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    #otpSection {
+      margin-top: 10px;
     }
     button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 1rem;
-      border: none;
-      border-radius: 30px;
-      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
+      padding: 8px 15px;
+      margin-top: 10px;
     }
-    button:hover { opacity: 0.9; transform: translateY(-2px); }
-    a {
-      display: block;
-      margin-top: 1rem;
-      text-decoration: none;
-      color: #f05a7e;
-      font-weight: bold;
+    #signupMessage {
+      color: green;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Sign Up</h1>
-    <p>Create an account to join SafeHer today.</p>
-    <form>
-      <input type="text" placeholder="Full Name" required>
-      <input type="email" placeholder="Enter Email" required>
-      <input type="password" placeholder="Enter Password" required>
-      <input type="password" placeholder="Confirm Password" required>
-      <button type="submit">Sign Up</button>
-      <a href="login.html">Already have an account? Login</a>
-    </form>
+  <h1>Signup - WomenSafetyApp</h1>
+
+  <form id="signupForm">
+    <input type="text" id="signupName" placeholder="Name" required><br>
+    <input type="email" id="signupEmail" placeholder="Email" required><br>
+    <input type="password" id="signupPassword" placeholder="Password" required><br>
+    <button type="submit">Signup</button>
+  </form>
+
+  <p id="signupMessage"></p>
+
+  <div id="otpSection" style="display:none;">
+    <input type="text" id="signupOtp" placeholder="Enter OTP"><br>
+    <button onclick="verifyOtp()">Verify OTP</button>
   </div>
+
+  <script>
+    const API_URL = "http://localhost:5000";
+
+    // Signup form submission
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("signupName").value;
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+
+      const res = await fetch(`${API_URL}/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      const data = await res.json();
+      document.getElementById("signupMessage").innerText = data.message || data.error;
+
+      if (data.message) {
+        document.getElementById("otpSection").style.display = "block";
+      }
+    });
+
+    // OTP verification
+    async function verifyOtp() {
+      const email = document.getElementById("signupEmail").value;
+      const otp = document.getElementById("signupOtp").value;
+
+      const res = await fetch(`${API_URL}/verify-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp })
+      });
+
+      const data = await res.json();
+      alert(data.message || data.error);
+    }
+  </script>
 </body>
 </html>
