@@ -19,6 +19,7 @@
     </ul>
     <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
   </nav>
+
   <!-- Side Panel -->
   <div id="sidePanel" class="side-panel">
     <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
@@ -119,8 +120,9 @@
     <p>&copy; 2025 SafeHer. All rights reserved.</p>
   </footer>
 
-  <!-- ✅ JS for slideshow -->
+  <!-- ✅ JS for slideshow & side panel -->
   <script>
+    // Video slideshow
     let currentSlide = 0;
     function moveSlide(n) {
       let slides = document.querySelectorAll(".video-slide");
@@ -132,7 +134,14 @@
       let slides = document.querySelectorAll(".video-slide");
       slides.forEach((s, i) => s.style.display = (i === 0 ? "block" : "none"));
     });
+
+    // Side Panel toggle
+    function toggleSidePanel() {
+      const panel = document.getElementById("sidePanel");
+      panel.style.width = panel.style.width === "250px" ? "0" : "250px";
+    }
   </script>
 
 </body>
 </html>
+
