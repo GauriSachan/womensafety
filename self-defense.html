@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self Defense - SafeHer</title>
+  <style>
+    /* General */
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    body { 
+      font-family: "Segoe UI", sans-serif; 
+      background: linear-gradient(to bottom, #ff7eb3, #f9d423); 
+      color: #333; 
+      line-height: 1.8; 
+    }
+
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(to right, rgba(255,78,80,0.85), rgba(249,212,35,0.7)), 
+                  url("https://source.unsplash.com/1600x600/?women,empowerment") no-repeat center/cover;
+      color: white;
+      text-align: center;
+      padding: 6rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+      animation: floatText 6s ease-in-out infinite;
+    }
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    }
+    @keyframes floatText {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    /* Headings */
+    h2 {
+      margin-top: 2rem;
+      font-size: 1.8rem;
+      color: #ff4e50;
+      border-left: 6px solid #ff7eb3;
+      padding-left: 12px;
+    }
+
+    /* Paragraphs and Lists */
+    p { margin: 1rem 0; font-size: 1.1rem; color: #444; }
+    ul { margin: 1rem 0; padding-left: 20px; }
+    ul li { margin-bottom: 0.7rem; font-size: 1.05rem; }
+
+    /* Cards Section */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .card {
+      background: linear-gradient(to bottom, #fff, #ffe9ef);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+    .card h3 { color: #f05a7e; margin-bottom: 0.5rem; }
+    .card p { font-size: 1rem; }
+
+    /* Video Section */
+    .videos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .video-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transition: 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .video-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.25);
+    }
+    .video-card iframe {
+      width: 100%;
+      height: 220px;
+      border: none;
+      display: block;
+    }
+    .video-card p {
+      padding: 0.7rem 1rem 1rem;
+      font-size: 1rem;
+      color: #444;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Back button */
+    .back {
+      display: inline-block;
+      margin-top: 2.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      padding: 14px 28px;
+      border-radius: 40px;
+      font-size: 1rem;
+      transition: 0.3s ease;
+    }
+    .back:hover { opacity: 0.9; transform: translateY(-2px) scale(1.02); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1rem; }
+      .container { padding: 1.5rem; }
+      .video-card iframe { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <h1>Self Defense for Women</h1>
+    <p>
+      Strength. Awareness. Confidence. Self-defense is not about violence—it’s about empowerment.
+      Every woman deserves to walk fearlessly. Let’s learn how.
+    </p>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+
+    <h2>🌟 Why Self-Defense Matters</h2>
+    <p>
+      In a world where women face challenges to their safety daily, self-defense provides more than 
+      just physical protection. It cultivates mental strength, self-confidence, and the ability to take control 
+      of situations. Learning self-defense means reclaiming freedom and living life without fear.
+    </p>
+
+    <h2>💪 Benefits of Learning Self-Defense</h2>
+    <ul>
+      <li>Boosts confidence and creates a fearless mindset.</li>
+      <li>Improves awareness of surroundings and helps avoid risks.</li>
+      <li>Provides practical skills to protect yourself in emergencies.</li>
+      <li>Encourages physical fitness and stronger mental health.</li>
+      <li>Empowers women to take control of their safety and independence.</li>
+    </ul>
+
+    <h2>🛡️ Core Self-Defense Techniques</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>1. Awareness & Prevention</h3>
+        <p>Staying alert is the first step. Avoid distractions like phones, and trust your instincts if a place or person feels unsafe.</p>
+      </div>
+      <div class="card">
+        <h3>2. Escaping Holds</h3>
+        <p>Learn quick ways to break free from wrist grabs, chokeholds, or unwanted touches using leverage and body mechanics.</p>
+      </div>
+      <div class="card">
+        <h3>3. Target Weak Spots</h3>
+        <p>In emergencies, aim for sensitive areas: eyes, nose, throat, knees, or groin. Quick strikes here can create time to escape.</p>
+      </div>
+      <div class="card">
+        <h3>4. Everyday Objects</h3>
+        <p>Your handbag, keys, umbrella, or even a pen can act as powerful tools for self-defense when used effectively.</p>
+      </div>
+      <div class="card">
+        <h3>5. Verbal Defense</h3>
+        <p>A strong, commanding voice can startle an attacker and attract attention, reducing the chance of escalation.</p>
+      </div>
+      <div class="card">
+        <h3>6. Quick Escape</h3>
+        <p>The goal is not to fight, but to survive. Learn to create opportunities to escape quickly and reach safety.</p>
+      </div>
+    </div>
+
+    <h2>🎥 Video Tutorials</h2>
+    <div class="videos">
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/pndPbpHLpos" allowfullscreen></iframe>
+        <p>Basic self-defense moves to build confidence and awareness.</p>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/k9Jn0eP-ZVg" allowfullscreen></iframe>
+        <p>Escaping holds and grabs techniques for beginners.</p>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/KVpxP3ZZtAc" allowfullscreen></iframe>
+        <p>Targeting sensitive areas to create an opportunity to escape.</p>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/q1pBBRi3XF8" allowfullscreen></iframe>
+        <p>Using everyday objects as self-defense tools effectively.</p>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/EmKOOZIropE" allowfullscreen></iframe>
+        <p>Verbal defense techniques to deter attackers.</p>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/jAh0cU1J5zk" allowfullscreen></iframe>
+        <p>Quick escape drills to ensure personal safety in emergencies.</p>
+      </div>
+    </div>
+
+    <a href="index.html" class="back">⬅ Back to Home</a>
+  </div>
+
+</body>
+</html>
