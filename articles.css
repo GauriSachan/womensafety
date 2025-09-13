@@ -20,7 +20,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   padding: 12px 25px;
-  background: linear-gradient(to right, #ff4b2b, #ff416c, #ffcc33);
+  background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -42,13 +42,16 @@ h2 {
 
 .nav-links li a {
   text-decoration: none;
-  color: #000;
+  color: #fff;
   font-weight: 500;
-  transition: color 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 25px;
+  transition: 0.3s ease;
 }
 
 .nav-links li a:hover {
-  color: #fff;
+  opacity: 0.9;
+  transform: translateY(-2px);
 }
 
 .three-dots {
@@ -57,26 +60,60 @@ h2 {
   color: #000;
 }
 
+/* === Side Panel === */
+.side-panel {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #ff4e50;
+  overflow-x: hidden;
+  transition: 0.4s;
+  padding-top: 60px;
+  z-index: 9999;
+}
+
+.side-panel a {
+  padding: 12px 24px;
+  display: block;
+  font-size: 1.2rem;
+  color: white;
+  text-decoration: none;
+}
+
+.side-panel a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.side-panel .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
 /* === Honeycomb Section === */
 .honeycomb-section {
-  padding: 2rem 0;
+  padding: 3rem 0;
 }
 
 .honeycomb {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 25px;
   list-style: none;
   padding: 0;
   margin: 2rem auto;
-  max-width: 1000px;
+  max-width: 1200px;
 }
 
 .hex {
   position: relative;
-  width: 200px;
-  height: 115px;
+  width: 270px;
+  height: 160px;
   background: #f8d7da;
   clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
   overflow: hidden;
@@ -100,8 +137,10 @@ h2 {
   background: rgba(0,0,0,0.6);
   color: #fff;
   text-align: center;
-  padding: 5px;
-  font-size: 0.9rem;
+  padding: 12px 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1.2;
 }
 
 /* === Online Articles Section === */
@@ -110,6 +149,8 @@ h2 {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .article {
@@ -138,7 +179,7 @@ h2 {
 
 .article p {
   margin: 0 0.8rem 1rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #444;
 }
 
@@ -198,7 +239,7 @@ h2 {
 
 /* === Cyberbullying Info === */
 .cyberbullying-info {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
   margin: 2rem auto;
   max-width: 800px;
   padding: 2rem;
@@ -214,7 +255,7 @@ h2 {
 
 /* === Footer === */
 footer {
-  background: #ff4b2b;
+  background: #ff4e50;
   color: #fff;
   padding: 2rem;
   text-align: center;
@@ -234,18 +275,10 @@ footer p {
   margin-top: 1rem;
   font-size: 0.9rem;
 }
-.side-panel {
-      height: 100%; width: 0;
-      position: fixed; top: 0; right: 0;
-      background-color: #ff4e50; overflow-x: hidden;
-      transition: 0.4s; padding-top: 60px; z-index: 9999;
-    }
-    .side-panel a {
-      padding: 12px 24px; display: block;
-      font-size: 1.2rem; color: white; text-decoration: none;
-    }
-    .side-panel a:hover { background: rgba(255,255,255,0.2); }
-    .side-panel .closebtn {
-      position: absolute; top: 20px; right: 25px;
-      font-size: 2rem; cursor: pointer;
-    }
+
+/* === Responsive === */
+@media(max-width:768px){
+  .honeycomb { gap: 15px; }
+  .hex { width: 200px; height: 120px; }
+  .hex-text { font-size: 0.9rem; padding: 8px 5px; }
+}
