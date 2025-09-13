@@ -234,3 +234,18 @@ footer p {
   margin-top: 1rem;
   font-size: 0.9rem;
 }
+.side-panel {
+      height: 100%; width: 0;
+      position: fixed; top: 0; right: 0;
+      background-color: #ff4e50; overflow-x: hidden;
+      transition: 0.4s; padding-top: 60px; z-index: 9999;
+    }
+    .side-panel a {
+      padding: 12px 24px; display: block;
+      font-size: 1.2rem; color: white; text-decoration: none;
+    }
+    .side-panel a:hover { background: rgba(255,255,255,0.2); }
+    .side-panel .closebtn {
+      position: absolute; top: 20px; right: 25px;
+      font-size: 2rem; cursor: pointer;
+    }
