@@ -44,16 +44,62 @@
 
     /* Hero Section */
     .hero {
-      height: 100vh; display: flex;
-      justify-content: center; align-items: center;
-      background: linear-gradient(to bottom, #ff7eb3, #f9d423);
-      text-align: center; padding-top: 60px;
-    }
-    .hero h1 {
-      font-size: 3rem; color: white; opacity: 1;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    background: url('29d8cea4-dace-42e9-967f-efd0280038b9.png') center/cover no-repeat;
+    overflow: hidden;
+  }
 
+  /* Gradient Overlay */
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,78,80,0.7), rgba(249,212,35,0.6), rgba(255,126,179,0.6));
+    z-index: 1;
+  }
+
+  .hero h1 {
+    position: relative;
+    z-index: 2;
+    color: white;
+    font-size: 3rem;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    animation: fadeInUp 1s ease forwards;
+  }
+
+  /* Hero fade-in animation */
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Optional subtle particles animation */
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: moveParticles 60s linear infinite;
+    z-index: 0;
+  }
+
+  @keyframes moveParticles {
+    0% { transform: translate(0,0); }
+    100% { transform: translate(-50px, -50px); }
+  }
+
+  @media (max-width: 768px){
+    .hero h1 { font-size: 2.2rem; padding: 0 10px; }
+  }
     /* Articles */
     .articles {
       padding: 3rem 2rem; display: grid; gap: 2rem;
@@ -122,6 +168,69 @@
     }
     .modal-content button:hover { transform: scale(1.05); }
     .switch { margin-top: 1rem; cursor: pointer; font-size: 0.9rem; color: #f9d423; }
+
+    /* ================= FLOATING BUTTONS ====================== */
+    .sos-btn {
+      position: fixed; bottom: 20px; left: 20px;
+      background: #ff1e56; color: #fff;
+      font-weight: bold; padding: 15px 25px;
+      border-radius: 50px; text-decoration: none;
+      font-size: 1.2rem; transition: 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 9999;
+    }
+    .sos-btn:hover { background: #ff4f6f; transform: scale(1.1); }
+
+    /* Chatbot Button & Iframe */
+   #chatbot-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff7eb3;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 9999;
+    transition: transform 0.2s ease;
+  }
+  #chatbot-btn:hover { transform: scale(1.1); }
+
+  #chatbot-frame {
+    position: fixed;
+    bottom: 90px; /* space above button */
+    right: 20px;
+    width: 500px;
+    height: 600px; /* increased height */
+    border: 2px solid #ff7eb3;
+    border-radius: 15px;
+    display: none;
+    z-index: 9998;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    background: white;
+  }
+
+  /* Make iframe content scrollable if needed */
+  #chatbot-frame::-webkit-scrollbar {
+    width: 15px;
+  }
+  #chatbot-frame::-webkit-scrollbar-thumb {
+    background: #ff7eb3;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 400px){
+    #chatbot-frame {
+      width: 90%;
+      height: 70%;
+      bottom: 80px;
+      right: 5%;
+    }
+  }
   </style>
 </head>
 <body>
@@ -148,7 +257,6 @@
     <a href="self-defense.html">Self Defense</a>
     <a href="workshop.html">Workshops</a>
     <a href="newsletter.html">About Us</a>
-    <!-- 🔹 Updated: Open modal instead of redirect -->
     <a href="javascript:void(0)" onclick="openModal('login')">Login / Sign Up</a>
   </div>
 
@@ -188,19 +296,9 @@
   <a href="mailto:cybercrimecell@nic.in?subject=Urgent%20Cybersecurity%20SOS&body=Dear%20Cybersecurity%20Authority,%0D%0A%0D%0AI%20am%20facing%20a%20serious%20cyber%20harassment/threat%20issue.%20Please%20assist%20me%20immediately.%0D%0A%0D%0AThank%20you."
      class="sos-btn" target="_blank"> 🚨 SOS </a>
 
-  <!-- Button Styling -->
-  <style>
-    .sos-btn {
-      position: fixed; bottom: 20px; left: 20px;
-      background: #ff1e56; color: #fff;
-      font-weight: bold; padding: 15px 25px;
-      border-radius: 50px; text-decoration: none;
-      font-size: 1.2rem; transition: 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      z-index: 9999;
-    }
-    .sos-btn:hover { background: #ff4f6f; transform: scale(1.1); }
-  </style>
+  <!-- Chatbot Button & Iframe -->
+  <button id="chatbot-btn">💬</button>
+  <iframe id="chatbot-frame" src="chatbot.html"></iframe>
 
   <!-- Footer -->
   <footer>
@@ -295,6 +393,18 @@
 
     closeModal.onclick = () => modal.classList.remove("active");
     window.onclick = (e) => { if (e.target == modal) modal.classList.remove("active"); };
+
+    // ================= CHATBOT TOGGLE =================
+    const chatbotBtn = document.getElementById('chatbot-btn');
+    const chatbotFrame = document.getElementById('chatbot-frame');
+
+    chatbotBtn.addEventListener('click', () => {
+      if(chatbotFrame.style.display === 'block') {
+        chatbotFrame.style.display = 'none';
+      } else {
+        chatbotFrame.style.display = 'block';
+      }
+    });
   </script>
 </body>
 </html>

@@ -1,0 +1,126 @@
+<!-- Chatbot HTML -->
+<div id="chatbot">
+  <div id="chatbot-header">💬 SafeHer Assistant
+    <span id="chatbot-close">&times;</span>
+  </div>
+  <div id="chatbot-body"></div>
+  <div id="chatbot-input-wrap">
+    <input id="chatbot-input" type="text" placeholder="Ask me about quizzes, badges, or tips..." />
+    <button id="chatbot-send">➤</button>
+  </div>
+</div>
+
+<style>
+:root {
+  --chat-bg: #fff;
+  --chat-panel: #f9f9f9;
+  --chat-header: linear-gradient(90deg, #ff4e50, #ff7eb3);
+  --chat-border: rgba(0,0,0,0.1);
+  --chat-accent: linear-gradient(90deg, #ff4e50, #ff7eb3);
+  --chat-text: #111;
+  --chat-user: #ff7eb3;
+  --chat-bot: #f0f0f0;
+}
+
+#chatbot{
+  position:fixed;bottom:20px;right:20px;width:360px;height:460px;background:var(--chat-bg);
+  border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.25);display:flex;flex-direction:column;overflow:hidden;
+  font-family:Inter,sans-serif;z-index:10000;transition:transform 0.3s;
+  animation: pop 0.5s ease;
+}
+@keyframes pop{
+  0%{transform:scale(0.7);opacity:0}
+  60%{transform:scale(1.05)}
+  100%{transform:scale(1);}
+}
+
+#chatbot-header{
+  background:var(--chat-header);color:#fff;padding:14px 18px;font-weight:700;display:flex;justify-content:space-between;align-items:center;font-size:1rem;
+  box-shadow:0 4px 20px rgba(0,0,0,0.15);cursor:grab;
+}
+#chatbot-close{cursor:pointer;font-size:1.3rem;transition:transform 0.2s;}
+#chatbot-close:hover{transform:rotate(90deg);}
+
+#chatbot-body{
+  flex:1;padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;background:var(--chat-panel);
+  scrollbar-width:thin;scrollbar-color:var(--chat-accent) transparent;
+}
+#chatbot-body::-webkit-scrollbar{width:6px;}
+#chatbot-body::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#ff4e50,#ff7eb3);border-radius:6px;}
+#chatbot-body::-webkit-scrollbar-track{background:transparent;}
+
+#chatbot-input-wrap{
+  display:flex;border-top:1px solid var(--chat-border);
+}
+#chatbot-input{
+  flex:1;border:none;padding:12px 14px;font-size:0.95rem;border-radius:0;outline:none;
+}
+#chatbot-send{
+  border:none;background:var(--chat-accent);color:#fff;padding:0 16px;font-size:1.1rem;cursor:pointer;
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+#chatbot-send:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,126,179,0.35);}
+
+.chatbot-msg{
+  background:var(--chat-bot);padding:10px 14px;border-radius:16px;max-width:80%;align-self:flex-start;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);position:relative;transition:transform 0.2s;
+  animation: fadeIn 0.3s ease;
+}
+.chatbot-msg.user{
+  background:var(--chat-user);color:#fff;align-self:flex-end;
+}
+@keyframes fadeIn{
+  0%{opacity:0;transform:translateY(10px);}
+  100%{opacity:1;transform:translateY(0);}
+}
+
+/* small sparkle animation for new bot messages */
+.chatbot-msg.bot::after{
+  content:'✨';position:absolute;top:-4px;right:-4px;font-size:0.7rem;opacity:0.7;animation: sparkle 1s infinite;
+}
+@keyframes sparkle{
+  0%,100%{opacity:0.7;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.3);}
+}
+</style>
+
+<script>
+const chatBody = document.getElementById('chatbot-body');
+const chatInput = document.getElementById('chatbot-input');
+const chatClose = document.getElementById('chatbot-close');
+const chatSend = document.getElementById('chatbot-send');
+
+chatClose.addEventListener('click',()=>document.getElementById('chatbot').style.display='none');
+
+function addMessage(text,type='bot'){
+  const div = document.createElement('div');
+  div.className = 'chatbot-msg ' + (type==='user'?'user':'bot');
+  div.textContent = text;
+  chatBody.appendChild(div);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function getResponse(msg){
+  msg = msg.toLowerCase();
+  if(msg.includes('quiz')) return 'Click "Start Quiz" to test your knowledge about safety and rights.';
+  if(msg.includes('badge')) return 'Earn badges by completing quizzes. You can share them with friends!';
+  if(msg.includes('tip')) return 'Quick Tip: Always share your location with a trusted contact before traveling alone.';
+  if(msg.includes('score')) return 'Your quiz score will be shown after submitting, along with earned badges.';
+  if(msg.includes('share')) return 'Use the "Share" button to share badges via WhatsApp, Messenger, or copy the link.';
+  return "Hi! Ask me about quizzes, badges, tips, or how to share your progress!";
+}
+
+// send message handler
+function sendMessage(){
+  const msg = chatInput.value.trim();
+  if(!msg) return;
+  addMessage(msg,'user');
+  chatInput.value='';
+  setTimeout(()=>addMessage(getResponse(msg)) ,400);
+}
+
+chatSend.addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress',(e)=>{
+  if(e.key==='Enter'){ sendMessage(); }
+});
+</script>

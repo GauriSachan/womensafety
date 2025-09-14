@@ -86,15 +86,15 @@ app.post("/signup", async (req, res) => {
     }
 
     await transporter.sendMail({
-      from: `"SheShield Team" <${process.env.EMAIL_USER}>`,
+      from: `"SafeHer Team" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: "SheShield: Confirm Your Email",
-      text: `Hello ${name},\n\nThank you for registering with SheShield.\n\nYour OTP is: ${otp}\n\nThis OTP will expire in 10 minutes.\n\n- Team SheShield`,
+      subject: "SafeHer: Confirm Your Email",
+      text: `Hello ${name},\n\nThank you for registering with SafeHer.\n\nYour OTP is: ${otp}\n\nThis OTP will expire in 10 minutes.\n\n- Team SafeHer`,
       html: `<h2>Hello ${name},</h2>
-             <p>Thank you for registering with <strong>SheShield</strong>.</p>
+             <p>Thank you for registering with <strong>SafeHer</strong>.</p>
              <p><strong>Your OTP is: ${otp}</strong></p>
              <p>This OTP will expire in 10 minutes.</p>
-             <p>- Team SheShield</p>`
+             <p>- Team SafeHer</p>`
     });
 
     res.json({ message: "OTP sent to email. Please verify." });
