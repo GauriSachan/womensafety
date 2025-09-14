@@ -99,17 +99,11 @@
       justify-content: center; align-items: center; z-index: 2000;
     }
     .modal.active { display: flex; }
-
     .modal-content {
-      background: rgba(255,255,255,0.2);
-      padding: 2rem;
-      border-radius: 20px;
-      width: 350px;
-      color: white;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      text-align: center;
-      animation: slideIn 0.5s ease;
+      background: rgba(255,255,255,0.15);
+      padding: 2rem; border-radius: 20px; width: 350px; color: white;
+      backdrop-filter: blur(15px); box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      text-align: center; animation: slideIn 0.5s ease;
     }
     @keyframes slideIn {
       from { transform: translateY(-50px); opacity: 0; }
@@ -118,8 +112,7 @@
     .modal-content h2 { margin-bottom: 1rem; font-size: 1.8rem; }
     .modal-content input {
       width: 100%; padding: 10px; margin: 10px 0;
-      border-radius: 12px; border: none;
-      outline: none;
+      border-radius: 12px; border: none; outline: none;
     }
     .modal-content button {
       width: 100%; padding: 10px; border: none; border-radius: 12px;
@@ -154,16 +147,14 @@
     <a href="self-defense.html">Self Defense</a>
     <a href="workshop.html">Workshops</a>
     <a href="newsletter.html">About Us</a>
-    <a href="login.html">Login / Sign Up</a>
+    <!-- 🔹 Updated: Open modal instead of redirect -->
+    <a href="javascript:void(0)" onclick="openModal('login')">Login / Sign Up</a>
   </div>
 
   <!-- Hero Section -->
-  <section class="hero" 
-  style="background: url('bg.jpeg') no-repeat center center / cover;">
-    
-  <h1 class="fade-text">SafeHer: Women Safety Awareness</h1>
-</section>
-
+  <section class="hero" style="background: url('bg.jpeg') no-repeat center center / cover;">
+    <h1 class="fade-text">SafeHer: Women Safety Awareness</h1>
+  </section>
 
   <!-- Articles Section -->
   <section class="articles">
@@ -191,35 +182,24 @@
       </div>
     </article>
   </section>
+
   <!-- Floating SOS Button -->
-<a href="mailto:cybercrimecell@nic.in?subject=Urgent%20Cybersecurity%20SOS&body=Dear%20Cybersecurity%20Authority,%0D%0A%0D%0AI%20am%20facing%20a%20serious%20cyber%20harassment/threat%20issue.%20Please%20assist%20me%20immediately.%0D%0A%0D%0AThank%20you."
-   class="sos-btn" target="_blank">
-   🚨 SOS
-</a>
+  <a href="mailto:cybercrimecell@nic.in?subject=Urgent%20Cybersecurity%20SOS&body=Dear%20Cybersecurity%20Authority,%0D%0A%0D%0AI%20am%20facing%20a%20serious%20cyber%20harassment/threat%20issue.%20Please%20assist%20me%20immediately.%0D%0A%0D%0AThank%20you."
+     class="sos-btn" target="_blank"> 🚨 SOS </a>
 
-<!-- Button Styling -->
-<style>
-.sos-btn {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: #ff1e56;
-  color: #fff;
-  font-weight: bold;
-  padding: 15px 25px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-size: 1.2rem;
-  transition: 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 9999; /* keeps it above all content */
-}
-.sos-btn:hover {
-  background: #ff4f6f;
-  transform: scale(1.1);
-}
-</style>
-
+  <!-- Button Styling -->
+  <style>
+    .sos-btn {
+      position: fixed; bottom: 20px; left: 20px;
+      background: #ff1e56; color: #fff;
+      font-weight: bold; padding: 15px 25px;
+      border-radius: 50px; text-decoration: none;
+      font-size: 1.2rem; transition: 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 9999;
+    }
+    .sos-btn:hover { background: #ff4f6f; transform: scale(1.1); }
+  </style>
 
   <!-- Footer -->
   <footer>

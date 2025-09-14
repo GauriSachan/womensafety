@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SafeHer — Daily Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body {
+      background: linear-gradient(135deg, #ff6b6b, #f8a5c2);
+      min-height: 100vh; color: #333;
+      display: flex; flex-direction: column;
+    }
+    header.topbar {
+      background: #fff; padding: 12px 30px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .brand { font-size: 1.5rem; font-weight: 600; color: #e84118; }
+    nav a { margin: 0 12px; text-decoration: none; color: #555; font-weight: 500; }
+    nav a:hover { color: #e84118; }
+    .btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+    .btn.small { font-size: 0.9rem; }
+    .btn:hover { opacity: 0.9; }
+    .btn.primary { background: #e84118; color: #fff; }
+
+    .page { flex: 1; padding: 40px; display: flex; flex-direction: column; gap: 30px; }
+    .quiz-hero { text-align: center; color: #fff; }
+    .quiz-hero h1 { font-size: 2.5rem; animation: fadeInDown 1s; }
+    .quiz-hero p { margin-top: 8px; font-size: 1.1rem; animation: fadeInUp 1s; }
+
+    .quiz-wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+    .card {
+      background: #fff; border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      padding: 20px;
+      animation: fadeIn 1s;
+    }
+    h3 { margin-bottom: 12px; }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; }
+    .badge { background: #e84118; color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; }
+
+    /* ================= Modal ================= */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: #fff; padding: 30px; border-radius: 12px; width: 350px; max-width: 90%;
+      animation: scaleUp 0.4s ease;
+    }
+    .modal-content h2 { margin-bottom: 16px; color: #e84118; }
+    .modal-content input {
+      width: 100%; padding: 10px; margin: 8px 0;
+      border: 1px solid #ddd; border-radius: 6px;
+    }
+    .switch { margin-top: 10px; font-size: 0.9rem; color: #555; cursor: pointer; }
+    .switch:hover { color: #e84118; }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: none;} }
+    @keyframes fadeInDown { from { opacity:0; transform: translateY(-30px);} to { opacity:1; transform: none;} }
+    @keyframes fadeInUp { from { opacity:0; transform: translateY(30px);} to { opacity:1; transform: none;} }
+    @keyframes scaleUp { from { transform: scale(0.8); opacity: 0;} to { transform: scale(1); opacity:1;} }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">SafeHer</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="quiz.html">Quizzes</a>
+      <a href="contact.html">Contact</a>
+      <button id="loginNav" class="btn primary small">Login</button>
+    </nav>
+  </header>
+
+  <div class="page">
+    <section class="quiz-hero">
+      <h1>Daily Quiz</h1>
+      <p id="subhead">Learn & earn badges — login to track progress.</p>
+    </section>
+
+    <section class="quiz-wrap">
+      <aside class="quiz-left card">
+        <div id="quizArea">
+          <p id="info">Loading questions...</p>
+        </div>
+      </aside>
+
+      <aside class="quiz-right card">
+        <h3>Your Badges</h3>
+        <div id="badgeArea" class="badges"></div>
+        <div style="margin-top:16px">
+          <button id="shareBadgeBtn" class="btn primary">Share Badge</button>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <!-- ================= LOGIN/SIGNUP MODAL ================= -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" style="float:right;cursor:pointer;font-size:1.5rem;">&times;</span>
+      <h2 id="modalTitle">Login</h2>
+      <form id="authForm">
+        <input type="email" id="authEmail" placeholder="Email" required>
+        <input type="password" id="authPassword" placeholder="Password" required>
+        <button type="submit" class="btn primary" style="width:100%">Login</button>
+      </form>
+      <div class="switch" id="toggleAuth">Don’t have an account? Sign up</div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("authModal");
+    const closeModal = document.getElementById("closeModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const toggleAuth = document.getElementById("toggleAuth");
+    const authForm = document.getElementById("authForm");
+    const loginNav = document.getElementById("loginNav");
+
+    let authMode = "login"; // login | signup | otp
+
+    // Open modal
+    loginNav.onclick = () => { modal.classList.add("active"); };
+    closeModal.onclick = () => modal.classList.remove("active");
+
+    toggleAuth.onclick = () => {
+      if (authMode === "login") {
+        authMode = "signup";
+        modalTitle.textContent = "Sign Up";
+        toggleAuth.textContent = "Already have an account? Login";
+        authForm.innerHTML = `
+          <input type="text" id="authName" placeholder="Name" required>
+          <input type="email" id="authEmail" placeholder="Email" required>
+          <input type="password" id="authPassword" placeholder="Password" required>
+          <button type="submit" class="btn primary" style="width:100%">Sign Up</button>
+        `;
+      } else {
+        authMode = "login";
+        modalTitle.textContent = "Login";
+        toggleAuth.textContent = "Don’t have an account? Sign up";
+        authForm.innerHTML = `
+          <input type="email" id="authEmail" placeholder="Email" required>
+          <input type="password" id="authPassword" placeholder="Password" required>
+          <button type="submit" class="btn primary" style="width:100%">Login</button>
+        `;
+      }
+    };
+
+    // Form submit
+    document.addEventListener("submit", async (e) => {
+      if (e.target.id === "authForm") {
+        e.preventDefault();
+        if (authMode === "login") {
+          const email = document.getElementById("authEmail").value;
+          const password = document.getElementById("authPassword").value;
+          const res = await fetch("http://localhost:5000/login", {
+            method: "POST", headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({ email, password })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            alert("Login successful ✅");
+            localStorage.setItem("token", data.token);
+            modal.classList.remove("active");
+          } else {
+            alert(data.error || "Login failed");
+          }
+        }
+        else if (authMode === "signup") {
+          const name = document.getElementById("authName").value;
+          const email = document.getElementById("authEmail").value;
+          const password = document.getElementById("authPassword").value;
+          const res = await fetch("http://localhost:5000/signup", {
+            method: "POST", headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({ name, email, password })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            alert("OTP sent to your email. Please verify!");
+            // Switch to OTP form
+            authMode = "otp";
+            modalTitle.textContent = "Verify OTP";
+            toggleAuth.style.display = "none";
+            authForm.innerHTML = `
+              <input type="email" id="otpEmail" value="${email}" readonly>
+              <input type="text" id="otpCode" placeholder="Enter OTP" required>
+              <button type="submit" class="btn primary" style="width:100%">Verify</button>
+            `;
+          } else {
+            alert(data.error || "Signup failed");
+          }
+        }
+        else if (authMode === "otp") {
+          const email = document.getElementById("otpEmail").value;
+          const otp = document.getElementById("otpCode").value;
+          const res = await fetch("http://localhost:5000/verify-otp", {
+            method: "POST", headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({ email, otp })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            alert("Email verified ✅. You can now login!");
+            toggleAuth.style.display = "block";
+            authMode = "login";
+            modalTitle.textContent = "Login";
+            authForm.innerHTML = `
+              <input type="email" id="authEmail" placeholder="Email" required>
+              <input type="password" id="authPassword" placeholder="Password" required>
+              <button type="submit" class="btn primary" style="width:100%">Login</button>
+            `;
+          } else {
+            alert(data.error || "OTP verification failed");
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
