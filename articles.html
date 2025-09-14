@@ -30,39 +30,159 @@
   </div>
 
   <!-- ✅ Honeycomb Section -->
-  <section class="honeycomb-section">
-    <h2>Our Stories & Articles</h2>
-    <ul class="honeycomb">
-      <li class="hex">
-        <img src="images/self-defense.jpg" alt="Self Defense">
-        <div class="hex-text">Self Defense Tips</div>
-      </li>
-      <li class="hex">
-        <img src="images/cyberbullying.jpg" alt="Cyberbullying">
-        <div class="hex-text">Cyberbullying Awareness</div>
-      </li>
-      <li class="hex">
-        <img src="images/empowerment.jpg" alt="Empowerment">
-        <div class="hex-text">Women Empowerment</div>
-      </li>
-    </ul>
-  </section>
+<!-- Honeycomb Section -->
+<section class="honeycomb-section">
+  <h2>Our Stories & Articles</h2>
+  <ul class="honeycomb">
+    <li class="hex" data-content="Learning self-defense helps women stay confident and safe in public spaces. Regular practice ensures preparedness in case of emergencies.">
+      <img src="download (9).jpeg" alt="Self Defense">
+      <div class="hex-text">Self Defense Tips</div>
+    </li>
+    <li class="hex" data-content="Cyberbullying is a major threat in today’s digital world. Understanding safe practices online is essential to protect your identity and mental health.">
+      <img src="images (4).jpeg" alt="Cyberbullying">
+      <div class="hex-text">Cyberbullying Awareness</div>
+    </li>
+    <li class="hex" data-content="Empowerment comes from knowledge and unity. Sharing stories and spreading awareness strengthens women’s position in society.">
+      <img src="download (10).jpeg" alt="Empowerment">
+      <div class="hex-text">Women Empowerment</div>
+    </li>
+  </ul>
+</section>
+
+<!-- Popup Modal -->
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <p id="popup-text"></p>
+  </div>
+</div>
+
+<style>
+/* Honeycomb Layout */
+.honeycomb {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+/* Hexagon Shape */
+/* Hexagon Shape */
+.hex {
+  width: 220px;
+  height: 240px;
+  position: relative;
+  clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hex:hover {
+  transform: scale(1.05);
+}
+
+/* Image inside hex */
+.hex img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* fill hex, cropped if needed */
+  clip-path: inherit;
+  opacity: 0.55;          /* higher visibility than 0.25 */
+  z-index: 0;
+}
+
+/* Text in middle without black box */
+.hex-text {
+  position: relative;
+  z-index: 1;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;            /* white text to stand out */
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.6); /* glow for readability */
+}
+
+/* Popup Modal */
+.popup {
+  display: none; /* hidden initially */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.popup-content {
+  background: white;
+  padding: 2rem;
+  width: 400px;
+  max-width: 90%;
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+  transform: rotateY(90deg);
+  animation: flipIn 0.5s forwards;
+}
+@keyframes flipIn {
+  from { transform: rotateY(90deg); opacity: 0; }
+  to { transform: rotateY(0deg); opacity: 1; }
+}
+.close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+</style>
+
+<script>
+// Select elements
+const hexItems = document.querySelectorAll(".hex");
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popup-text");
+const closeBtn = document.querySelector(".close");
+
+// Open popup on hex click
+hexItems.forEach(hex => {
+  hex.addEventListener("click", () => {
+    popup.style.display = "flex";
+    popupText.textContent = hex.getAttribute("data-content");
+  });
+});
+
+// Close popup on cross click
+closeBtn.addEventListener("click", () => {
+  popup.style.display = "none";
+});
+</script>
+
 
   <!-- ✅ Online Articles Section -->
   <section class="articles">
     <h2>Online Safety Resources</h2>
     <div class="article">
-      <img src="images/social-media.jpg" alt="Online Safety">
+      <img src="download (11).jpeg" alt="Online Safety">
       <h3>Staying Safe on Social Media</h3>
       <p>Tips and guidelines from experts on maintaining privacy and security online...</p>
     </div>
     <div class="article">
-      <img src="images/harassment.jpg" alt="Harassment">
+      <img src="download (12).jpeg" alt="Harassment">
       <h3>Dealing with Online Harassment</h3>
       <p>Understand cyberbullying, reporting mechanisms, and mental health care...</p>
     </div>
     <div class="article">
-      <img src="images/women.jpg" alt="Empowerment">
+      <img src="download (13).jpeg" alt="Empowerment">
       <h3>Women’s Stories of Empowerment</h3>
       <p>Read real-life stories of women fighting back and building safer communities...</p>
     </div>
@@ -74,13 +194,19 @@
     <div class="carousel-container">
       <div class="carousel">
         <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID1" frameborder="0" allowfullscreen></iframe>
+          <iframe src="https://youtu.be/q1pBBRi3XF8?si=NCZUCEVlN1STb-hQ" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID2" frameborder="0" allowfullscreen></iframe>
+          <iframe src="https://youtu.be/KVpxP3ZZtAc?si=988pi7j1bBX80NU_" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID3" frameborder="0" allowfullscreen></iframe>
+          <iframe src="https://youtu.be/EERMNeTfHaY?si=JZBjnih874b--WiT" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-slide">
+          <iframe src="https://youtu.be/WdTeXgszCC0?si=Lk2jLQHdcJs7Rt8M" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-slide">
+          <iframe src="https://youtu.be/Ngom9L8CKkU?si=XTGuyjdKUrPyfF8J" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
       <button class="prev" onclick="moveSlide(-1)">❮</button>
@@ -100,6 +226,35 @@
       and a safe community for women everywhere.
     </p>
   </section>
+  <!-- Floating SOS Button -->
+<a href="mailto:cybercrimecell@nic.in?subject=Urgent%20Cybersecurity%20SOS&body=Dear%20Cybersecurity%20Authority,%0D%0A%0D%0AI%20am%20facing%20a%20serious%20cyber%20harassment/threat%20issue.%20Please%20assist%20me%20immediately.%0D%0A%0D%0AThank%20you."
+   class="sos-btn" target="_blank">
+   🚨 SOS
+</a>
+
+<!-- Button Styling -->
+<style>
+.sos-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #ff1e56;
+  color: #fff;
+  font-weight: bold;
+  padding: 15px 25px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 9999; /* keeps it above all content */
+}
+.sos-btn:hover {
+  background: #ff4f6f;
+  transform: scale(1.1);
+}
+</style>
+
 
   <!-- ✅ Footer (centered table layout) -->
   <footer>
@@ -141,6 +296,7 @@
       panel.style.width = panel.style.width === "250px" ? "0" : "250px";
     }
   </script>
+  
 
 </body>
 </html>
