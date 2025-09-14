@@ -1,0 +1,179 @@
+/* === General === */
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  background: url("images/bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: #222;
+}
+
+/* === Navbar (reuse your index.css styles) === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 25px;
+  background: linear-gradient(to right, #ff4b2b, #ff416c, #ffcc33);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: #fff;
+}
+
+/* === Downloads Section === */
+.downloads-section {
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.downloads-section h2 {
+  font-size: 2.5rem;
+  background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.downloads-intro {
+  color: #444;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* === Pinterest Masonry Layout === */
+.downloads-masonry {
+  column-count: 3;         /* number of columns */
+  column-gap: 1.5rem;      /* space between columns */
+}
+
+.download-card {
+  background: linear-gradient(to right, #ff7eb3, #f9d423, #ff4e50);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 0 0 1.5rem;
+  display: inline-block;   /* key for masonry */
+  width: 100%;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: white;
+  break-inside: avoid;     /* prevent breaking inside column */
+}
+
+.download-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.pdf-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.download-card a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.download-card a:hover {
+  color: #222;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .downloads-masonry {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .downloads-masonry {
+    column-count: 1;
+  }
+}
+
+/* === Footer === */
+footer {
+  background: #ff4b2b;
+  color: #fff;
+  padding: 2rem;
+  text-align: center;
+}
+
+footer table {
+  margin: auto;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+footer td {
+  padding: 8px 15px;
+}
+
+footer p {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+/* === Side Panel === */
+.side-panel {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #ff4e50;
+  overflow-x: hidden;
+  transition: 0.4s;
+  padding-top: 60px;
+  z-index: 9999;
+}
+
+.side-panel a {
+  padding: 12px 24px;
+  display: block;
+  font-size: 1.2rem;
+  color: white;
+  text-decoration: none;
+}
+
+.side-panel a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.side-panel .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+
