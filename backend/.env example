@@ -1,0 +1,5 @@
+MONGO_URI=mongodb+srv://<db name>:<password>cluster0.j5jmfir.mongodb.net/<db name>?retryWrites=true&w=majority&appName=Cluster0
+SECRET_KEY=<dbname>_secret
+EMAIL_USER=your mail@gmail.com
+EMAIL_PASS=app password
+ADMIN_EMAIL=your mail@gmail.com
