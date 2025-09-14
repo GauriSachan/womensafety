@@ -14,24 +14,23 @@ app.use(bodyParser.json());
 const SECRET_KEY = process.env.SECRET_KEY;
 
 // ✅ MongoDB connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("✅ MongoDB connected"))
-.catch(err => console.log("MongoDB connection error:", err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.log("MongoDB connection error:", err));
 
-// ✅ User Model
+// ==========================
+// MODELS
+// ==========================
 const UserSchema = new mongoose.Schema({
   name: String,
   email: { type: String, required: true, unique: true },
   password: String,
   otp: String,
-  verified: { type: Boolean, default: false }
+  verified: { type: Boolean, default: false },
+  badges: [{ type: String }] // 🏅 earned badges
 });
 const User = mongoose.model("User", UserSchema);
 
-// ✅ Contact Message Model
 const ContactSchema = new mongoose.Schema({
   name: String,
   email: String,
@@ -39,6 +38,15 @@ const ContactSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 const ContactMessage = mongoose.model("ContactMessage", ContactSchema);
+
+// ✅ Quiz Schema
+const QuizSchema = new mongoose.Schema({
+  question: String,
+  options: [String],
+  answer: String, // correct answer
+  createdAt: { type: Date, default: Date.now }
+});
+const Quiz = mongoose.model("Quiz", QuizSchema);
 
 // ✅ Mail Transporter
 const transporter = nodemailer.createTransport({
@@ -52,7 +60,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // ==========================
-// AUTH ROUTES (Same as before)
+// AUTH ROUTES
 // ==========================
 
 // ✅ Signup - send OTP
@@ -133,7 +141,7 @@ app.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
 
     const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: "1h" });
-    res.json({ message: "Login successful ✅", token });
+    res.json({ message: "Login successful ✅", token, userId: user._id });
 
   } catch (err) {
     console.error("Login error:", err);
@@ -142,20 +150,17 @@ app.post("/login", async (req, res) => {
 });
 
 // ==========================
-// CONTACT ROUTE (NEW)
+// CONTACT ROUTE
 // ==========================
 app.post("/contact", async (req, res) => {
   try {
     const { name, email, message } = req.body;
-
-    // ✅ Save message in DB
     const newMessage = new ContactMessage({ name, email, message });
     await newMessage.save();
 
-    // ✅ Send email to Admin
     await transporter.sendMail({
       from: `"SafeHer Contact Form" <${process.env.EMAIL_USER}>`,
-      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER, // admin email from .env
+      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER,
       subject: "📩 New Contact Message - SafeHer",
       text: `New message received from ${name} (${email}):\n\n${message}`,
       html: `<h3>New Contact Message</h3>
@@ -170,6 +175,58 @@ app.post("/contact", async (req, res) => {
   } catch (err) {
     console.error("Contact form error:", err);
     res.status(500).json({ error: "Failed to send message" });
+  }
+});
+
+// ==========================
+// QUIZ & BADGES ROUTES
+// ==========================
+
+// ✅ Get daily quiz (5 random questions)
+app.get("/quiz/daily", async (req, res) => {
+  try {
+    const questions = await Quiz.aggregate([{ $sample: { size: 5 } }]);
+    res.json(questions);
+  } catch (err) {
+    console.error("Quiz fetch error:", err);
+    res.status(500).json({ error: "Failed to load quiz" });
+  }
+});
+
+// ✅ Submit quiz answers
+app.post("/quiz/submit", async (req, res) => {
+  try {
+    const { userId, answers } = req.body; // answers = [{id, answer}, ...]
+
+    let score = 0;
+    for (const ans of answers) {
+      const q = await Quiz.findById(ans.id);
+      if (q && q.answer === ans.answer) score++;
+    }
+
+    // Award badge if score >= 3
+    let badge = null;
+    if (score >= 3) {
+      badge = `QuizMaster-${new Date().toISOString().split("T")[0]}`;
+      await User.findByIdAndUpdate(userId, { $addToSet: { badges: badge } });
+    }
+
+    res.json({ message: "Quiz submitted ✅", score, badge });
+  } catch (err) {
+    console.error("Quiz submit error:", err);
+    res.status(500).json({ error: "Failed to submit quiz" });
+  }
+});
+
+// ✅ Get user badges
+app.get("/badges/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user.badges || []);
+  } catch (err) {
+    console.error("Badge fetch error:", err);
+    res.status(500).json({ error: "Failed to fetch badges" });
   }
 });
 
