@@ -17,13 +17,15 @@ body::before {
     z-index: -1;
 }
 
+/* Gradient Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255, 102, 0, 0.9); /* semi-transparent */
+    background: linear-gradient(90deg, #ff6600, #ff0000, #ffcc00); /* orange → red → yellow */
     padding: 10px 20px;
     color: white;
+    border-radius: 0 0 15px 15px;
 }
 
 .navbar .logo {
@@ -47,10 +49,13 @@ body::before {
     text-decoration: underline;
 }
 
+/* Gradient Newsletter Header */
 .newsletter-header {
     text-align: center;
     padding: 50px 20px;
-    background: rgba(255, 230, 204, 0.8); /* semi-transparent header */
+    background: linear-gradient(120deg, #ff6600, #ff0000, #ffcc00);
+    color: white;
+    border-radius: 15px;
 }
 
 .newsletter-header h1 {
@@ -62,7 +67,7 @@ body::before {
     max-width: 900px;
     margin: 20px auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.9); /* semi-transparent content box */
+    background: rgba(255, 255, 255, 0.95); /* keep content readable */
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 10px;
 }
@@ -76,6 +81,7 @@ body::before {
     margin-left: 20px;
 }
 
+/* Gradient Button */
 #subscribeForm {
     display: flex;
     margin-top: 10px;
@@ -92,19 +98,22 @@ body::before {
 #subscribeForm button {
     padding: 10px 20px;
     border: none;
-    background: #ff6600;
+    background: linear-gradient(90deg, #ff6600, #ff0000, #ffcc00); /* gradient button */
     color: white;
     cursor: pointer;
     border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
 #subscribeForm button:hover {
-    background: #e65c00;
+    background: linear-gradient(90deg, #ff4500, #cc0000, #ffd700); /* hover gradient */
 }
 
 .footer {
     text-align: center;
     padding: 20px;
-    background: rgba(51, 51, 51, 0.9); /* semi-transparent footer */
+    background: linear-gradient(90deg, #ff6600, #ff0000, #ffcc00); /* gradient footer */
     color: white;
+    border-radius: 15px 15px 0 0;
 }

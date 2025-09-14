@@ -7,9 +7,24 @@
 
 body {
   font-family: "Segoe UI", sans-serif;
-  background: #fdf6f0;
   color: #333;
   line-height: 1.6;
+  position: relative; /* for ::before overlay */
+  min-height: 100vh;
+}
+
+/* Light background image behind everything */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("backg.jpeg") no-repeat center center fixed;
+  background-size: cover;
+  opacity: 0.85; /* subtle visibility */
+  z-index: -1;
 }
 
 /* Navbar */
@@ -105,10 +120,7 @@ body {
   text-align: center;
   padding-top: 60px;
 
-  /* Gradient + Image */
-  background: 
-    linear-gradient(to bottom, #ff7eb3, #f9d423),
-    url("bg.jpeg");
+  background: linear-gradient(to bottom, #ff7eb3, #f9d423), url("bg.jpeg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -121,7 +133,7 @@ body {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(255, 255, 255, 0.45); /* controls image visibility */
+  background: rgba(255, 255, 255, 0.45);
 }
 
 /* Hero text stays on top */
@@ -133,24 +145,17 @@ body {
   z-index: 1;
 }
 
-/* Container with white background + subtle image */
+/* Container with white background + subtle transparency */
 .container {
   position: relative;
   max-width: 1000px;
   margin: 2rem auto;
-
-  /* White overlay + image */
-  background: 
-    linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
-    url("backg.jpeg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
+  background: rgba(255, 255, 255, 0.85); /* white with slight transparency */
   padding: 3rem;
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(0,0,0,0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1; /* stays above body::before */
 }
 
 /* Headings */
