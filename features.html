@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SafeHer — Learn & Earn (Quizzes, Badges, Dark Mode)</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #fff;
+    --panel: #fff;
+    --muted: #666;
+    --accent1: #ff4e50;
+    --accent2: #ff7eb3;
+    --accent3: #f9d423;
+    --glass: rgba(255,255,255,0.6);
+    --text: #111;
+    --success: #28a745;
+    --danger: #e74c3c;
+    --shadow: 0 8px 30px rgba(16,24,40,0.08);
+    --glass-border: rgba(255,255,255,0.4);
+    --transition: 260ms cubic-bezier(.2,.9,.2,1);
+  }
+
+  [data-theme="dark"]{
+    --bg: #0b1020;
+    --panel: #0f1724;
+    --muted: #9aa4b2;
+    --text: #e6eef6;
+    --glass: rgba(255,255,255,0.03);
+    --glass-border: rgba(255,255,255,0.06);
+    --shadow: 0 12px 30px rgba(2,6,23,0.7);
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, var(--bg), color-mix(in srgb, var(--bg) 90%, #f7f7f7 10%));
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    transition: background var(--transition), color var(--transition);
+    padding-bottom: 60px;
+  }
+
+  /* Container */
+  .container{max-width:1100px;margin:40px auto;padding:28px;display:grid;grid-template-columns:1fr 420px;gap:28px}
+  @media (max-width:1000px){ .container{grid-template-columns:1fr; padding:18px;margin:20px} }
+
+  /* Animated Hero */
+  .hero{
+    background: linear-gradient(135deg,var(--accent1),var(--accent3) 45%,var(--accent2));
+    border-radius:16px;padding:28px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden;
+    display:flex;flex-direction:column;gap:12px;align-items:flex-start;
+  }
+  .hero h1{font-size:clamp(1.6rem,2.4vw,2.4rem);margin:0;font-weight:800;letter-spacing:-0.02em;text-shadow:0 6px 20px rgba(0,0,0,0.15)}
+  .hero p{margin:0.2rem 0 0;font-weight:500;opacity:0.95}
+  .hero .cta-row{margin-top:14px;display:flex;gap:12px;align-items:center}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:0;cursor:pointer;
+    font-weight:700;background:rgba(255,255,255,0.16);color:#fff;backdrop-filter: blur(6px);
+    transition:transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+  }
+  .btn:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.18)}
+
+  /* micro interactions for icons */
+  .btn .spark{width:18px;height:18px;border-radius:6px;background:linear-gradient(45deg,#fff8,#fff4);display:inline-block}
+
+  /* Panel / Card */
+  .card{background:var(--panel);border-radius:14px;padding:18px;box-shadow:var(--shadow);border:1px solid var(--glass-border);transition:transform var(--transition);overflow:hidden}
+  .card h3{margin:0 0 10px;font-size:1.05rem}
+  .card p{margin:0;color:var(--muted)}
+
+  /* Quiz area */
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+  .progress{
+    height:10px;border-radius:999px;background:linear-gradient(90deg,#eee,#f7f7f7);overflow:hidden;flex:1;margin-left:12px;
+  }
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:0%;transition:width 400ms ease}
+
+  .question{
+    font-weight:700;padding:12px 10px;border-radius:10px;margin-bottom:12px;background:linear-gradient(180deg, color-mix(in srgb, var(--panel) 100%, #0000 0%), color-mix(in srgb, var(--panel) 96%, #0000 0%));
+  }
+  .options{display:grid;gap:10px}
+  .option{
+    padding:12px;border-radius:10px;border:1px solid color-mix(in srgb, var(--text) 8%, transparent 92%);cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+    transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    background:transparent;
+  }
+  .option:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.06)}
+  .option.selected{background:linear-gradient(90deg,#fff8,#fff4);border-color:color-mix(in srgb,var(--accent1) 70%, transparent 30%)}
+  [data-theme="dark"] .option.selected{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03))}
+
+  .controls{display:flex;gap:8px;align-items:center;margin-top:14px}
+  .small {font-size:0.9rem;padding:8px 10px;border-radius:10px;background:transparent;border:1px solid var(--glass-border);cursor:pointer}
+  .small:hover{transform:translateY(-3px)}
+
+  /* badges */
+  .badges {display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+  .badge {
+    width:86px;height:86px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff8);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:8px;font-weight:700;color:#333;box-shadow:0 10px 30px rgba(0,0,0,0.08);transform-origin:center;
+    transition: transform 450ms cubic-bezier(.2,.9,.2,1), box-shadow var(--transition), opacity var(--transition);
+    border:1px solid rgba(0,0,0,0.04);
+  }
+  [data-theme="dark"] .badge{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03)); color:var(--text); border:1px solid rgba(255,255,255,0.03)}
+  .badge.locked{opacity:0.35;filter:grayscale(0.3)}
+  .badge.earned{animation:pop 700ms cubic-bezier(.2,.9,.2,1); box-shadow:0 22px 60px rgba(255,126,179,0.18)}
+  @keyframes pop { 0% { transform:scale(.6) } 60% { transform:scale(1.12) } 100% { transform:scale(1) } }
+
+  .badge .icon{width:44px;height:44px;border-radius:10px;margin-bottom:6px;display:grid;place-items:center;background:linear-gradient(45deg,var(--accent1),var(--accent2));color:#fff;box-shadow:0 8px 30px rgba(255,126,179,0.12)}
+  .badge.locked .icon{background:linear-gradient(45deg,#d1d1d1,#e9e9e9); color:#888}
+
+  .toast{
+    position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.25);opacity:0;pointer-events:none;transition:all 260ms;
+  }
+  .toast.show{opacity:1;transform:translate(-50%, -6px)}
+
+  /* right column */
+  .right-col{display:flex;flex-direction:column;gap:18px}
+  .theme-toggle{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+  .theme-toggle button{padding:8px 12px;border-radius:10px;border:1px solid var(--glass-border);background:transparent;cursor:pointer}
+  .hint {font-size:0.95rem;color:var(--muted)}
+  footer.small{font-size:0.85rem;color:var(--muted);text-align:center;margin-top:24px;padding-top:8px;border-top:1px dashed color-mix(in srgb, var(--text) 4%, transparent 96%);}
+
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <!-- Left: Hero + Quiz -->
+  <div>
+    <div class="hero">
+      <h1 id="siteTitle">SafeHer — Learn & Earn</h1>
+      <p>Level up your safety knowledge — take quick quizzes, earn badges, and share your progress.</p>
+      <div class="cta-row">
+        <button class="btn" id="startQuizBtn" title="Start quiz (keyboard: Enter)">
+          <span class="spark"></span> Start Quiz
+        </button>
+        <button class="btn" id="takeQuickBtn" style="background:rgba(255,255,255,0.12)">
+          Tips
+        </button>
+      </div>
+    </div>
+
+    <div style="height:18px"></div>
+
+    <div class="card" id="quizCard" aria-live="polite">
+      <div class="quiz-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <strong id="qIndex">Quiz: Rights & Safety</strong>
+          <span class="hint" id="qSub">Practice your awareness — answer all the questions</span>
+        </div>
+        <div style="display:flex;align-items:center">
+          <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+          <div style="width:12px"></div>
+          <div id="scoreLabel" class="hint">0%</div>
+        </div>
+      </div>
+
+      <div id="quizBody">
+        <!-- question/ options injected here -->
+        <div class="question" id="questionText">Click start to begin the quiz</div>
+        <div class="options" id="optionsList"></div>
+
+        <div class="controls">
+          <button class="small" id="prevBtn" aria-label="Previous question">◀ Prev</button>
+          <button class="small" id="nextBtn" aria-label="Next question">Next ▶</button>
+          <button class="small" id="submitBtn" style="margin-left:auto;background:var(--accent1);color:#fff;border:0">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:16px"></div>
+    <div class="card">
+      <h3>Quick Tips</h3>
+      <p>Share your location with a trusted contact, set safety check-ins, and keep emergency numbers saved. A few small steps make a big difference.</p>
+    </div>
+
+  </div>
+
+  <!-- Right column: Badges + Theme -->
+  <aside class="right-col">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 style="margin:0">Your Badges</h3>
+        <div class="theme-toggle">
+          <span class="hint">Theme</span>
+          <button id="themeBtn" aria-pressed="false">Toggle</button>
+        </div>
+      </div>
+      <p class="hint">Earn badges by completing quizzes. Badges are saved locally in your browser.</p>
+
+      <div class="badges" id="badgesWrap" aria-live="polite">
+        <!-- badges injected -->
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Progress</h3>
+      <p class="hint">Complete quizzes to unlock more badges. Try the "Know Your Rights" quiz first.</p>
+      <div style="margin-top:12px">
+        <div style="display:flex;gap:10px;align-items:center">
+          <div style="flex:1">
+            <div style="height:10px;background:#eee;border-radius:999px;overflow:hidden">
+              <div id="globalProgress" style="height:100%;width:0;background:linear-gradient(90deg,var(--accent1),var(--accent2));transition:width 500ms"></div>
+            </div>
+          </div>
+          <div id="globalPercent" style="min-width:42px;text-align:right;font-weight:700">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:center">
+      <h3>Share your badge</h3>
+      <p class="hint">Encourage friends — share a badge image or your progress link.</p>
+      <button class="btn" id="shareBtn">Share</button>
+    </div>
+
+  </aside>
+</div>
+
+<!-- toast -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================
+   Data / Questions / Badges
+   ============================ */
+
+const QUESTIONS = [
+  {
+    id: 'rights1',
+    q: 'If you are harassed on public transport, which of these is a correct immediate step?',
+    options: ['Record the incident on phone', 'Ignore it and keep quiet', 'Get off at next stop and stay alone'],
+    a: 0
+  },
+  {
+    id: 'rights2',
+    q: 'Which number is an official emergency contact in India?',
+    options: ['100 (police)', '999', '111'],
+    a: 0
+  },
+  {
+    id: 'rights3',
+    q: 'What should you NOT share with strangers online?',
+    options: ['Your travel plans', 'A helpful resource link', 'A public awareness post'],
+    a: 0
+  },
+  {
+    id: 'rights4',
+    q: 'When is it useful to enable live location sharing?',
+    options: ['When traveling late alone', 'When watching TV at home', 'When attending a group event with friends'],
+    a: 0
+  },
+  {
+    id: 'rights5',
+    q: 'What is the best action if you feel followed on foot?',
+    options: ['Go to a crowded place or shop', 'Run into empty alleys', 'Walk faster alone'],
+    a: 0
+  }
+];
+
+const BADGES = [
+  { id: 'starter', label: 'Safety Starter', desc: 'Complete the first quiz', icon: '🏅' },
+  { id: 'rights', label: 'Know Your Rights', desc: 'Score ≥70% on Rights quiz', icon: '📜' },
+  { id: 'guardian', label: 'Community Guardian', desc: 'Report a safe tip', icon: '🛡️' }
+];
+
+/* ============================
+   Local state & storage helpers
+   ============================ */
+
+const storage = {
+  get(key, fallback=null){ try { const v=localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch(e){return fallback} },
+  set(key, value){ try { localStorage.setItem(key, JSON.stringify(value)); } catch(e){} }
+};
+
+let state = {
+  currentIndex: 0,
+  answers: {}, // question -> selectedOptionIndex
+  quizStarted: false,
+  earnedBadges: storage.get('safeher_badges', []), // array of badge ids
+  theme: storage.get('safeher_theme', 'light'),
+};
+
+/* ============================
+   UI Helpers
+   ============================ */
+
+const $ = (s) => document.querySelector(s);
+const $all = (s) => Array.from(document.querySelectorAll(s));
+
+function showToast(msg, ms=2500){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), ms);
+}
+
+/* ============================
+   Theme (Dark Mode)
+   ============================ */
+
+function applyTheme(theme){
+  if(theme === 'dark'){
+    document.documentElement.setAttribute('data-theme','dark');
+    $('#themeBtn').textContent = 'Dark';
+    $('#themeBtn').setAttribute('aria-pressed','true');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    $('#themeBtn').textContent = 'Light';
+    $('#themeBtn').setAttribute('aria-pressed','false');
+  }
+  state.theme = theme;
+  storage.set('safeher_theme', theme);
+}
+$('#themeBtn').addEventListener('click', ()=> applyTheme(state.theme === 'dark' ? 'light' : 'dark'));
+applyTheme(state.theme);
+
+/* ============================
+   Badge UI
+   ============================ */
+
+function renderBadges(){
+  const wrap = $('#badgesWrap');
+  wrap.innerHTML = '';
+  BADGES.forEach(b=>{
+    const earned = state.earnedBadges.includes(b.id);
+    const div = document.createElement('div');
+    div.className = 'badge ' + (earned ? 'earned' : 'locked');
+    div.setAttribute('title', b.desc);
+    div.innerHTML = `<div class="icon">${b.icon}</div><div style="font-size:0.85rem">${b.label}</div>`;
+    div.addEventListener('click', ()=>{
+      if(earned) showToast(`Badge: ${b.label} — ${b.desc}`);
+      else showToast(`Locked: ${b.desc}`);
+    });
+    wrap.appendChild(div);
+  });
+  // update global progress
+  const percent = Math.round((state.earnedBadges.length / BADGES.length) * 100);
+  $('#globalProgress').style.width = percent + '%';
+  $('#globalPercent').textContent = percent + '%';
+}
+renderBadges();
+
+/* ============================
+   Quiz: render / navigation
+   ============================ */
+
+const quizCard = $('#quizCard');
+const questionText = $('#questionText');
+const optionsList = $('#optionsList');
+const qIndex = $('#qIndex');
+const progressBar = $('#progressBar');
+const scoreLabel = $('#scoreLabel');
+
+function renderQuestion(idx){
+  const q = QUESTIONS[idx];
+  qIndex.textContent = `Question ${idx + 1} / ${QUESTIONS.length}`;
+  questionText.textContent = q.q;
+  optionsList.innerHTML = '';
+  q.options.forEach((opt, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.type = 'button';
+    btn.innerHTML = `<span>${opt}</span>`;
+    btn.setAttribute('data-opt', i);
+    if(state.answers[q.id] === i) btn.classList.add('selected');
+    btn.addEventListener('click', ()=> {
+      // mark selection
+      state.answers[q.id] = i;
+      // re-render to show selected class
+      renderQuestion(idx);
+      updateProgressVisual();
+    });
+    optionsList.appendChild(btn);
+  });
+  // update progress bar
+  updateProgressVisual();
+}
+
+function updateProgressVisual(){
+  const answeredCount = Object.keys(state.answers).length;
+  const pct = Math.round((answeredCount / QUESTIONS.length) * 100);
+  progressBar.style.width = pct + '%';
+  scoreLabel.textContent = `${pct}%`;
+}
+
+$('#startQuizBtn').addEventListener('click', ()=> {
+  startQuiz();
+});
+
+$('#takeQuickBtn').addEventListener('click', ()=> {
+  showTips();
+});
+
+$('#prevBtn').addEventListener('click', ()=> {
+  if(state.currentIndex > 0) {
+    state.currentIndex--;
+    renderQuestion(state.currentIndex);
+  }
+});
+$('#nextBtn').addEventListener('click', ()=> {
+  if(state.currentIndex < QUESTIONS.length - 1){
+    state.currentIndex++;
+    renderQuestion(state.currentIndex);
+  }
+});
+$('#submitBtn').addEventListener('click', async ()=> {
+  submitQuiz();
+});
+
+/* keyboard support */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' && !state.quizStarted){
+    startQuiz();
+  }
+});
+
+/* ============================
+   Quiz lifecycle
+   ============================ */
+
+function startQuiz(){
+  state.quizStarted = true;
+  state.currentIndex = 0;
+  state.answers = {};
+  renderQuestion(0);
+  showToast('Quiz started — good luck!');
+}
+
+function calculateScore(){
+  let correct = 0;
+  QUESTIONS.forEach(q=>{
+    const sel = state.answers[q.id];
+    if(typeof sel !== 'undefined' && sel === q.a) correct++;
+  });
+  return { correct, total: QUESTIONS.length, pct: Math.round((correct / QUESTIONS.length) * 100) };
+}
+
+function awardBadge(badgeId){
+  if(!state.earnedBadges.includes(badgeId)){
+    state.earnedBadges.push(badgeId);
+    storage.set('safeher_badges', state.earnedBadges);
+    renderBadges();
+    // celebratory toast
+    showToast('🎉 Badge earned: ' + (BADGES.find(b=>b.id===badgeId)||{}).label, 3500);
+  }
+}
+
+async function submitQuiz(){
+  // validation - ensure all answered
+  if(Object.keys(state.answers).length < QUESTIONS.length){
+    if(!confirm('You have unanswered questions. Submit anyway?')) return;
+  }
+  const result = calculateScore();
+  // show modal-like result (simple)
+  const passed = result.pct >= 70;
+  let msg = `You scored ${result.correct}/${result.total} (${result.pct}%). `;
+  if(passed){
+    msg += 'Great! You passed.';
+    awardBadge('rights'); // award rights badge
+    awardBadge('starter'); // ensure starter awarded on first success
+  } else {
+    msg += 'Keep learning — try again to earn the badge.';
+    // still award starter badge on any submit
+    awardBadge('starter');
+  }
+  showToast(msg, 5000);
+
+  // optional: show a quick results card
+  showResultsOverlay(result, passed);
+}
+
+/* ============================
+   Results overlay
+   ============================ */
+function showResultsOverlay(result, passed){
+  const overlay = document.createElement('div');
+  overlay.style.position='fixed';
+  overlay.style.left=0;overlay.style.top=0;width='100%';height='100%';display='grid';
+  overlay.style.placeItems='center';zIndex=9999;
+  overlay.style.backdropFilter='blur(6px)';overlay.style.background='rgba(0,0,0,0.35)';
+  overlay.innerHTML = `
+    <div style="width:92%;max-width:520px;background:var(--panel);padding:20px;border-radius:14px;box-shadow:var(--shadow);text-align:center;">
+      <h2 style="margin:0 0 8px">${passed ? '🎉 Well done!' : 'Nice try'}</h2>
+      <p style="margin:0 0 12px">${result.correct}/${result.total} correct — ${result.pct}%</p>
+      <div style="margin:12px 0">
+        <button id="retryBtn" class="small">Retry Quiz</button>
+        <button id="closeRes" class="small" style="margin-left:10px">Close</button>
+      </div>
+      <p style="font-size:0.95rem;color:var(--muted)">${passed ? 'You unlocked a badge — check the right panel!' : 'Read tips and try again to unlock badges.'}</p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  $('#retryBtn').addEventListener('click', ()=>{
+    document.body.removeChild(overlay);
+    startQuiz();
+  });
+  $('#closeRes').addEventListener('click', ()=>{
+    document.body.removeChild(overlay);
+  });
+}
+
+/* ============================
+   Tips / share / misc
+   ============================ */
+
+function showTips(){
+  showToast('Tip: Always share ETA with a trusted contact before travelling alone.',3500);
+}
+
+$('#shareBtn').addEventListener('click', async ()=>{
+  try {
+    const shareData = { title: 'SafeHer Badge', text: 'I earned badges on SafeHer — stay safe!', url: location.href };
+    if(navigator.share){
+      await navigator.share(shareData);
+      showToast('Shared!');
+    } else {
+      // Fallback: copy to clipboard
+      await navigator.clipboard.writeText(`${shareData.title} — ${shareData.text} ${shareData.url}`);
+      showToast('Link copied to clipboard');
+    }
+  } catch(e){
+    showToast('Unable to share — try manually', 2500);
+  }
+});
+
+
+/* ============================
+   Init
+   ============================ */
+
+(function init(){
+  // Ensure starter badge exists if none
+  if(!state.earnedBadges || !Array.isArray(state.earnedBadges)) state.earnedBadges = [];
+  renderBadges();
+  updateProgressVisual();
+  // animate hero title on load
+  const st = $('#siteTitle');
+  st.animate([{transform:'translateY(-8px)', opacity:0},{transform:'translateY(0)',opacity:1}], {duration:800, easing:'cubic-bezier(.2,.9,.2,1)'});
+})();
+
+</script>
+</body>
+</html>
