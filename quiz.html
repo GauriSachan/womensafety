@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SafeHer — Learn & Earn (Quizzes, Badges, Dark Mode)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff;--panel:#fff;--muted:#666;--accent1:#ff4e50;--accent2:#ff7eb3;--accent3:#f9d423;
+  --glass:rgba(255,255,255,0.6);--text:#111;--success:#28a745;--danger:#e74c3c;
+  --shadow:0 8px 30px rgba(16,24,40,0.08);--glass-border:rgba(255,255,255,0.4);--transition:260ms cubic-bezier(.2,.9,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#0b1020;--panel:#0f1724;--muted:#9aa4b2;--text:#e6eef6;--glass:rgba(255,255,255,0.03);
+  --glass-border:rgba(255,255,255,0.06);--shadow:0 12px 30px rgba(2,6,23,0.7);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding-bottom:60px;transition:background var(--transition),color var(--transition);}
+body{background:linear-gradient(180deg,#f8faff,#e2ebf7);color:var(--text);}
+.container{max-width:1100px;margin:40px auto;padding:28px;display:grid;grid-template-columns:1fr 420px;gap:28px}
+@media(max-width:1000px){.container{grid-template-columns:1fr;padding:18px;margin:20px}}
+.hero{background:linear-gradient(135deg,#ff4e50,#f9d423 45%,#ff7eb3);border-radius:20px;padding:36px;color:#fff;box-shadow:0 12px 30px rgba(0,0,0,0.12);display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.hero h1{font-size:2.4rem;margin:0;font-weight:800;letter-spacing:-0.02em;text-shadow:0 6px 20px rgba(0,0,0,0.18)}
+.hero p{margin:0.2rem 0 0;font-weight:500;opacity:0.95}
+.hero .cta-row{margin-top:16px;display:flex;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;border:0;cursor:pointer;font-weight:700;background:rgba(255,255,255,0.16);color:#fff;backdrop-filter: blur(6px);transition:transform var(--transition), box-shadow var(--transition), opacity var(--transition);}
+.btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 10px 30px rgba(0,0,0,0.18)}
+.card{background:var(--panel);border-radius:18px;padding:22px;box-shadow:0 12px 35px rgba(0,0,0,0.08);border:1px solid var(--glass-border);transition:transform var(--transition);overflow:hidden}
+.card h3{margin:0 0 10px;font-size:1.1rem}
+.card p{margin:0;color:var(--muted)}
+.quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.progress{height:10px;border-radius:999px;background:linear-gradient(90deg,#eee,#f7f7f7);overflow:hidden;flex:1;margin-left:12px}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:0%;transition:width 400ms ease}
+.question{font-weight:700;padding:16px 14px;border-radius:12px;margin-bottom:12px;background:linear-gradient(180deg,#fff,#f7f7f7);box-shadow:0 6px 18px rgba(0,0,0,0.06);}
+.options{display:grid;gap:12px}
+.option{padding:14px;border-radius:12px;border:1px solid #ddd;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition: transform var(--transition), box-shadow var(--transition), background var(--transition);background:transparent;font-size:1rem;}
+.option:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(0,0,0,0.08)}
+.option.selected{background:linear-gradient(90deg,#ffdde1,#f9d423);border-color:var(--accent1);}
+[data-theme="dark"] .option.selected{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03))}
+.controls{display:flex;gap:10px;align-items:center;margin-top:14px}
+.small{font-size:0.95rem;padding:10px 14px;border-radius:12px;background:transparent;border:1px solid var(--glass-border);cursor:pointer}
+.small:hover{transform:translateY(-3px)}
+.badges{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.badge{width:100px;height:100px;border-radius:14px;background:linear-gradient(180deg,#fff,#fff8);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;font-weight:700;color:#333;box-shadow:0 12px 30px rgba(0,0,0,0.08);transform-origin:center;transition: transform 450ms cubic-bezier(.2,.9,.2,1), box-shadow var(--transition), opacity var(--transition);border:1px solid rgba(0,0,0,0.04);font-size:0.95rem;}
+[data-theme="dark"] .badge{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03)); color:var(--text); border:1px solid rgba(255,255,255,0.03)}
+.badge.locked{opacity:0.35;filter:grayscale(0.3)}
+.badge.earned{animation:pop 700ms cubic-bezier(.2,.9,.2,1); box-shadow:0 18px 50px rgba(255,126,179,0.2);}
+@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+.badge .icon{width:50px;height:50px;border-radius:12px;margin-bottom:6px;display:grid;place-items:center;background:linear-gradient(45deg,var(--accent1),var(--accent2));color:#fff;box-shadow:0 8px 30px rgba(255,126,179,0.12);font-size:1.3rem;}
+.badge.locked .icon{background:linear-gradient(45deg,#d1d1d1,#e9e9e9); color:#888}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;padding:12px 18px;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.25);opacity:0;pointer-events:none;transition:all 260ms;}
+.toast.show{opacity:1;transform:translate(-50%,-6px)}
+.right-col{display:flex;flex-direction:column;gap:18px}
+.theme-toggle{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+.theme-toggle button{padding:8px 14px;border-radius:12px;border:1px solid var(--glass-border);background:transparent;cursor:pointer}
+#shareBtn{background:linear-gradient(90deg,#ff4e50,#f9d423,#ff7eb3);font-weight:700;}
+#shareBtn:hover{transform:scale(1.05)}
+#resultModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:1000}
+#resultContent{background:var(--panel);border-radius:18px;padding:28px;max-width:400px;width:90%;text-align:center;box-shadow:var(--shadow);position:relative}
+#resultContent h2{margin-top:0;font-size:1.8rem;color:var(--accent1)}
+#resultContent p{margin:12px 0;font-weight:600}
+#resultContent .closeModal{position:absolute;top:12px;right:12px;background:transparent;border:0;font-size:1.5rem;cursor:pointer;color:var(--accent2)}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <div>
+    <div class="hero">
+      <h1 id="siteTitle">SafeHer — Learn & Earn</h1>
+      <p>Level up your safety knowledge — take quick quizzes, earn badges, and share your progress.</p>
+      <div class="cta-row">
+        <button class="btn" id="startQuizBtn"><span class="spark"></span> Start Quiz</button>
+      </div>
+    </div>
+    <div style="height:18px"></div>
+    <div class="card" id="quizCard" aria-live="polite">
+      <div class="quiz-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <strong id="qIndex">Quiz: Rights & Safety</strong>
+          <span class="hint" id="qSub">Practice your awareness — answer all the questions</span>
+        </div>
+        <div style="display:flex;align-items:center">
+          <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+          <div style="width:12px"></div>
+          <div id="scoreLabel" class="hint">0%</div>
+        </div>
+      </div>
+      <div id="quizBody">
+        <div class="question" id="questionText">Click start to begin the quiz</div>
+        <div class="options" id="optionsList"></div>
+        <div class="controls">
+          <button class="small" id="prevBtn">◀ Prev</button>
+          <button class="small" id="nextBtn">Next ▶</button>
+          <button class="small" id="submitBtn" style="margin-left:auto;background:var(--accent1);color:#fff;border:0">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="right-col">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 style="margin:0">Your Badges</h3>
+        <div class="theme-toggle">
+          <span class="hint">Theme</span>
+          <button id="themeBtn" aria-pressed="false">Toggle</button>
+        </div>
+      </div>
+      <p class="hint">Earn badges by completing quizzes. Badges are saved locally in your browser.</p>
+      <div class="badges" id="badgesWrap" aria-live="polite"></div>
+    </div>
+    <div class="card" style="text-align:center">
+      <h3>Share your badge</h3>
+      <p class="hint">Encourage friends — share your progress!</p>
+      <button class="btn" id="shareBtn">Share</button>
+    </div>
+  </aside>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="resultModal">
+  <div id="resultContent">
+    <button class="closeModal" id="closeResult">&times;</button>
+    <h2>Quiz Completed!</h2>
+    <p id="resultScore">Score: 0%</p>
+  </div>
+</div>
+
+<script>
+const QUESTIONS=[
+{q:'If you are harassed on public transport, which is a correct step?',options:['Record incident','Ignore it','Go alone'],a:0},
+{q:'Official emergency number in India?',options:['100','999','111'],a:0},
+{q:'What NOT to share online?',options:['Travel plans','Resource link','Public post'],a:0},
+{q:'When enable live location sharing?',options:['Traveling late alone','Watching TV','Group event'],a:0},
+{q:'Best action if followed on foot?',options:['Go to crowded place','Run into alley','Walk faster alone'],a:0}
+];
+const BADGES=[{id:'starter',label:'Safety Starter',icon:'🏅'},{id:'rights',label:'Know Your Rights',icon:'📜'},{id:'guardian',label:'Community Guardian',icon:'🛡️'}];
+let state={qIndex:0,answers:[],earnedBadges:JSON.parse(localStorage.getItem('earnedBadges')||'[]')};
+
+const questionText=document.getElementById('questionText'),optionsList=document.getElementById('optionsList');
+const prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn'),submitBtn=document.getElementById('submitBtn');
+const progressBar=document.getElementById('progressBar'),scoreLabel=document.getElementById('scoreLabel');
+const badgesWrap=document.getElementById('badgesWrap'),themeBtn=document.getElementById('themeBtn');
+const toast=document.getElementById('toast'),resultModal=document.getElementById('resultModal');
+const resultScore=document.getElementById('resultScore'),closeResult=document.getElementById('closeResult');
+
+function showToast(msg){ toast.textContent=msg; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1800);}
+function updateProgress(){const pct=Math.round((state.qIndex+1)/QUESTIONS.length*100);progressBar.style.width=pct+'%';scoreLabel.textContent=pct+'%';}
+function renderQuestion(){
+  const q=QUESTIONS[state.qIndex]; questionText.textContent=q.q;
+  optionsList.innerHTML='';
+  q.options.forEach((opt,i)=>{
+    const div=document.createElement('div'); div.className='option'+(state.answers[state.qIndex]===i?' selected':''); div.textContent=opt;
+    div.addEventListener('click',()=>{state.answers[state.qIndex]=i; renderQuestion();});
+    optionsList.appendChild(div);
+  });
+  updateProgress();
+}
+function nextQ(){if(state.qIndex<QUESTIONS.length-1){state.qIndex++;renderQuestion();}}
+function prevQ(){if(state.qIndex>0){state.qIndex--;renderQuestion();}}
+
+function submitQuiz(){
+  const correct=QUESTIONS.reduce((acc,q,i)=>acc+(q.a===state.answers[i]?1:0),0);
+  const pct=Math.round(correct/QUESTIONS.length*100);
+  resultScore.textContent=`Score: ${pct}%`;
+  resultModal.style.display='flex';
+  if(pct>=70 && !state.earnedBadges.includes('rights')){state.earnedBadges.push('rights');localStorage.setItem('earnedBadges',JSON.stringify(state.earnedBadges));renderBadges();}
+}
+
+function renderBadges(){
+  badgesWrap.innerHTML='';
+  BADGES.forEach(b=>{
+    const div=document.createElement('div'); div.className='badge'+(state.earnedBadges.includes(b.id)?' earned':' locked');
+    div.innerHTML=`<div class="icon">${b.icon}</div><div>${b.label}</div>`; badgesWrap.appendChild(div);
+  });
+}
+
+themeBtn.addEventListener('click',()=>{ const isDark=document.documentElement.getAttribute('data-theme')==='dark'; document.documentElement.setAttribute('data-theme',isDark?'light':'dark'); });
+
+nextBtn.addEventListener('click',nextQ); prevBtn.addEventListener('click',prevQ);
+submitBtn.addEventListener('click',submitQuiz);
+document.getElementById('startQuizBtn').addEventListener('click',()=>{state.qIndex=0;renderQuestion();});
+closeResult.addEventListener('click',()=>{resultModal.style.display='none';});
+
+document.getElementById('shareBtn').addEventListener('click', async ()=>{
+  const earned=state.earnedBadges.map(id=>BADGES.find(b=>b.id===id)?.label).filter(Boolean);
+  if(earned.length===0){showToast('No badges to share!');return;}
+  const text=`I earned these badges on SafeHer: ${earned.join(', ')} 🏅\nCheck it out: ${location.href}`;
+  if(navigator.share){try{await navigator.share({title:'SafeHer Badges',text,text,url:location.href});}catch(e){console.log(e);}}
+  else{window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);}
+});
+
+renderBadges();
+</script>
+</body>
+</html>
