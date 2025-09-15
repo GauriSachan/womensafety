@@ -3,31 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact - SafeHer</title>
+  <title>SafeHer | Contact - Reach Out for Support</title>
+  <meta name="description" content="Contact SafeHer for support, questions, or to report safety concerns. We're here to help 24/7.">
+  
+  <!-- Unified Design System -->
+  <link rel="stylesheet" href="css/global-unified.css">
+  
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: "Segoe UI", sans-serif; background: #fff; color: #333; line-height: 1.6; }
-
-    /* Navbar */
-    .navbar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 2rem;
-      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
-      position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    .navbar .logo { font-weight: bold; font-size: 1.7rem; color: #fff; }
-    .nav-links { list-style: none; display: flex; gap: 1rem; }
-    .nav-links li a {
-      text-decoration: none; color: #fff; font-weight: 600;
-      padding: 8px 18px; border-radius: 25px;
-      transition: 0.3s;
-    }
-    .nav-links li a:hover { background: rgba(255,255,255,0.2); }
-
-    .three-dots { font-size: 2rem; cursor: pointer; color: white; display: none; }
-
-    /* Side Panel */
+    /* Page-specific styles for contact form */
     .side-panel {
       height: 100%; width: 0; position: fixed; top: 0; right: 0;
       background-color: #ff4e50; overflow-x: hidden;
@@ -134,26 +117,53 @@
 </head>
 <body>
 
-  <!-- Navbar -->
+  <!-- Unified Navbar -->
   <nav class="navbar">
-    <div class="logo">SafeHer</div>
+    <a href="index.html" class="logo">SafeHer</a>
+    
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="article.html">Articles</a></li>
-      <li><a href="resource.html">Resources</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="emergency.html">Emergency</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
-    <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
+    
+    <div class="menu-button" onclick="toggleSidePanel()" aria-label="Open menu">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <span class="menu-text">MENU</span>
+    </div>
   </nav>
 
-  <!-- Side Panel -->
+  <!-- Unified Sidebar -->
+  <div id="sidePanelBackdrop" class="side-panel-backdrop" onclick="toggleSidePanel()"></div>
   <div id="sidePanel" class="side-panel">
-    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
-    <a href="emergency.html">Emergency Numbers</a>
-    <a href="self-defense.html">Self Defense</a>
-    <a href="workshop.html">Workshops</a>
-    <a href="newsletter.html">About Us</a>
-    <a href="contact.html">Contact</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()" aria-label="Close sidebar">&times;</a>
+    
+    <!-- Navigation Links -->
+    <a href="index.html">🏠 Home</a>
+    <a href="emergency.html">🚨 Emergency Numbers</a>
+    <a href="self-defense.html">🥊 Self Defense</a>
+    <a href="resources.html">📚 Resources</a>
+    <a href="articles.html">📰 Articles</a>
+    <a href="workshop.html">🎓 Workshops</a>
+    <a href="contact.html">📞 Contact</a>
+    <a href="quiz.html">🧠 Safety Quiz</a>
+    <a href="chatbot.html">🤖 AI Assistant</a>
+    <a href="login.html">👤 Login / Sign Up</a>
+    
+    <!-- Divider -->
+    <hr style="border-color: rgba(255,255,255,0.3); margin: 20px 0;">
+    
+    <!-- Download Links -->
+    <a href="#" onclick="downloadSafetyKit()">📥 Complete Safety Kit</a>
+    <a href="#" onclick="downloadEmergencyGuide()">📥 Emergency Guide</a>
+    <a href="#" onclick="downloadSelfDefenseGuide()">📥 Self Defense Guide</a>
+    <a href="#" onclick="downloadLegalRights()">📥 Legal Rights Guide</a>
   </div>
 
   <!-- Hero -->
@@ -258,5 +268,8 @@
       }
     });
   </script>
+  
+  <!-- Unified Global JavaScript -->
+  <script src="js/global-unified.js"></script>
 </body>
 </html>

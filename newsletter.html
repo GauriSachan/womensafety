@@ -3,19 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeHer Newsletter</title>
+    <title>SafeHer Newsletter - Stay Informed & Safe</title>
+    <meta name="description" content="Subscribe to SafeHer newsletter for the latest women's safety tips, resources, and community updates.">
+    
+    <!-- Unified Design System -->
+    <link rel="stylesheet" href="css/global-unified.css">
     <link rel="stylesheet" href="newsletter.css">
 </head>
 <body>
+    <!-- Unified Navigation -->
     <nav class="navbar">
-        <div class="logo">SafeHer</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="newsletter.html" class="active">Newsletter</a></li>
-            <li><a href="resources.html">Resources</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">SafeHer</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="resources.html">Resources</a>
+                <a href="articles.html">Articles</a>
+                <a href="newsletter.html" class="active">Newsletter</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <button class="hamburger" onclick="toggleSidePanel()" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </nav>
+
+    <!-- Sidebar Panel -->
+    <div class="sidebar" id="sidePanel">
+        <div class="sidebar-header">
+            <h3>SafeHer Menu</h3>
+            <button class="close-btn" onclick="toggleSidePanel()" aria-label="Close menu">&times;</button>
+        </div>
+        <div class="sidebar-content">
+            <div class="sidebar-section">
+                <h4>Navigation</h4>
+                <a href="index.html">🏠 Home</a>
+                <a href="emergency.html">🚨 Emergency</a>
+                <a href="resources.html">📚 Resources</a>
+                <a href="articles.html">📰 Articles</a>
+                <a href="self-defense.html">🥋 Self Defense</a>
+                <a href="workshop.html">🎓 Workshops</a>
+                <a href="contact.html">📞 Contact</a>
+            </div>
+            <div class="sidebar-section">
+                <h4>Quick Access</h4>
+                <a href="newsletter.html" class="active">📧 Newsletter</a>
+                <a href="downloads.html">📥 Downloads</a>
+                <a href="login.html">👤 Login</a>
+            </div>
+            <div class="sidebar-section">
+                <h4>Safety Resources</h4>
+                <a href="#" onclick="downloadSafetyKit()">📥 Download Safety Kit</a>
+                <a href="#" onclick="downloadEmergencyGuide()">🆘 Emergency Guide</a>
+            </div>
+        </div>
+    </div>
 
     <header class="newsletter-header">
         <h1>Cybersecurity Threats Against Women</h1>
@@ -94,5 +140,8 @@
     </footer>
 
     <script src="newsletter.js"></script>
+    
+    <!-- Global JavaScript -->
+    <script src="js/global-unified.js"></script>
 </body>
 </html>

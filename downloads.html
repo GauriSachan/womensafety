@@ -3,31 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SafeHer | Downloads</title>
+  <title>SafeHer | Downloads - Safety Resources & Guides</title>
+  <meta name="description" content="Download safety resources, emergency guides, and women's safety toolkits to stay prepared and protected.">
+  
+  <!-- Unified Design System -->
+  <link rel="stylesheet" href="css/global-unified.css">
   <link rel="stylesheet" href="downloads.css">
 </head>
 <body>
 
-  <!-- ✅ Navbar -->
+  <!-- Unified Navigation -->
   <nav class="navbar">
-    <div class="logo">SafeHer</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="articles.html">Articles</a></li>
-      <li><a href="resources.html">Resources</a></li>
-      <li><a href="downloads.html" class="active">Downloads</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="index.html">SafeHer</a>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="resources.html">Resources</a>
+        <a href="articles.html">Articles</a>
+        <a href="downloads.html" class="active">Downloads</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="hamburger" onclick="toggleSidePanel()" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </nav>
 
-  <!-- ✅ Side Panel -->
-  <div id="sidePanel" class="side-panel">
-    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
-    <a href="emergency.html">Emergency Numbers</a>
-    <a href="self-defense.html">Self Defense</a>
-    <a href="workshop.html">Workshops</a>
-    <a href="newsletter.html">About Us</a>
+  <!-- Sidebar Panel -->
+  <div class="sidebar" id="sidePanel">
+    <div class="sidebar-header">
+      <h3>SafeHer Menu</h3>
+      <button class="close-btn" onclick="toggleSidePanel()" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="sidebar-content">
+      <div class="sidebar-section">
+        <h4>Navigation</h4>
+        <a href="index.html">🏠 Home</a>
+        <a href="emergency.html">🚨 Emergency</a>
+        <a href="resources.html">📚 Resources</a>
+        <a href="articles.html">📰 Articles</a>
+        <a href="self-defense.html">� Self Defense</a>
+        <a href="workshop.html">🎓 Workshops</a>
+        <a href="contact.html">📞 Contact</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Quick Access</h4>
+        <a href="downloads.html" class="active">� Downloads</a>
+        <a href="login.html">👤 Login</a>
+        <a href="newsletter.html">📰 Newsletter</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Safety Resources</h4>
+        <a href="#" onclick="downloadSafetyKit()">📥 Download Safety Kit</a>
+        <a href="#" onclick="downloadEmergencyGuide()">🆘 Emergency Guide</a>
+        <a href="#" onclick="downloadSelfDefenseGuide()">🥊 Self Defense Guide</a>
+        <a href="#" onclick="downloadLegalRights()">⚖️ Legal Rights Guide</a>
+      </div>
+    </div>
   </div>
 
 <!-- Downloadable PDFs Section -->
@@ -127,7 +163,540 @@
       const panel = document.getElementById("sidePanel");
       panel.style.width = panel.style.width === "250px" ? "0" : "250px";
     }
+
+    // Enhanced Download Functions
+    function downloadSafetyKit() {
+      const content = `COMPREHENSIVE WOMEN'S SAFETY KIT - SafeHer Platform
+
+🛡️ PERSONAL SAFETY ESSENTIALS:
+- Emergency whistle or personal alarm
+- SafeHer mobile app installed and configured
+- Pepper spray (check local laws)
+- Self-defense keychain tools
+- Emergency cash and backup cards
+- Copies of important identification
+- Medical emergency information card
+- Emergency contact list (laminated)
+
+📱 DIGITAL SAFETY TOOLKIT:
+- Strong, unique passwords for all accounts
+- Two-factor authentication enabled everywhere
+- Privacy settings properly configured
+- Regular software and app updates
+- Secure backup of important data
+- VPN installed for public Wi-Fi protection
+- Location sharing apps configured
+- Emergency apps with quick access
+
+🚨 EMERGENCY PREPAREDNESS CHECKLIST:
+- Local emergency numbers programmed in phone
+- Share live location with trusted contacts
+- Basic self-defense techniques practiced
+- Emergency scenarios rehearsed with family
+- First aid kit accessible at home/work
+- Backup communication methods available
+- Safe meeting points established
+- Emergency evacuation routes planned
+
+📚 EDUCATIONAL RESOURCES:
+- Legal rights and protection information
+- Local support services and contacts
+- Self-defense class certificates
+- Safety workshop completion records
+- Community safety group contacts
+- Professional counseling resources
+
+📞 ESSENTIAL CONTACT NUMBERS:
+India:
+- All Emergency Services: 112
+- Police: 100
+- Women Helpline: 1091
+- Child Helpline: 1098
+- Cyber Crime: 1930
+
+International:
+- USA: 911 (Emergency), 988 (Crisis)
+- UK: 999 (Emergency), 116 123 (Samaritans)
+- Australia: 000
+- Europe: 112
+
+🌟 DAILY SAFETY PRACTICES:
+- Trust your instincts always
+- Stay aware of surroundings
+- Inform others of your whereabouts
+- Avoid isolated areas when alone
+- Keep devices charged
+- Use well-lit, populated routes
+- Carry yourself confidently
+- Stay connected with support network
+
+Remember: Your safety is not negotiable. You have the right to feel safe and protected at all times.
+
+© 2025 SafeHer Platform - Empowering Women's Safety Worldwide`;
+
+      downloadTextFile(content, 'SafeHer_Complete_Safety_Kit.txt');
+    }
+
+    function downloadEmergencyGuide() {
+      const content = `EMERGENCY ACTION GUIDE - SafeHer Platform
+
+🚨 IMMEDIATE EMERGENCY RESPONSE:
+
+STEP 1: ASSESS THE SITUATION
+- Is there immediate physical danger?
+- Can you safely remove yourself?
+- Do you need immediate help?
+- Are others at risk?
+
+STEP 2: TAKE IMMEDIATE ACTION
+If in Physical Danger:
+- Call emergency services immediately
+- Get to a safe location if possible
+- Alert others nearby if safe to do so
+- Use personal safety devices if available
+
+If Facing Harassment/Threats:
+- Document everything (screenshots, recordings)
+- Do not engage with the aggressor
+- Report to appropriate authorities
+- Seek support from trusted contacts
+
+STEP 3: CONTACT HELP
+Emergency Services:
+- India: 112 (All emergencies)
+- Police: 100
+- Medical: 108
+- Fire: 101
+
+Specialized Help:
+- Women in Distress: 1091
+- Cyber Crime: 1930
+- Child Helpline: 1098
+- Senior Citizen: 14567
+
+STEP 4: SAFETY PROTOCOL
+After Immediate Danger:
+- Get medical attention if needed
+- File official reports with police
+- Contact support services
+- Inform trusted family/friends
+- Document all interactions
+- Seek counseling if needed
+
+🆘 EMERGENCY COMMUNICATION:
+- Use panic buttons on safety apps
+- Send pre-written emergency messages
+- Share live location with contacts
+- Use code words with family/friends
+- Keep backup communication methods
+
+📱 DIGITAL EMERGENCIES:
+Cyberbullying/Harassment:
+- Take screenshots immediately
+- Block and report the user
+- Do not respond to provocations
+- Report to platform administrators
+- File cyber crime complaint if severe
+
+Identity Theft/Privacy Breach:
+- Change all passwords immediately
+- Contact financial institutions
+- File reports with relevant authorities
+- Monitor accounts closely
+- Seek professional help if needed
+
+🏥 MEDICAL EMERGENCIES:
+- Call 108 for ambulance
+- Provide clear location details
+- Stay on line with dispatcher
+- Perform first aid if trained
+- Contact emergency contacts
+- Keep medical information handy
+
+📋 POST-EMERGENCY CHECKLIST:
+- Ensure immediate safety is restored
+- Seek medical/psychological help
+- File all necessary reports
+- Inform employer/school if needed
+- Update security measures
+- Review and improve safety plans
+- Connect with support groups
+
+Remember: In any emergency, your safety comes first. Trust your instincts and don't hesitate to seek help.
+
+© 2025 SafeHer Platform - Your Safety, Our Priority`;
+
+      downloadTextFile(content, 'SafeHer_Emergency_Action_Guide.txt');
+    }
+
+    function downloadSelfDefenseGuide() {
+      const content = `WOMEN'S SELF DEFENSE GUIDE - SafeHer Platform
+
+🥊 FUNDAMENTAL PRINCIPLES:
+
+1. AWARENESS IS YOUR FIRST LINE OF DEFENSE
+- Stay alert to surroundings
+- Trust your instincts
+- Avoid distractions (phone, music) in unsafe areas
+- Know your escape routes
+- Recognize potential threats early
+
+2. CONFIDENCE DETERS ATTACKERS
+- Walk with purpose and confidence
+- Make eye contact appropriately
+- Stand tall with shoulders back
+- Use assertive body language
+- Practice situational awareness
+
+3. YOUR GOAL IS TO ESCAPE, NOT FIGHT
+- Create opportunity to flee
+- Distract and run
+- Fight only when escape isn't possible
+- Use maximum force if you must fight
+- Get to safety and call for help
+
+🎯 VULNERABLE TARGET AREAS:
+
+PRIMARY TARGETS (Most Effective):
+• EYES - Thumb strikes, finger jabs
+• NOSE - Palm heel strikes upward
+• THROAT - Knife hand, knuckle strikes
+• SOLAR PLEXUS - Hard punches, knee strikes
+• GROIN - Knee strikes, kicks, grabs
+• SHINS - Hard kicks, stomps
+• INSTEP - Heel stomps
+
+SECONDARY TARGETS:
+• Ears - Cupped hand strikes
+• Temple - Knuckle strikes
+• Jaw - Uppercuts, side strikes
+• Ribs - Elbow strikes, knee strikes
+• Kidneys - Back fist, elbow strikes
+
+✊ ESSENTIAL TECHNIQUES:
+
+1. PALM HEEL STRIKE
+- Use heel of palm, not knuckles
+- Strike upward toward nose/chin
+- Drive through the target
+- More powerful than punch, less injury to you
+
+2. KNEE STRIKE
+- Most powerful close-range technique
+- Grab attacker's clothing/shoulders
+- Drive knee upward to groin/abdomen
+- Use full body weight behind strike
+
+3. ELBOW STRIKE
+- Strongest weapon at close range
+- Strike backward, sideways, or upward
+- Target ribs, solar plexus, or face
+- Devastating at close quarters
+
+4. HAMMER FIST
+- Use bottom of closed fist
+- Strike downward on nose, collarbone
+- Effective from any angle
+- Natural motion, hard to block
+
+5. FRONT KICK
+- Use ball of foot or shin
+- Target groin, knee, or shin
+- Push through target
+- Creates distance for escape
+
+🏃‍♀️ ESCAPE TECHNIQUES:
+
+WRIST GRAB ESCAPE:
+- Rotate arm toward attacker's thumb
+- Pull sharply while rotating
+- Strike and run immediately
+
+BEAR HUG FROM BEHIND:
+- Drop your weight suddenly
+- Strike back with elbows to ribs
+- Stomp on instep
+- Break free and run
+
+CHOKE HOLD ESCAPE:
+- Tuck chin to protect airway
+- Strike groin with knee
+- Push off attacker and flee
+- Seek immediate help
+
+🔧 IMPROVISED WEAPONS:
+
+EVERYDAY ITEMS AS WEAPONS:
+• Keys - Between fingers for striking
+• Pen/Pencil - Stabbing weapon
+• Umbrella - Striking and blocking
+• Phone - Striking weapon (heavy ones)
+• Bag/Purse - Swinging weapon
+• Hairspray - Temporary blindness
+• Hot Coffee - Thrown as distraction
+
+🧠 MENTAL PREPARATION:
+
+PSYCHOLOGICAL READINESS:
+- Mentally rehearse scenarios
+- Overcome hesitation to hurt someone
+- Practice verbal commands ("STOP!", "FIRE!")
+- Build confidence through training
+- Know your capabilities and limits
+
+SITUATIONAL STRATEGIES:
+- In elevator: Stand near buttons, hit all floors
+- In parking garage: Stay near main aisles
+- Walking alone: Stay on well-lit paths
+- At home: Know all exits, keep doors locked
+- In car: Keep doors locked, windows up
+
+⚠️ IMPORTANT REMINDERS:
+
+LEGAL CONSIDERATIONS:
+- Use only necessary force
+- Stop when threat is neutralized
+- Seek safety immediately after
+- Report incident to authorities
+- Know your local self-defense laws
+
+TRAINING RECOMMENDATIONS:
+- Take professional self-defense classes
+- Practice techniques regularly
+- Learn with friends/family
+- Consider martial arts training
+- Update skills periodically
+
+LIFESTYLE SAFETY:
+- Share your schedule with trusted contacts
+- Use safety apps with panic buttons
+- Avoid predictable routines
+- Stay sober in unfamiliar places
+- Trust your instincts always
+
+Remember: The best self-defense is avoiding dangerous situations. These techniques are last resort options when escape isn't possible.
+
+DISCLAIMER: This guide is for educational purposes only. Seek professional instruction for proper technique training. Your safety is paramount - when in doubt, comply with demands and escape when safe.
+
+© 2025 SafeHer Platform - Empowering Women Through Knowledge`;
+
+      downloadTextFile(content, 'SafeHer_Self_Defense_Guide.txt');
+    }
+
+    function downloadLegalRights() {
+      const content = `WOMEN'S LEGAL RIGHTS GUIDE - SafeHer Platform
+
+⚖️ FUNDAMENTAL LEGAL RIGHTS:
+
+CONSTITUTIONAL RIGHTS (India):
+- Right to Equality (Article 14)
+- Right to Life and Personal Liberty (Article 21)
+- Right against Discrimination (Article 15)
+- Right to Privacy (Fundamental Right)
+- Right to Dignity (Article 21)
+
+WORKPLACE RIGHTS:
+- Equal pay for equal work
+- Safe working environment
+- Protection from sexual harassment
+- Maternity leave and benefits
+- Non-discriminatory hiring practices
+- Right to file complaints without retaliation
+
+🚨 VIOLENCE AND HARASSMENT LAWS:
+
+DOMESTIC VIOLENCE:
+Protection of Women from Domestic Violence Act, 2005:
+- Right to residence
+- Right to maintenance
+- Right to custody of children
+- Protection orders available
+- Monetary relief provisions
+
+SEXUAL HARASSMENT:
+Sexual Harassment of Women at Workplace Act, 2013:
+- Applies to all workplaces
+- Internal Complaints Committee mandatory
+- Confidential complaint process
+- Protection from retaliation
+- Compensation provisions
+
+DOWRY HARASSMENT:
+Dowry Prohibition Act, 1961:
+- Giving/taking dowry is illegal
+- Punishment for dowry demands
+- Special protection for women
+- Enhanced penalties for dowry deaths
+
+📱 CYBER CRIMES PROTECTION:
+
+ONLINE HARASSMENT:
+Information Technology Act, 2000:
+- Protection from cyberbullying
+- Punishment for identity theft
+- Privacy violation penalties
+- Obscene content sharing punishment
+- Electronic evidence protection
+
+SPECIFIC CYBER CRIMES:
+- Morphing photos: Section 66E
+- Fake profiles: Section 66D
+- Stalking online: Section 354D IPC
+- Voyeurism: Section 354C IPC
+- Revenge sharing: Section 67A IT Act
+
+🏛️ LEGAL REMEDIES AVAILABLE:
+
+IMMEDIATE PROTECTION:
+- Protection Orders (Domestic Violence Act)
+- Restraining Orders
+- Emergency Contact Orders
+- Police Protection
+- Shelter Home Access
+
+CRIMINAL REMEDIES:
+- FIR (First Information Report)
+- Police Investigation
+- Court Proceedings
+- Witness Protection
+- Victim Compensation
+
+CIVIL REMEDIES:
+- Divorce/Separation
+- Maintenance/Alimony
+- Property Rights
+- Child Custody
+- Injunctive Relief
+
+📋 HOW TO FILE COMPLAINTS:
+
+POLICE COMPLAINT:
+1. Visit nearest police station
+2. File FIR immediately
+3. Get FIR copy
+4. Ensure proper investigation
+5. Follow up regularly
+6. Seek legal representation
+
+ONLINE COMPLAINTS:
+- National Cyber Crime Portal: cybercrime.gov.in
+- Women Helpline: 1091
+- State Women Commission
+- National Commission for Women
+- Cyber Cell of local police
+
+WORKPLACE HARASSMENT:
+1. Report to Internal Committee
+2. File written complaint
+3. Cooperate with investigation
+4. Seek interim relief if needed
+5. Appeal if unsatisfied
+6. Approach court if necessary
+
+💼 PROFESSIONAL LEGAL HELP:
+
+WHEN TO SEEK LAWYER:
+- Complex legal matters
+- Court proceedings required
+- Rights violation cases
+- Property disputes
+- Divorce/maintenance issues
+- Criminal cases
+
+FREE LEGAL AID:
+- Legal Services Authority
+- District Legal Services Committee
+- State Legal Services Authority
+- NGO legal support
+- Women's rights organizations
+
+📞 IMPORTANT LEGAL CONTACTS:
+
+NATIONAL LEVEL:
+- National Commission for Women: 011-26942369
+- National Human Rights Commission: 011-23340891
+- Supreme Court Legal Services: 011-23388952
+
+STATE LEVEL:
+- State Women Commission (varies by state)
+- State Legal Services Authority
+- District Collector/Magistrate Office
+- Women's Police Stations
+
+🔍 DOCUMENTATION TIPS:
+
+EVIDENCE COLLECTION:
+- Photographs of injuries/damage
+- Medical reports and certificates
+- Screenshots of digital harassment
+- Voice recordings (if legal)
+- Witness statements
+- Communication records
+
+RECORD KEEPING:
+- Maintain detailed chronology
+- Keep all documents organized
+- Make multiple copies
+- Store in secure locations
+- Digital backups recommended
+
+⚠️ IMPORTANT REMINDERS:
+
+TIME LIMITATIONS:
+- File complaints promptly
+- Statute of limitations varies
+- Delay can weaken case
+- Seek immediate legal advice
+- Don't wait for escalation
+
+SAFETY FIRST:
+- Your safety over legal action
+- Seek protection orders first
+- Inform trusted contacts
+- Consider temporary relocation
+- Use legal system strategically
+
+RIGHTS AWARENESS:
+- Know your local laws
+- Understand available remedies
+- Don't let anyone intimidate you
+- Legal system is there to protect you
+- Seek help when needed
+
+Remember: Knowledge of your legal rights is your first defense. Don't hesitate to seek legal help when your rights are violated. The law is designed to protect you.
+
+DISCLAIMER: This guide provides general information about legal rights in India. Laws may vary by state and circumstances. Consult qualified legal professionals for specific legal advice.
+
+© 2025 SafeHer Platform - Know Your Rights, Exercise Your Power`;
+
+      downloadTextFile(content, 'SafeHer_Legal_Rights_Guide.txt');
+    }
+
+    function downloadTextFile(content, filename) {
+      const element = document.createElement('a');
+      const file = new Blob([content], {type: 'text/plain'});
+      element.href = URL.createObjectURL(file);
+      element.download = filename;
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+      
+      // Enhanced success message with instructions
+      const message = `✅ ${filename} downloaded successfully!
+
+📁 Location: Check your Downloads folder
+📱 Tip: Save this file to your phone for offline access
+💡 Share with friends and family for their safety too
+🔒 Keep these resources easily accessible
+
+Stay safe and empowered! 💪`;
+      
+      alert(message);
+    }
   </script>
+  
+  <!-- Global JavaScript -->
+  <script src="js/global-unified.js"></script>
 
 </body>
 </html>

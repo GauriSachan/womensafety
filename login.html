@@ -1,42 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>WomenSafetyApp - Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeHer | Login - Secure Access to Your Safety Dashboard</title>
+  <meta name="description" content="Login to your SafeHer account to access personalized safety features, emergency contacts, and security tools.">
+  
+  <!-- Unified Design System -->
+  <link rel="stylesheet" href="css/global-unified.css">
+  
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    /* Page-specific styles for login form */
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-gradient);
+      padding: var(--space-xl);
+    }
+    
+    .login-card {
+      background: var(--white);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-3xl);
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      max-width: 400px;
       text-align: center;
-      margin-top: 50px;
     }
-    input {
-      margin: 5px;
-      padding: 8px;
+    
+    .login-title {
+      font-size: var(--font-size-3xl);
+      font-weight: 800;
+      margin-bottom: var(--space-lg);
+      color: var(--gray-800);
     }
-    form {
-      display: inline-block;
+    
+    .login-subtitle {
+      color: var(--gray-600);
+      margin-bottom: var(--space-2xl);
+    }
+    
+    .form-group {
+      margin-bottom: var(--space-lg);
       text-align: left;
-      margin-bottom: 20px;
     }
-    button {
-      padding: 8px 15px;
-      margin-top: 10px;
+    
+    .form-label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      font-weight: 600;
+      color: var(--gray-700);
     }
-    #loginMessage {
-      color: red;
-      margin-top: 10px;
+    
+    .form-control {
+      width: 100%;
+      padding: var(--space-md);
+      border: 2px solid var(--gray-300);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      transition: var(--transition-normal);
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: #6B46C1;
+      box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.1);
+    }
+    
+    .btn-login {
+      width: 100%;
+      background: var(--primary-gradient);
+      color: var(--white);
+      border: none;
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      margin-top: var(--space-lg);
+    }
+    
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .login-message {
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      font-weight: 500;
+    }
+    
+    .login-message.error {
+      background: #FEE2E2;
+      color: #DC2626;
+      border: 1px solid #FECACA;
+    }
+    
+    .login-message.success {
+      background: #D1FAE5;
+      color: #059669;
+      border: 1px solid #A7F3D0;
+    }
+    
+    .login-links {
+      margin-top: var(--space-xl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--gray-200);
+    }
+    
+    .login-links a {
+      color: #6B46C1;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 var(--space-sm);
+    }
+    
+    .login-links a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+  <!-- Unified Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">SafeHer</a>
+    
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="emergency.html">Emergency</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    
+    <div class="menu-button" onclick="toggleSidePanel()" aria-label="Open menu">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <span class="menu-text">MENU</span>
+    </div>
+  </nav>
+
+  <!-- Unified Sidebar -->
+  <div id="sidePanelBackdrop" class="side-panel-backdrop" onclick="toggleSidePanel()"></div>
+  <div id="sidePanel" class="side-panel">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()" aria-label="Close sidebar">&times;</a>
+    
+    <!-- Navigation Links -->
+    <a href="index.html">🏠 Home</a>
+    <a href="emergency.html">🚨 Emergency Numbers</a>
+    <a href="self-defense.html">🥊 Self Defense</a>
+    <a href="resources.html">📚 Resources</a>
+    <a href="articles.html">📰 Articles</a>
+    <a href="workshop.html">🎓 Workshops</a>
+    <a href="contact.html">📞 Contact</a>
+    <a href="quiz.html">🧠 Safety Quiz</a>
+    <a href="chatbot.html">🤖 AI Assistant</a>
+    <a href="login.html">👤 Login / Sign Up</a>
+    
+    <!-- Divider -->
+    <hr style="border-color: rgba(255,255,255,0.3); margin: 20px 0;">
+    
+    <!-- Download Links -->
+    <a href="#" onclick="downloadSafetyKit()">📥 Complete Safety Kit</a>
+    <a href="#" onclick="downloadEmergencyGuide()">📥 Emergency Guide</a>
+    <a href="#" onclick="downloadSelfDefenseGuide()">📥 Self Defense Guide</a>
+    <a href="#" onclick="downloadLegalRights()">📥 Legal Rights Guide</a>
+  </div>
+
+  <!-- Login Container -->
+  <div class="login-container">
+    <div class="login-card">
+      <h1 class="login-title">Welcome Back</h1>
+      <p class="login-subtitle">Sign in to your SafeHer account</p>
   <h1>Login - WomenSafetyApp</h1>
 
-  <form id="loginForm">
-    <input type="email" id="loginEmail" placeholder="Email" required><br>
-    <input type="password" id="loginPassword" placeholder="Password" required><br>
-    <button type="submit">Login</button>
+  <form id="loginForm" class="auth-form">
+    <div class="form-group">
+      <label for="loginEmail">Email Address</label>
+      <input type="email" id="loginEmail" name="email" placeholder="Enter your email" required>
+    </div>
+    <div class="form-group">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+    </div>
+    <button type="submit" class="btn-primary">Login</button>
   </form>
 
-  <p id="loginMessage"></p>
+  <div class="message-container">
+    <p id="loginMessage"></p>
+  </div>
 
   <script>
     const API_URL = "http://localhost:5000";

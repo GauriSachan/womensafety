@@ -1,0 +1,449 @@
+/* Contact Page Styles */
+.contact-page {
+  min-height: calc(100vh - 200px);
+}
+
+/* Contact Header */
+.contact-header {
+  background: var(--primary-gradient);
+  color: var(--white);
+  padding: var(--space-3xl) 0;
+  text-align: center;
+}
+
+.header-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.header-content h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: 800;
+  margin-bottom: var(--space-lg);
+}
+
+.header-content p {
+  font-size: var(--font-size-lg);
+  opacity: 0.95;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Contact Methods */
+.contact-methods {
+  padding: var(--space-3xl) 0;
+  background: var(--gray-50);
+}
+
+.methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-xl);
+}
+
+.method-card {
+  background: var(--white);
+  padding: var(--space-2xl);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  border-top: 4px solid var(--color-primary);
+}
+
+.method-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.method-card.blue {
+  border-top-color: #3b82f6;
+}
+
+.method-card.green {
+  border-top-color: #10b981;
+}
+
+.method-card.purple {
+  border-top-color: #8b5cf6;
+}
+
+.method-card.red {
+  border-top-color: #ef4444;
+}
+
+.method-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-lg);
+  border-radius: 50%;
+  color: var(--white);
+}
+
+.method-card.blue .method-icon {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+}
+
+.method-card.green .method-icon {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+.method-card.purple .method-icon {
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+}
+
+.method-card.red .method-icon {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+}
+
+.method-card h3 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--gray-900);
+}
+
+.method-details {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.method-card p {
+  color: var(--gray-600);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Contact Form Section */
+.contact-form-section {
+  padding: var(--space-3xl) 0;
+  background: var(--white);
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+.form-container h2,
+.locations-container h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-xl);
+  color: var(--gray-900);
+}
+
+/* Contact Form */
+.contact-form {
+  background: var(--gray-50);
+  padding: var(--space-2xl);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--gray-200);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: var(--space-sm);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: var(--space-md);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  color: var(--gray-900);
+  background: var(--white);
+  transition: all var(--transition-normal);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form .btn {
+  width: 100%;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.form-status {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  font-weight: 600;
+}
+
+.form-status.success {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.form-status.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Office Locations */
+.locations-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.location-card {
+  background: var(--gray-50);
+  padding: var(--space-xl);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--gray-200);
+}
+
+.location-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.location-header svg {
+  color: var(--color-primary);
+}
+
+.location-header h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0;
+}
+
+.address {
+  color: var(--gray-700);
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.location-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--gray-600);
+  font-size: var(--font-size-sm);
+}
+
+.info-item svg {
+  color: var(--gray-500);
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: var(--space-3xl) 0;
+  background: var(--gray-50);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.section-header h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  color: var(--gray-900);
+}
+
+.section-header p {
+  font-size: var(--font-size-lg);
+  color: var(--gray-600);
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--space-xl);
+}
+
+.faq-item {
+  background: var(--white);
+  padding: var(--space-xl);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.faq-item h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--gray-900);
+}
+
+.faq-item p {
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Emergency Notice */
+.emergency-notice {
+  padding: var(--space-2xl) 0;
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+  color: var(--white);
+}
+
+.notice-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  text-align: left;
+}
+
+.notice-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.notice-text {
+  flex: 1;
+}
+
+.notice-text h3 {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.notice-text p {
+  font-size: var(--font-size-base);
+  opacity: 0.95;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.notice-actions {
+  flex-shrink: 0;
+}
+
+.btn-white {
+  background: var(--white);
+  color: var(--gray-900);
+  border: 2px solid var(--white);
+}
+
+.btn-white:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--gray-900);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-header {
+    padding: var(--space-2xl) 0;
+  }
+  
+  .header-content h1 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .methods-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  
+  .notice-content {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-lg);
+  }
+  
+  .notice-text {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-methods,
+  .contact-form-section,
+  .faq-section {
+    padding: var(--space-2xl) 0;
+  }
+  
+  .method-card,
+  .contact-form,
+  .location-card {
+    padding: var(--space-lg);
+  }
+  
+  .header-content h1 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .section-header h2 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .form-container h2,
+  .locations-container h2 {
+    font-size: var(--font-size-xl);
+  }
+}

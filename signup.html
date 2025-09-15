@@ -1,51 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>WomenSafetyApp - Signup</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeHer - Sign Up</title>
+  <meta name="description" content="Create your SafeHer account to access women's safety resources and emergency tools.">
+  
+  <!-- Unified Design System -->
+  <link rel="stylesheet" href="css/global-unified.css">
+  
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    .auth-container {
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: var(--space-xl);
+      background: var(--color-bg-elevated);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .auth-header {
       text-align: center;
-      margin-top: 50px;
+      margin-bottom: var(--space-xl);
     }
-    input {
-      margin: 5px;
-      padding: 8px;
+    
+    .auth-header h1 {
+      color: var(--color-primary);
+      margin-bottom: var(--space-sm);
     }
-    form {
-      display: inline-block;
-      text-align: left;
-      margin-bottom: 20px;
+    
+    .message-container {
+      margin-top: var(--space-lg);
+      text-align: center;
     }
+    
     #otpSection {
-      margin-top: 10px;
-    }
-    button {
-      padding: 8px 15px;
-      margin-top: 10px;
-    }
-    #signupMessage {
-      color: green;
-      margin-top: 10px;
+      margin-top: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--color-border);
     }
   </style>
 </head>
 <body>
-  <h1>Signup - WomenSafetyApp</h1>
+  <!-- Unified Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="index.html">SafeHer</a>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="resources.html">Resources</a>
+        <a href="articles.html">Articles</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+      </div>
+      <button class="hamburger" onclick="toggleSidePanel()" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
 
-  <form id="signupForm">
-    <input type="text" id="signupName" placeholder="Name" required><br>
-    <input type="email" id="signupEmail" placeholder="Email" required><br>
-    <input type="password" id="signupPassword" placeholder="Password" required><br>
-    <button type="submit">Signup</button>
-  </form>
-
-  <p id="signupMessage"></p>
-
-  <div id="otpSection" style="display:none;">
-    <input type="text" id="signupOtp" placeholder="Enter OTP"><br>
-    <button onclick="verifyOtp()">Verify OTP</button>
+  <!-- Sidebar Panel -->
+  <div class="sidebar" id="sidePanel">
+    <div class="sidebar-header">
+      <h3>SafeHer Menu</h3>
+      <button class="close-btn" onclick="toggleSidePanel()" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="sidebar-content">
+      <div class="sidebar-section">
+        <h4>Navigation</h4>
+        <a href="index.html">🏠 Home</a>
+        <a href="emergency.html">🚨 Emergency</a>
+        <a href="resources.html">📚 Resources</a>
+        <a href="articles.html">📰 Articles</a>
+        <a href="self-defense.html">🥋 Self Defense</a>
+        <a href="workshop.html">🎓 Workshops</a>
+        <a href="contact.html">📞 Contact</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Quick Access</h4>
+        <a href="login.html">👤 Login</a>
+        <a href="signup.html" class="active">📝 Sign Up</a>
+      </div>
+      <div class="sidebar-section">
+        <h4>Safety Resources</h4>
+        <a href="#" onclick="downloadSafetyKit()">📥 Download Safety Kit</a>
+        <a href="#" onclick="downloadEmergencyGuide()">🆘 Emergency Guide</a>
+      </div>
+    </div>
   </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="auth-container">
+      <div class="auth-header">
+        <h1>Create Your Account</h1>
+        <p>Join SafeHer to access safety resources and emergency tools</p>
+      </div>
+
+      <form id="signupForm" class="auth-form">
+        <div class="form-group">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" name="name" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email Address</label>
+          <input type="email" id="signupEmail" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" name="password" placeholder="Create a password" required>
+        </div>
+        <button type="submit" class="btn-primary">Create Account</button>
+      </form>
+
+      <div class="message-container">
+        <p id="signupMessage"></p>
+      </div>
+
+      <div id="otpSection" style="display:none;" class="form-group">
+        <label for="signupOtp">Enter Verification Code</label>
+        <input type="text" id="signupOtp" placeholder="Enter the OTP sent to your email">
+        <button onclick="verifyOtp()" class="btn-secondary">Verify Code</button>
+      </div>
+
+      <div class="auth-footer">
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+      </div>
+    </div>
+  </main>
 
   <script>
     const API_URL = "http://localhost:5000";
@@ -85,6 +171,15 @@
       const data = await res.json();
       alert(data.message || data.error);
     }
+    
+    // Load global functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize any global features if needed
+      console.log('SafeHer signup page loaded');
+    });
   </script>
+  
+  <!-- Global JavaScript -->
+  <script src="js/global-unified.js"></script>
 </body>
 </html>

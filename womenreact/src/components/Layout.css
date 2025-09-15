@@ -1,0 +1,28 @@
+/* Layout Styles */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  transition: var(--transition-normal);
+}
+
+/* Ensure content doesn't get hidden under fixed navbar */
+.main-content {
+  padding-top: 0;
+}
+
+/* When sidebar is open, add overlay effect */
+.sidebar-open .main-content {
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 0;
+  }
+}

@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cyberbullying Emergency Contacts</title>
+  <title>SafeHer | Emergency Help - Cyberbullying Support</title>
+  <meta name="description" content="Get immediate help for cyberbullying and emergency situations. Access helplines, support resources, and safety guides.">
+  
+  <!-- Unified Design System -->
+  <link rel="stylesheet" href="css/global-unified.css">
   <link rel="stylesheet" href="cyberbully.css">
 </head>
 <body>
@@ -16,7 +20,14 @@
       <li><a href="resources.html">Resources</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
+    <div class="menu-button" onclick="toggleSidePanel()">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <span class="menu-text">MENU</span>
+    </div>
   </nav>
 
   <!-- Emergency Banner -->
@@ -92,13 +103,116 @@
     <p>© 2025 SafeHer | All Rights Reserved</p>
   </footer>
 
+  <!-- Side Panel Backdrop -->
+  <div id="sidePanelBackdrop" class="side-panel-backdrop" onclick="toggleSidePanel()"></div>
+  
+  <!-- Side Panel -->
+  <div id="sidePanel" class="side-panel">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
+    <a href="index.html">🏠 Home</a>
+    <a href="emergency.html">🚨 Emergency Numbers</a>
+    <a href="self-defense.html">🥊 Self Defense</a>
+    <a href="workshop.html">🎓 Workshops</a>
+    <a href="newsletter.html">📰 About Us</a>
+    <a href="login.html">👤 Login / Sign Up</a>
+    <a href="#" onclick="downloadEmergencyGuide()">📥 Emergency Guide</a>
+    <a href="#" onclick="downloadSafetyTips()">📥 Safety Tips</a>
+  </div>
+
   <script>
+    // Side Panel Toggle
     function toggleSidePanel() {
-      alert("Side Panel Placeholder - can add quick links here!");
+      const panel = document.getElementById("sidePanel");
+      const backdrop = document.getElementById("sidePanelBackdrop");
+      
+      panel.classList.toggle("open");
+      backdrop.classList.toggle("show");
+    }
+
+    // Download Functions
+    function downloadEmergencyGuide() {
+      const content = `EMERGENCY GUIDE - SafeHer Platform
+
+🚨 IMMEDIATE EMERGENCY CONTACTS:
+- India Emergency: 112
+- Women Helpline: 1091
+- Child Helpline: 1098
+- Cyber Crime: 1930
+
+🚨 CYBERBULLYING EMERGENCY STEPS:
+1. Do NOT respond to bullies online
+2. Block & Report the offender immediately
+3. Take screenshots of abusive messages
+4. File complaint with cybercrime cell
+5. Talk to someone you trust
+
+📞 INTERNATIONAL EMERGENCY:
+- US: 911, 988 (Crisis)
+- UK: 999, 116 123 (Samaritans)
+- Global: Contact local emergency services
+
+Remember: You are not alone. Help is available 24/7.
+
+© 2025 SafeHer Platform`;
+
+      downloadTextFile(content, 'SafeHer_Emergency_Guide.txt');
+    }
+
+    function downloadSafetyTips() {
+      const content = `SAFETY TIPS - SafeHer Platform
+
+🛡️ PERSONAL SAFETY:
+- Stay alert and aware of surroundings
+- Trust your instincts
+- Keep emergency contacts readily available
+- Share location with trusted friends/family
+- Avoid isolated areas, especially at night
+
+💻 DIGITAL SAFETY:
+- Use strong, unique passwords
+- Enable two-factor authentication
+- Be cautious about sharing personal info online
+- Report cyberbullying immediately
+- Keep software updated
+
+🚨 EMERGENCY PREPAREDNESS:
+- Learn basic self-defense
+- Keep emergency kit ready
+- Know nearest police station/hospital
+- Practice emergency scenarios
+- Stay connected with support network
+
+📱 SAFETY APPS:
+- Install reliable safety apps
+- Share live location when needed
+- Use panic buttons when available
+- Keep phone charged
+
+Remember: Prevention is better than cure!
+
+© 2025 SafeHer Platform`;
+
+      downloadTextFile(content, 'SafeHer_Safety_Tips.txt');
+    }
+
+    function downloadTextFile(content, filename) {
+      const element = document.createElement('a');
+      const file = new Blob([content], {type: 'text/plain'});
+      element.href = URL.createObjectURL(file);
+      element.download = filename;
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+      
+      // Show confirmation
+      alert(`${filename} downloaded successfully! Keep it safe for emergency reference.`);
     }
   </script>
   
   <!-- Safety Features Script -->
   <script src="js/safety-features.js"></script>
+  
+  <!-- Unified Global JavaScript -->
+  <script src="js/global-unified.js"></script>
 </body>
 </html>

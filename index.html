@@ -7,6 +7,7 @@
   <meta name="description" content="Empowering women with safety resources, emergency tools, and community support. Your safety is our priority.">
   
   <!-- Unified Design System -->
+  <link rel="stylesheet" href="css/global-unified.css">
   <link rel="stylesheet" href="css/unified-design.css">
   
   <style>
@@ -259,11 +260,15 @@
   <!-- Side Panel -->
   <div id="sidePanel" class="side-panel">
     <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
-    <a href="emergency.html">Emergency Numbers</a>
-    <a href="self-defense.html">Self Defense</a>
-    <a href="workshop.html">Workshops</a>
-    <a href="newsletter.html">About Us</a>
-    <a href="login.html">Login / Sign Up</a>
+    <a href="emergency.html">🚨 Emergency Numbers</a>
+    <a href="self-defense.html">🥊 Self Defense</a>
+    <a href="workshop.html">🎓 Workshops</a>
+    <a href="newsletter.html">📰 About Us</a>
+    <a href="login.html">👤 Login / Sign Up</a>
+    <hr style="border-color: rgba(255,255,255,0.3); margin: 20px 0;">
+    <a href="#" onclick="downloadSafetyKit()">📥 Download Safety Kit</a>
+    <a href="#" onclick="downloadEmergencyContacts()">📥 Emergency Contacts</a>
+    <a href="#" onclick="downloadSelfDefenseGuide()">📥 Self Defense Guide</a>
   </div>
 
   <!-- Hero Section -->
@@ -445,6 +450,172 @@
     function toggleSidePanel() {
       const panel = document.getElementById("sidePanel");
       panel.style.width = (panel.style.width === "250px") ? "0" : "250px";
+    }
+
+    // Download Functions
+    function downloadSafetyKit() {
+      const content = `COMPREHENSIVE SAFETY KIT - SafeHer Platform
+
+🛡️ PERSONAL SAFETY ESSENTIALS:
+- Emergency whistle or alarm
+- Personal safety app on phone
+- Pepper spray (where legal)
+- Self-defense keychain
+- Emergency cash and cards
+- Copy of important IDs
+- Emergency contact list
+
+📱 DIGITAL SAFETY TOOLKIT:
+- Strong passwords for all accounts
+- Two-factor authentication enabled
+- Privacy settings configured
+- Regular software updates
+- Secure backup of important data
+- VPN for public Wi-Fi protection
+
+🚨 EMERGENCY PREPAREDNESS:
+- Know your local emergency numbers
+- Share location with trusted contacts
+- Learn basic self-defense moves
+- Practice emergency scenarios
+- Keep emergency supplies ready
+- Stay informed about local safety
+
+📞 IMPORTANT CONTACTS:
+- Local Police: [Your local number]
+- Emergency Services: 112 (India)
+- Women Helpline: 1091
+- Cyber Crime: 1930
+- Family/Friends: [Add your contacts]
+
+Remember: Your safety is your priority!
+
+© 2025 SafeHer Platform - Stay Safe, Stay Strong!`;
+
+      downloadTextFile(content, 'SafeHer_Complete_Safety_Kit.txt');
+    }
+
+    function downloadEmergencyContacts() {
+      const content = `EMERGENCY CONTACTS - SafeHer Platform
+
+🚨 INDIA EMERGENCY NUMBERS:
+• All Emergency Services: 112
+• Police: 100, 112
+• Fire: 101, 112
+• Ambulance: 108, 112
+• Women Helpline: 1091
+• Child Helpline: 1098
+• Cyber Crime: 1930
+• Railway Protection: 182
+• Tourist Helpline: 1363
+
+🌍 INTERNATIONAL EMERGENCY:
+• USA: 911 (Emergency), 988 (Crisis)
+• UK: 999 (Emergency), 116 123 (Samaritans)
+• Canada: 911
+• Australia: 000
+• Europe: 112
+
+🆘 SPECIALIZED HELPLINES:
+• National Suicide Prevention: 988
+• Domestic Violence: 1-800-799-7233
+• Sexual Assault: 1-800-656-4673
+• Crisis Text Line: Text HOME to 741741
+
+📱 SAFETY APPS TO INSTALL:
+• bSafe
+• Life360
+• SafeTrek
+• Shake2Safety
+• Emergency SOS (built-in)
+
+IMPORTANT: Save these numbers in your phone contacts!
+
+© 2025 SafeHer Platform`;
+
+      downloadTextFile(content, 'SafeHer_Emergency_Contacts.txt');
+    }
+
+    function downloadSelfDefenseGuide() {
+      const content = `SELF DEFENSE GUIDE - SafeHer Platform
+
+🥊 BASIC SELF DEFENSE PRINCIPLES:
+1. AWARENESS is your first defense
+2. TRUST your instincts
+3. CONFIDENCE deters attackers
+4. AIM for vulnerable areas
+5. ESCAPE is always the goal
+
+🎯 TARGET AREAS (Most Effective):
+• Eyes - Push thumbs or fingers
+• Nose - Palm heel strike upward
+• Throat - Knife hand strike
+• Solar Plexus - Hard punch
+• Groin - Knee or kick
+• Shins - Stomp or kick
+• Instep - Stomp with heel
+
+✊ BASIC TECHNIQUES:
+1. PALM HEEL STRIKE
+   - Use heel of palm, not fist
+   - Aim for nose or chin
+   - Push through target
+
+2. KNEE STRIKE
+   - Grab attacker, pull them down
+   - Drive knee up to groin/stomach
+   - Use full body weight
+
+3. ELBOW STRIKE
+   - Most powerful close-range weapon
+   - Strike backward or to side
+   - Aim for ribs or face
+
+4. HAMMER FIST
+   - Use bottom of fist
+   - Strike downward on nose/face
+   - Effective from any angle
+
+🏃‍♀️ ESCAPE TECHNIQUES:
+• Break free from wrist grab: Rotate toward thumb
+• Escape bear hug: Drop low, strike back with elbow
+• Get out of choke: Tuck chin, strike groin, push away
+
+⚠️ REMEMBER:
+- Your goal is to escape, not fight
+- Make noise - scream, yell "FIRE!"
+- Use any available weapons (keys, phone, bag)
+- Practice these moves regularly
+- Take a self-defense class
+- Carry legal defense tools
+
+🧠 MENTAL PREPARATION:
+- Stay alert in public
+- Trust your gut feelings
+- Avoid isolated areas
+- Tell someone your plans
+- Stay sober in unfamiliar places
+
+THIS IS FOR EDUCATIONAL PURPOSES ONLY
+Consult professional self-defense instructors
+
+© 2025 SafeHer Platform - Empower Yourself!`;
+
+      downloadTextFile(content, 'SafeHer_Self_Defense_Guide.txt');
+    }
+
+    function downloadTextFile(content, filename) {
+      const element = document.createElement('a');
+      const file = new Blob([content], {type: 'text/plain'});
+      element.href = URL.createObjectURL(file);
+      element.download = filename;
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+      
+      // Show success message
+      const message = `✅ ${filename} downloaded successfully!\n\n📁 Check your Downloads folder\n💡 Keep these resources handy for quick reference`;
+      alert(message);
     }
 
     // Fade-in articles

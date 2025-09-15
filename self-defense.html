@@ -3,16 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Self Defense - SafeHer</title>
+  <title>SafeHer | Self Defense - Empower Yourself with Safety Skills</title>
+  <meta name="description" content="Learn essential self-defense techniques and personal safety skills designed specifically for women's protection and empowerment.">
+  
+  <!-- Unified Design System -->
+  <link rel="stylesheet" href="css/global-unified.css">
+  
   <style>
-    /* General */
-    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-    body { 
-      font-family: "Segoe UI", sans-serif; 
-      background: linear-gradient(to bottom, #ff7eb3, #f9d423); 
-      color: #333; 
-      line-height: 1.8; 
-    }
+    /* Page-specific styles that complement the unified system */
 
     /* Hero Banner */
     .hero {
@@ -146,6 +144,55 @@
   </style>
 </head>
 <body>
+  <!-- Unified Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">SafeHer</a>
+    
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="emergency.html">Emergency</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="self-defense.html" class="active">Self Defense</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    
+    <div class="menu-button" onclick="toggleSidePanel()" aria-label="Open menu">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <span class="menu-text">MENU</span>
+    </div>
+  </nav>
+
+  <!-- Unified Sidebar -->
+  <div id="sidePanelBackdrop" class="side-panel-backdrop" onclick="toggleSidePanel()"></div>
+  <div id="sidePanel" class="side-panel">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()" aria-label="Close sidebar">&times;</a>
+    
+    <!-- Navigation Links -->
+    <a href="index.html">🏠 Home</a>
+    <a href="emergency.html">🚨 Emergency Numbers</a>
+    <a href="self-defense.html">🥊 Self Defense</a>
+    <a href="resources.html">📚 Resources</a>
+    <a href="articles.html">📰 Articles</a>
+    <a href="workshop.html">🎓 Workshops</a>
+    <a href="contact.html">📞 Contact</a>
+    <a href="quiz.html">🧠 Safety Quiz</a>
+    <a href="chatbot.html">🤖 AI Assistant</a>
+    <a href="login.html">👤 Login / Sign Up</a>
+    
+    <!-- Divider -->
+    <hr style="border-color: rgba(255,255,255,0.3); margin: 20px 0;">
+    
+    <!-- Download Links -->
+    <a href="#" onclick="downloadSafetyKit()">📥 Complete Safety Kit</a>
+    <a href="#" onclick="downloadEmergencyGuide()">📥 Emergency Guide</a>
+    <a href="#" onclick="downloadSelfDefenseGuide()">📥 Self Defense Guide</a>
+    <a href="#" onclick="downloadLegalRights()">📥 Legal Rights Guide</a>
+  </div>
 
   <!-- Hero Banner -->
   <section class="hero">
@@ -262,6 +309,7 @@
 }
 </style>
 
-
+  <!-- Unified Global JavaScript -->
+  <script src="js/global-unified.js"></script>
 </body>
 </html>

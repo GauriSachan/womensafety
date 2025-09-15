@@ -3,30 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SafeHer | Articles</title>
+  <title>SafeHer | Articles - Women's Safety Resources</title>
+  <meta name="description" content="Read empowering articles about women's safety, self-defense, legal rights, and personal security tips.">
+  
+  <!-- Unified Design System -->
+  <link rel="stylesheet" href="css/global-unified.css">
   <link rel="stylesheet" href="articles.css">
 </head>
 <body>
 
-  <!-- ✅ Navbar -->
+  <!-- Unified Navbar -->
   <nav class="navbar">
-    <div class="logo">SafeHer</div>
+    <a href="index.html" class="logo">SafeHer</a>
+    
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="articles.html">Articles</a></li>
+      <li><a href="emergency.html">Emergency</a></li>
+      <li><a href="articles.html" class="active">Articles</a></li>
       <li><a href="resources.html">Resources</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
+    
+    <div class="menu-button" onclick="toggleSidePanel()" aria-label="Open menu">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <span class="menu-text">MENU</span>
+    </div>
   </nav>
 
-  <!-- Side Panel -->
+  <!-- Unified Sidebar -->
+  <div id="sidePanelBackdrop" class="side-panel-backdrop" onclick="toggleSidePanel()"></div>
   <div id="sidePanel" class="side-panel">
-    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
-    <a href="emergency.html">Emergency Numbers</a>
-    <a href="self-defense.html">Self Defense</a>
-    <a href="workshop.html">Workshops</a>
-    <a href="newsletter.html">About Us</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()" aria-label="Close sidebar">&times;</a>
+    
+    <!-- Navigation Links -->
+    <a href="index.html">🏠 Home</a>
+    <a href="emergency.html">🚨 Emergency Numbers</a>
+    <a href="self-defense.html">🥊 Self Defense</a>
+    <a href="resources.html">📚 Resources</a>
+    <a href="articles.html">📰 Articles</a>
+    <a href="workshop.html">🎓 Workshops</a>
+    <a href="contact.html">📞 Contact</a>
+    <a href="quiz.html">🧠 Safety Quiz</a>
+    <a href="chatbot.html">🤖 AI Assistant</a>
+    <a href="login.html">👤 Login / Sign Up</a>
+    
+    <!-- Divider -->
+    <hr style="border-color: rgba(255,255,255,0.3); margin: 20px 0;">
+    
+    <!-- Download Links -->
+    <a href="#" onclick="downloadSafetyKit()">📥 Complete Safety Kit</a>
+    <a href="#" onclick="downloadEmergencyGuide()">📥 Emergency Guide</a>
+    <a href="#" onclick="downloadSelfDefenseGuide()">📥 Self Defense Guide</a>
+    <a href="#" onclick="downloadLegalRights()">📥 Legal Rights Guide</a>
   </div>
 
   <!-- ✅ Honeycomb Section -->
@@ -297,6 +329,8 @@ closeBtn.addEventListener("click", () => {
     }
   </script>
   
+  <!-- Unified Global JavaScript -->
+  <script src="js/global-unified.js"></script>
 
 </body>
 </html>
