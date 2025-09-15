@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('backg.jpeg') no-repeat center center fixed; /* Add your image path */
+    background-size: cover;
+    color: #333;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85); /* light overlay for readability */
+    z-index: -1;
+}
+
+/* Gradient Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #ff6600, #ff0000, #ffcc00); /* orange → red → yellow */
+    padding: 10px 20px;
+    color: white;
+    border-radius: 0 0 15px 15px;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar .nav-links a.active {
+    text-decoration: underline;
+}
+
+/* Gradient Newsletter Header */
+.newsletter-header {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(120deg, #ff6600, #ff0000, #ffcc00);
+    color: white;
+    border-radius: 15px;
+}
+
+.newsletter-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.newsletter-content {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95); /* keep content readable */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.newsletter-content h2 {
+    color: #ff6600;
+    margin-top: 30px;
+}
+
+.newsletter-content ul {
+    margin-left: 20px;
+}
+
+/* Gradient Button */
+#subscribeForm {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+#subscribeForm input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#subscribeForm button {
+    padding: 10px 20px;
+    border: none;
+    background: linear-gradient(90deg, #ff6600, #ff0000, #ffcc00); /* gradient button */
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#subscribeForm button:hover {
+    background: linear-gradient(90deg, #ff4500, #cc0000, #ffd700); /* hover gradient */
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(90deg, #ff6600, #ff0000, #ffcc00); /* gradient footer */
+    color: white;
+    border-radius: 15px 15px 0 0;
+}

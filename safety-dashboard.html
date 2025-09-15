@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Dashboard - SafeHer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Segoe UI", sans-serif; background: #f5f5f5; color: #333; }
+        
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem; background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+            position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
+        }
+        .navbar .logo { color: #0e0e0e; font-weight: bold; font-size: 1.5rem; }
+        .nav-links { list-style: none; display: flex; gap: 1rem; }
+        .nav-links li a {
+            text-decoration: none; font-weight: bold; padding: 8px 16px;
+            border-radius: 25px; background: rgba(255,255,255,0.2);
+            color: white; transition: 0.3s ease;
+        }
+        .nav-links li a:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+        
+        .dashboard { margin-top: 80px; padding: 2rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .dashboard h1 { text-align: center; margin-bottom: 2rem; color: #ff4e50; }
+        
+        .safety-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        
+        .safety-card {
+            background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .safety-card:hover { transform: translateY(-5px); }
+        .safety-card h3 { color: #ff4e50; margin-bottom: 1rem; }
+        .safety-card p { margin-bottom: 1rem; color: #666; }
+        
+        .btn {
+            display: inline-block; padding: 10px 20px; background: #ff4e50; color: white;
+            text-decoration: none; border-radius: 5px; border: none; cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn:hover { background: #e63946; }
+        .btn-secondary { background: #6c757d; }
+        .btn-secondary:hover { background: #545b62; }
+        
+        .emergency-contacts-section {
+            background: white; border-radius: 10px; padding: 2rem; margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .contact-list { margin-top: 1rem; }
+        .contact-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; border-bottom: 1px solid #eee;
+        }
+        .contact-item:last-child { border-bottom: none; }
+        
+        .location-sharing-section {
+            background: white; border-radius: 10px; padding: 2rem; margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .sharing-controls { display: flex; gap: 1rem; align-items: center; margin-top: 1rem; }
+        .sharing-controls select, .sharing-controls input {
+            padding: 8px; border: 1px solid #ddd; border-radius: 4px;
+        }
+        
+        .status-indicator {
+            display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-active { background: #28a745; }
+        .status-inactive { background: #dc3545; }
+        
+        .reports-section {
+            background: white; border-radius: 10px; padding: 2rem; margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        #map { height: 300px; width: 100%; border-radius: 8px; background: #f0f0f0; 
+               display: flex; align-items: center; justify-content: center; color: #666; }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">SafeHer</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="articles.html">Articles</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><a href="emergency.html">Emergency</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="dashboard">
+        <h1>🛡️ Safety Dashboard</h1>
+        
+        <div class="safety-grid">
+            <!-- Emergency SOS Card -->
+            <div class="safety-card">
+                <h3>🚨 Emergency SOS</h3>
+                <p>Quick access to emergency alerts. The SOS button is always available on all pages.</p>
+                <p><strong>Features:</strong></p>
+                <ul>
+                    <li>Floating SOS button on all pages</li>
+                    <li>5-second countdown before sending</li>
+                    <li>Sends location + emergency message</li>
+                    <li>SMS & Email to emergency contacts</li>
+                </ul>
+                <button class="btn" onclick="if(window.emergencySystem) emergencySystem.triggerEmergency()">
+                    Test SOS Alert
+                </button>
+            </div>
+
+            <!-- Panic Mode Card -->
+            <div class="safety-card">
+                <h3>👁️ Panic Mode (Quick Hide)</h3>
+                <p>Press <strong>Esc</strong> key to instantly switch to a neutral Google-like page.</p>
+                <p><strong>How to use:</strong></p>
+                <ul>
+                    <li>Press <kbd>Esc</kbd> key anytime</li>
+                    <li>Page instantly changes to look like Google</li>
+                    <li>Click "Back" to return</li>
+                    <li>Works on all pages</li>
+                </ul>
+                <button class="btn btn-secondary" onclick="if(window.emergencySystem) emergencySystem.activatePanicMode()">
+                    Test Panic Mode
+                </button>
+            </div>
+
+            <!-- Anonymous Reporting Card -->
+            <div class="safety-card">
+                <h3>📋 Anonymous Reporting</h3>
+                <p>Report incidents safely and anonymously. Help make communities safer.</p>
+                <p><strong>Report Types:</strong></p>
+                <ul>
+                    <li>Street Harassment</li>
+                    <li>Unsafe Areas</li>
+                    <li>Stalking Incidents</li>
+                    <li>Other Safety Concerns</li>
+                </ul>
+                <button class="btn" onclick="if(window.anonymousReporting) anonymousReporting.showReportModal()">
+                    Submit Report
+                </button>
+            </div>
+        </div>
+
+        <!-- Emergency Contacts Section -->
+        <div class="emergency-contacts-section">
+            <h3>👥 Emergency Contacts</h3>
+            <p>Manage your emergency contacts who will be notified during SOS alerts.</p>
+            
+            <div style="margin: 1rem 0;">
+                <input type="text" id="contact-name" placeholder="Contact Name" style="margin-right: 10px; padding: 8px;">
+                <input type="tel" id="contact-phone" placeholder="Phone Number" style="margin-right: 10px; padding: 8px;">
+                <input type="email" id="contact-email" placeholder="Email" style="margin-right: 10px; padding: 8px;">
+                <button class="btn" onclick="addEmergencyContact()">Add Contact</button>
+            </div>
+            
+            <div class="contact-list" id="contact-list">
+                <p style="color: #666; font-style: italic;">No emergency contacts added yet.</p>
+            </div>
+        </div>
+
+        <!-- Live Location Sharing Section -->
+        <div class="location-sharing-section">
+            <h3>📍 Live Location Sharing</h3>
+            <p>Share your live location with trusted contacts for a specified duration.</p>
+            
+            <div class="sharing-controls">
+                <span class="status-indicator" id="location-status"></span>
+                <span id="location-status-text">Location sharing inactive</span>
+                <select id="duration-select">
+                    <option value="15">15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="60" selected>1 hour</option>
+                    <option value="120">2 hours</option>
+                </select>
+                <button class="btn" id="location-share-btn" onclick="toggleLocationSharing()">
+                    Start Sharing
+                </button>
+            </div>
+            
+            <div style="margin-top: 1rem;">
+                <p><strong>Current Location:</strong> <span id="current-location">Getting location...</span></p>
+            </div>
+        </div>
+
+        <!-- Recent Reports Section -->
+        <div class="reports-section">
+            <h3>🗺️ Community Safety Map</h3>
+            <p>View recent anonymous reports in your area (anonymized for privacy).</p>
+            
+            <div id="map">
+                📍 Interactive Map Coming Soon<br>
+                <small>Will show anonymized incident reports to help identify unsafe areas</small>
+            </div>
+            
+            <div style="margin-top: 1rem;">
+                <button class="btn btn-secondary" onclick="loadRecentReports()">Load Recent Reports</button>
+                <div id="recent-reports" style="margin-top: 1rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dashboard functionality
+        let currentLocationWatch = null;
+        let locationSharingActive = false;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            loadEmergencyContacts();
+            updateLocationDisplay();
+            loadRecentReports();
+        });
+
+        // Emergency contacts management
+        function addEmergencyContact() {
+            const name = document.getElementById('contact-name').value.trim();
+            const phone = document.getElementById('contact-phone').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+
+            if (!name || !phone) {
+                alert('Please enter at least name and phone number');
+                return;
+            }
+
+            if (window.emergencySystem) {
+                const contact = emergencySystem.addEmergencyContact(name, phone, email);
+                loadEmergencyContacts();
+                
+                // Clear form
+                document.getElementById('contact-name').value = '';
+                document.getElementById('contact-phone').value = '';
+                document.getElementById('contact-email').value = '';
+            }
+        }
+
+        function loadEmergencyContacts() {
+            const contactList = document.getElementById('contact-list');
+            
+            if (window.emergencySystem) {
+                const contacts = emergencySystem.getEmergencyContacts();
+                
+                if (contacts.length === 0) {
+                    contactList.innerHTML = '<p style="color: #666; font-style: italic;">No emergency contacts added yet.</p>';
+                    return;
+                }
+
+                contactList.innerHTML = contacts.map(contact => `
+                    <div class="contact-item">
+                        <div>
+                            <strong>${contact.name}</strong><br>
+                            📞 ${contact.phone} ${contact.email ? `• ✉️ ${contact.email}` : ''}
+                        </div>
+                        <button class="btn btn-secondary" onclick="removeEmergencyContact(${contact.id})" 
+                                style="padding: 5px 10px; font-size: 12px;">Remove</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function removeEmergencyContact(id) {
+            if (window.emergencySystem && confirm('Remove this emergency contact?')) {
+                emergencySystem.removeEmergencyContact(id);
+                loadEmergencyContacts();
+            }
+        }
+
+        // Location sharing
+        function toggleLocationSharing() {
+            const btn = document.getElementById('location-share-btn');
+            const duration = parseInt(document.getElementById('duration-select').value);
+
+            if (!locationSharingActive) {
+                if (window.locationSharing) {
+                    // Start location sharing
+                    const contactIds = window.emergencySystem ? 
+                        emergencySystem.getEmergencyContacts().map(c => c.id) : [];
+                    
+                    locationSharing.startLocationSharing(contactIds, duration)
+                        .then(shareId => {
+                            locationSharingActive = true;
+                            btn.textContent = 'Stop Sharing';
+                            updateLocationStatus(true);
+                            
+                            // Auto-stop after duration
+                            setTimeout(() => {
+                                locationSharingActive = false;
+                                btn.textContent = 'Start Sharing';
+                                updateLocationStatus(false);
+                            }, duration * 60 * 1000);
+                        })
+                        .catch(err => {
+                            alert('Failed to start location sharing: ' + err.message);
+                        });
+                }
+            } else {
+                // Stop location sharing
+                locationSharingActive = false;
+                btn.textContent = 'Start Sharing';
+                updateLocationStatus(false);
+            }
+        }
+
+        function updateLocationStatus(active) {
+            const statusIndicator = document.getElementById('location-status');
+            const statusText = document.getElementById('location-status-text');
+            
+            if (active) {
+                statusIndicator.className = 'status-indicator status-active';
+                statusText.textContent = 'Location sharing active';
+            } else {
+                statusIndicator.className = 'status-indicator status-inactive';
+                statusText.textContent = 'Location sharing inactive';
+            }
+        }
+
+        function updateLocationDisplay() {
+            const locationEl = document.getElementById('current-location');
+            
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const lat = position.coords.latitude.toFixed(6);
+                        const lng = position.coords.longitude.toFixed(6);
+                        locationEl.textContent = `${lat}, ${lng}`;
+                    },
+                    error => {
+                        locationEl.textContent = 'Location access denied or unavailable';
+                    }
+                );
+            } else {
+                locationEl.textContent = 'Geolocation not supported by this browser';
+            }
+        }
+
+        // Load recent reports
+        async function loadRecentReports() {
+            const reportsDiv = document.getElementById('recent-reports');
+            reportsDiv.innerHTML = '<p>Loading reports...</p>';
+
+            try {
+                const response = await fetch('/api/reports');
+                if (response.ok) {
+                    const reports = await response.json();
+                    
+                    if (reports.length === 0) {
+                        reportsDiv.innerHTML = '<p style="color: #666;">No recent reports in your area.</p>';
+                        return;
+                    }
+
+                    reportsDiv.innerHTML = `
+                        <h4>Recent Reports (${reports.length})</h4>
+                        ${reports.slice(0, 5).map(report => `
+                            <div style="border: 1px solid #eee; padding: 10px; margin: 5px 0; border-radius: 5px;">
+                                <strong>${report.incidentType}</strong> - ${report.location}<br>
+                                <small>${new Date(report.createdAt).toLocaleDateString()}</small>
+                            </div>
+                        `).join('')}
+                    `;
+                } else {
+                    throw new Error('Failed to load reports');
+                }
+            } catch (error) {
+                reportsDiv.innerHTML = '<p style="color: #dc3545;">Failed to load reports. Server may be offline.</p>';
+            }
+        }
+    </script>
+
+    <!-- Safety Features Script -->
+    <script src="js/safety-features.js"></script>
+</body>
+</html>

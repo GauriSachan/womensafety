@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeHer - Women Safety Awareness Platform</title>
+  <meta name="description" content="Empowering women with safety resources, emergency tools, and community support. Your safety is our priority.">
+  
+  <!-- Unified Design System -->
+  <link rel="stylesheet" href="css/unified-design.css">
+  
+  <style>
+    /* Page-specific styles */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-xl);
+      margin-top: var(--space-2xl);
+    }
+    
+    .feature-card {
+      text-align: center;
+      padding: var(--space-2xl);
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+      border: 1px solid var(--gray-200);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-lg);
+      display: block;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem;
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
+    }
+    .navbar .logo { color: #0e0e0e; font-weight: bold; font-size: 1.5rem; }
+    .nav-links { list-style: none; display: flex; gap: 1rem; }
+    .nav-links li a {
+      text-decoration: none; font-weight: bold; padding: 8px 16px;
+      border-radius: 25px; background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      color: white; transition: 0.3s ease;
+    }
+    .nav-links li a:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    /* 3-dot button */
+    .three-dots { font-size: 2rem; color: rgb(34, 33, 33); cursor: pointer; display: block; }
+
+    /* Side Panel */
+    .side-panel {
+      height: 100%; width: 0;
+      position: fixed; top: 0; right: 0;
+      background-color: #ff4e50; overflow-x: hidden;
+      transition: 0.4s; padding-top: 60px; z-index: 9999;
+    }
+    .side-panel a {
+      padding: 12px 24px; display: block;
+      font-size: 1.2rem; color: white; text-decoration: none;
+    }
+    .side-panel a:hover { background: rgba(255,255,255,0.2); }
+    .side-panel .closebtn { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh; display: flex;
+      justify-content: center; align-items: center;
+      background: linear-gradient(to bottom, #ff7eb3, #f9d423);
+      text-align: center; padding-top: 60px;
+    }
+    .hero h1 {
+      font-size: 3rem; color: white; opacity: 1;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* Articles */
+    .articles {
+      padding: 3rem 2rem; display: grid; gap: 2rem;
+      max-width: 1200px; margin: auto;
+    }
+    .articles article {
+      display: flex; flex-wrap: wrap;
+      gap: 1rem; align-items: center;
+      opacity: 0; transform: translateY(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      background: #fff; padding: 1rem; border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .articles article:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    }
+    .articles article.visible { opacity: 1; transform: translateY(0); }
+    .articles img { max-width: 400px; border-radius: 10px; flex: 1; }
+    .articles div { flex: 2; }
+
+    /* Footer */
+    footer {
+      background: #ff4e50; color: white;
+      padding: 2rem; text-align: center;
+    }
+    footer table { margin: 1rem auto; border-collapse: collapse; }
+    footer td { padding: 0.5rem 1rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .three-dots { display: block; }
+      .articles article { flex-direction: column; text-align: center; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+
+    /* ===================== LOGIN/SIGNUP MODAL ====================== */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+      justify-content: center; align-items: center; z-index: 2000;
+    }
+    .modal.active { display: flex; }
+
+    .modal-content {
+      background: rgba(255,255,255,0.2);
+      padding: 2rem;
+      border-radius: 20px;
+      width: 350px;
+      color: white;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      text-align: center;
+      animation: slideIn 0.5s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-content h2 { margin-bottom: 1rem; font-size: 1.8rem; }
+    .modal-content input {
+      width: 100%; padding: 10px; margin: 10px 0;
+      border-radius: 12px; border: none;
+      outline: none;
+    }
+    .modal-content button {
+      width: 100%; padding: 10px; border: none; border-radius: 12px;
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      color: white; font-weight: bold; cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .modal-content button:hover { transform: scale(1.05); }
+    .switch { margin-top: 1rem; cursor: pointer; font-size: 0.9rem; color: #f9d423; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-brand">SafeHer</div>
+      <ul class="navbar-nav" id="navbarNav">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="articles.html" class="nav-link">Articles</a></li>
+        <li><a href="resources.html" class="nav-link">Resources</a></li>
+        <li><a href="safety-dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="emergency.html" class="nav-link">Emergency</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="navbar-toggle" onclick="toggleNavbar()" aria-label="Toggle navigation">
+        <span>&#8942;</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Side Panel -->
+  <div id="sidePanel" class="side-panel">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
+    <a href="emergency.html">Emergency Numbers</a>
+    <a href="self-defense.html">Self Defense</a>
+    <a href="workshop.html">Workshops</a>
+    <a href="newsletter.html">About Us</a>
+    <a href="login.html">Login / Sign Up</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Empowering Women's Safety</h1>
+        <p class="hero-subtitle">Your comprehensive platform for safety resources, emergency tools, and community support. Because every woman deserves to feel safe.</p>
+        <div class="hero-cta">
+          <a href="safety-dashboard.html" class="btn btn-primary btn-lg">Safety Dashboard</a>
+          <a href="emergency.html" class="btn btn-outline btn-lg">Emergency Help</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Features Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Core Safety Features</h2>
+        <p class="section-subtitle">Advanced safety tools designed to protect and empower women</p>
+      </div>
+      
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🚨</span>
+          <h3 class="card-title">Emergency SOS</h3>
+          <p class="card-text">One-click emergency alert that sends your location and message to trusted contacts instantly.</p>
+          <button class="btn btn-primary" onclick="if(window.emergencySystem) emergencySystem.triggerEmergency()">Test SOS</button>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">👁️</span>
+          <h3 class="card-title">Panic Mode</h3>
+          <p class="card-text">Press ESC to instantly disguise this site. Perfect for dangerous situations.</p>
+          <button class="btn btn-secondary" onclick="if(window.emergencySystem) emergencySystem.activatePanicMode()">Try Quick Hide</button>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">📍</span>
+          <h3 class="card-title">Live Location Sharing</h3>
+          <p class="card-text">Share your real-time location with trusted contacts for a set duration.</p>
+          <a href="safety-dashboard.html" class="btn btn-success">Manage Location</a>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">📋</span>
+          <h3 class="card-title">Anonymous Reporting</h3>
+          <p class="card-text">Safely report incidents and unsafe areas to help build a safer community.</p>
+          <button class="btn btn-warning" onclick="if(window.anonymousReporting) anonymousReporting.showReportModal()">Submit Report</button>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">🛡️</span>
+          <h3 class="card-title">Safety Resources</h3>
+          <p class="card-text">Access self-defense tips, legal resources, and safety workshops.</p>
+          <a href="resources.html" class="btn btn-primary">View Resources</a>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">📚</span>
+          <h3 class="card-title">Educational Content</h3>
+          <p class="card-text">Stay informed with articles on women's rights and safety tips.</p>
+          <a href="articles.html" class="btn btn-primary">Read Articles</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Floating SOS Button -->
+<a href="mailto:cybercrimecell@nic.in?subject=Urgent%20Cybersecurity%20SOS&body=Dear%20Cybersecurity%20Authority,%0D%0A%0D%0AI%20am%20facing%20a%20serious%20cyber%20harassment/threat%20issue.%20Please%20assist%20me%20immediately.%0D%0A%0D%0AThank%20you."
+   class="sos-btn" target="_blank">
+   🚨 SOS
+</a>
+
+<!-- Button Styling -->
+<style>
+.sos-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #ff1e56;
+  color: #fff;
+  font-weight: bold;
+  padding: 15px 25px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 9999; /* keeps it above all content */
+}
+.sos-btn:hover {
+  background: #ff4f6f;
+  transform: scale(1.1);
+}
+</style>
+
+
+  <!-- Footer -->
+  <footer>
+    <h3>Contact Us</h3>
+    <table>
+      <tr><td>Email:</td><td>support@safeher.org</td></tr>
+      <tr><td>Phone:</td><td>+91 98765 43210</td></tr>
+      <tr><td>Address:</td><td>New Delhi, India</td></tr>
+    </table>
+  </footer>
+
+  <!-- ================= LOGIN/SIGNUP MODAL ================= -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" style="float:right;cursor:pointer;font-size:1.5rem;">&times;</span>
+      <h2 id="modalTitle">Login</h2>
+      <form id="authForm">
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <div class="switch" id="toggleAuth">Don’t have an account? Sign up</div>
+    </div>
+  </div>
+
+  <script>
+    // Side Panel Toggle
+    function toggleSidePanel() {
+      const panel = document.getElementById("sidePanel");
+      panel.style.width = (panel.style.width === "250px") ? "0" : "250px";
+    }
+
+    // Fade-in articles
+    const articles = document.querySelectorAll(".articles article");
+    function revealOnScroll() {
+      articles.forEach(article => {
+        const rect = article.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) article.classList.add("visible");
+      });
+    }
+    window.addEventListener("scroll", revealOnScroll);
+    window.addEventListener("load", revealOnScroll);
+
+    // Hero fade effect
+    window.addEventListener("scroll", () => {
+      const heroText = document.querySelector(".hero h1");
+      const scrollPos = window.scrollY;
+      heroText.style.opacity = 1 - scrollPos / 300;
+      heroText.style.transform = `translateY(-${scrollPos / 3}px)`;
+    });
+
+    // ================= LOGIN/SIGNUP MODAL SCRIPT =================
+    const modal = document.getElementById("authModal");
+    const closeModal = document.getElementById("closeModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const toggleAuth = document.getElementById("toggleAuth");
+    const authForm = document.getElementById("authForm");
+
+    function openModal(type) {
+      modal.classList.add("active");
+      if (type === "login") {
+        modalTitle.textContent = "Login";
+        toggleAuth.textContent = "Don’t have an account? Sign up";
+        authForm.innerHTML = `
+          <input type="email" placeholder="Email" required>
+          <input type="password" placeholder="Password" required>
+          <button type="submit">Login</button>
+        `;
+      }
+    }
+
+    toggleAuth.onclick = () => {
+      if (modalTitle.textContent === "Login") {
+        modalTitle.textContent = "Sign Up";
+        toggleAuth.textContent = "Already have an account? Login";
+        authForm.innerHTML = `
+          <input type="text" placeholder="Name" required>
+          <input type="email" placeholder="Email" required>
+          <input type="password" placeholder="Password" required>
+          <button type="submit">Sign Up</button>
+        `;
+      } else {
+        modalTitle.textContent = "Login";
+        toggleAuth.textContent = "Don’t have an account? Sign up";
+        authForm.innerHTML = `
+          <input type="email" placeholder="Email" required>
+          <input type="password" placeholder="Password" required>
+          <button type="submit">Login</button>
+        `;
+      }
+    };
+
+    closeModal.onclick = () => modal.classList.remove("active");
+    window.onclick = (e) => { if (e.target == modal) modal.classList.remove("active"); };
+  </script>
+  
+  <!-- Safety Features Script -->
+  <script src="js/safety-features.js"></script>
+</body>
+</html>

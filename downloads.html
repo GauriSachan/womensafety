@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeHer | Downloads</title>
+  <link rel="stylesheet" href="downloads.css">
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+    <div class="logo">SafeHer</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="downloads.html" class="active">Downloads</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="three-dots" onclick="toggleSidePanel()">&#8942;</div>
+  </nav>
+
+  <!-- ✅ Side Panel -->
+  <div id="sidePanel" class="side-panel">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidePanel()">&times;</a>
+    <a href="emergency.html">Emergency Numbers</a>
+    <a href="self-defense.html">Self Defense</a>
+    <a href="workshop.html">Workshops</a>
+    <a href="newsletter.html">About Us</a>
+  </div>
+
+<!-- Downloadable PDFs Section -->
+<section class="downloads-section">
+  <h2>📂 Downloadable PDFs</h2>
+  <p class="downloads-intro">Access carefully curated resources and research papers to stay informed and empowered.</p>
+  
+  <div class="downloads-masonry">
+    <div class="download-card">
+      <span class="pdf-icon">📘</span>
+      <a href="https://digitalcommons.law.byu.edu/cgi/viewcontent.cgi?article=1396&context=jpl" target="_blank">
+        Journal of Public Law Article
+      </a>
+      <p class="pdf-desc">Examines legal frameworks protecting women’s public rights and responsibilities.</p>
+    </div>
+    <div class="download-card">
+      <span class="pdf-icon">📗</span>
+      <a href="https://mckinneylaw.iu.edu/practice/law-reviews/iiclr/pdf/vol19p1.pdf" target="_blank">
+        McKinney Law Review Vol. 19 Pt.1
+      </a>
+      <p class="pdf-desc">Scholarly perspectives on statutory reforms in women’s law over recent decades.</p>
+    </div>
+    <div class="download-card">
+      <span class="pdf-icon">📙</span>
+      <a href="https://www.ijariit.com/manuscripts/v11i3/V11I3-1331.pdf" target="_blank">
+        IJARIIT Manuscript v11i3
+      </a>
+      <p class="pdf-desc">Research on empowerment strategies and awareness programs for women.</p>
+    </div>
+    <div class="download-card">
+      <span class="pdf-icon">📕</span>
+      <a href="https://smkvbastar.ac.in/Admin/Files/StudyMaterial/05252023114707_legal%20rights%20of%20women.pdf" target="_blank">
+        Legal Rights of Women (Study Material)
+      </a>
+      <p class="pdf-desc">Educational guide covering basic legal rights every woman should know.</p>
+    </div>
+    <div class="download-card">
+      <span class="pdf-icon">📒</span>
+      <a href="https://rru.ac.in/wp-content/uploads/2023/07/Brochure-Self-Defence-for-Women.pdf" target="_blank">
+        Self Defence Brochure for Women
+      </a>
+      <p class="pdf-desc">Simple self-defense techniques and safety precautions for everyday situations.</p>
+    </div>
+    <div class="download-card">
+      <span class="pdf-icon">📓</span>
+      <a href="http://www.oas.org/es/mesecvi/docs/RecomendacionLegitimaDefensa-EN.pdf" target="_blank">
+        Legitimate Defense Recommendation (EN)
+      </a>
+      <p class="pdf-desc">International guidelines on legitimate defense and legal protections.</p>
+    </div>
+    <div class="download-card">
+      <span class="pdf-icon">📔</span>
+      <a href="https://socialwelfare.tripura.gov.in/sites/default/files/GUIDELINES%20FOR%20WOMEN%20HELP%20LINE%20SCHEME_0.pdf" target="_blank">
+        Guidelines for Women Help Line Scheme
+      </a>
+      <p class="pdf-desc">Procedures and support services for state-run women’s call helplines.</p>
+    </div>
+    <div class="download-card">
+      <span class="pdf-icon">📖</span>
+      <a href="https://www.idlo.int/sites/default/files/pdfs/publications/Justice-for-Women_Full-Report-English.pdf" target="_blank">
+        Justice for Women Full Report
+      </a>
+      <p class="pdf-desc">Comprehensive report on obstacles to justice for women globally.</p>
+    </div>
+    <div class="download-card">
+      <span class="pdf-icon">📚</span>
+      <a href="https://assets.ctfassets.net/pxcfulgsd9e2/1pBXftH0F1zQeybWZHG0SD/a743bb620bf4066100a23ed35b17fb08/Prepare_for_the_Unexpected_Self-Defense_Tips_Every_Woman_Should_Know.pdf" target="_blank">
+        Prepare for the Unexpected: Self-Defense Tips Every Woman Should Know
+      </a>
+      <p class="pdf-desc">Practical tips to stay safe in unexpected dangerous situations.</p>
+    </div>
+  </div>
+</section>
+
+  <!-- ✅ Footer -->
+  <footer>
+    <table align="center" cellpadding="8">
+      <tr>
+        <td><strong>Contact:</strong></td>
+        <td>support@safeher.org</td>
+      </tr>
+      <tr>
+        <td><strong>Phone:</strong></td>
+        <td>+91 98765 43210</td>
+      </tr>
+      <tr>
+        <td><strong>Address:</strong></td>
+        <td>123 Safe Street, New Delhi, India</td>
+      </tr>
+    </table>
+    <p>&copy; 2025 SafeHer. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ JS -->
+  <script>
+    function toggleSidePanel() {
+      const panel = document.getElementById("sidePanel");
+      panel.style.width = panel.style.width === "250px" ? "0" : "250px";
+    }
+  </script>
+
+</body>
+</html>
