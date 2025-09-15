@@ -10,6 +10,80 @@
   <link rel="stylesheet" href="css/unified-design.css">
   
   <style>
+    /* ================= CHATBOT STYLES ================= */
+    #chatbot-btn {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      border: none;
+      border-radius: 50%;
+      width: 60px; height: 60px;
+      font-size: 1.8rem;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      z-index: 10000;
+      transition: transform 0.3s ease;
+    }
+    #chatbot-btn:hover { transform: scale(1.1); }
+
+    #chatbot-box {
+      position: fixed;
+      bottom: 80px;
+      padding:50px;
+      right: 20px;
+      width: 350px;
+      max-height: 500px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 10001;
+      animation: slideUp 0.4s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    #chatbot-header {
+      background: linear-gradient(to right, #ff4e50, #f9d423, #ff7eb3);
+      padding: 10px;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #chatbot-header span { cursor: pointer; font-size: 1.3rem; }
+
+    #chatbot-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 0.95rem;
+    }
+    .msg { margin: 8px 0; padding: 8px 12px; border-radius: 10px; max-width: 80%; }
+    .user-msg { background: #ff7eb3; color: white; margin-left: auto; }
+    .bot-msg { background: #f1f1f1; color: #333; margin-right: auto; }
+
+    #chatbot-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+    #chatbot-input input {
+      flex: 1; padding: 10px; border: none; outline: none;
+    }
+    #chatbot-input button {
+      padding: 10px 15px;
+      border: none;
+      background: #ff4e50;
+      color: white;
+      cursor: pointer;
+    }
+    #chatbot-input button:hover { background: #ff7eb3; }
     /* Page-specific styles */
     .feature-grid {
       display: grid;
@@ -174,6 +248,7 @@
         <li><a href="safety-dashboard.html" class="nav-link">Dashboard</a></li>
         <li><a href="emergency.html" class="nav-link">Emergency</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
+         <li><a href="quiz.html" class="nav-link">Quiz</a></li>
       </ul>
       <button class="navbar-toggle" onclick="toggleNavbar()" aria-label="Toggle navigation">
         <span>&#8942;</span>
@@ -264,6 +339,22 @@
    class="sos-btn" target="_blank">
    🚨 SOS
 </a>
+<!-- ================= CHATBOT ================= -->
+  <button id="chatbot-btn">💬</button>
+  
+  <div id="chatbot-box">
+    <div id="chatbot-header">
+      <span>SafeHer Chatbot</span>
+      <span id="chatbot-close">&times;</span>
+    </div>
+    <div id="chatbot-messages">
+      <div class="bot-msg msg">👋 Hi! I’m your safety assistant. How can I help you today?</div>
+    </div>
+    <div id="chatbot-input">
+      <input type="text" id="chatbot-text" placeholder="Type your message...">
+      <button id="chatbot-send">➤</button>
+    </div>
+  </div>
 
 <!-- Button Styling -->
 <style>
@@ -314,6 +405,42 @@
   </div>
 
   <script>
+    const chatbotBtn = document.getElementById("chatbot-btn");
+    const chatbotBox = document.getElementById("chatbot-box");
+    const chatbotClose = document.getElementById("chatbot-close");
+    const chatbotSend = document.getElementById("chatbot-send");
+    const chatbotText = document.getElementById("chatbot-text");
+    const chatbotMessages = document.getElementById("chatbot-messages");
+
+    chatbotBtn.onclick = () => chatbotBox.style.display = "flex";
+    chatbotClose.onclick = () => chatbotBox.style.display = "none";
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.className = sender === "user" ? "user-msg msg" : "bot-msg msg";
+      msg.textContent = text;
+      chatbotMessages.appendChild(msg);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    function botReply(userText) {
+      let reply = "I'm here to help. Try asking about SOS, safety tips, or resources.";
+      if (userText.toLowerCase().includes("sos")) reply = "🚨 Press the SOS button anytime to alert your trusted contacts.";
+      if (userText.toLowerCase().includes("safety")) reply = "🛡️ You can explore our resources page for safety guides and workshops.";
+      if (userText.toLowerCase().includes("help")) reply = "📞 In case of emergency, call 112 or use our emergency features.";
+      addMessage(reply, "bot");
+    }
+
+    chatbotSend.onclick = () => {
+      const text = chatbotText.value.trim();
+      if (!text) return;
+      addMessage(text, "user");
+      chatbotText.value = "";
+      setTimeout(() => botReply(text), 600);
+    };
+    chatbotText.addEventListener("keypress", e => {
+      if (e.key === "Enter") chatbotSend.click();
+    });
     // Side Panel Toggle
     function toggleSidePanel() {
       const panel = document.getElementById("sidePanel");
@@ -385,6 +512,8 @@
   </script>
   
   <!-- Safety Features Script -->
-  <script src="js/safety-features.js"></script>
+  <script src="js/safety-features.js">
+
+  </script>
 </body>
 </html>
